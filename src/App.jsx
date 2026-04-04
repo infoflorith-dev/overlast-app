@@ -677,43 +677,347 @@ export default function App() {
 
   const printReport = () => {
     const sorted = [...filteredIncidents].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
+
+    const categoryCounts = sorted.reduce((acc, incident) => {
+      acc[incident.category] = (acc[incident.category] || 0) + 1;
+      return acc;
+    }, {});
+
+    const dayCounts = sorted.reduce((acc, incident) => {
+      const key = new Intl.DateTimeFormat("nl-NL", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      }).format(new Date(incident.datetime));
+      acc[key] = (acc[key] || 0) + 1;
+      return acc;
+    }, {});
+
+    const sourceCounts = sorted.reduce((acc, incident) => {
+      const key = incident.source || "Onbekend";
+      acc[key] = (acc[key] || 0) + 1;
+      return acc;
+    }, {});
+
+    const topSources = Object.entries(sourceCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5);
+
+    const categoryEntries = Object.entries(categoryCounts);
+    const dayEntries = Object.entries(dayCounts);
+
+    const makeBarChartSvg = (entries, title, color = "#0f172a") => {
+      if (!entries.length) {
+        return `<div class="chart-empty">Geen gegevens beschikbaar</div>`;
+      }
+
+      const width = 760;
+      const height = Math.max(220, entries.length * 44 + 50);
+      const left = 170;
+      const right = 30;
+      const top = 24;
+      const rowHeight = 36;
+      const barMax = width - left - right;
+      const maxValue = Math.max(...entries.map(([, value]) => value), 1);
+
+      const rows = entries
+        .map(([label, value], index) => {
+          const y = top + index * rowHeight;
+          const barWidth = Math.max((value / maxValue) * barMax, 6);
+          return `
+            <text x="12" y="${y + 16}" font-size="13" fill="#334155">${String(label).replace(/&/g, "&amp;").replace(/</g, "&lt;")}</text>
+            <rect x="${left}" y="${y}" width="${barWidth}" height="18" rx="9" fill="${color}" opacity="0.9"></rect>
+            <text x="${left + barWidth + 10}" y="${y + 14}" font-size="13" fill="#0f172a">${value}</text>
+          `;
+        })
+        .join("");
+
+      return `
+        <div class="chart-block">
+          <div class="chart-title">${title}</div>
+          <svg viewBox="0 0 ${width} ${height}" width="100%" height="${height}" role="img" aria-label="${title}">
+            ${rows}
+          </svg>
+        </div>
+      `;
+    };
+
+    const timelineSvg = (() => {
+      if (!dayEntries.length) return `<div class="chart-empty">Geen tijdlijn beschikbaar</div>`;
+      const width = 760;
+      const height = 280;
+      const left = 52;
+      const right = 20;
+      const top = 24;
+      const bottom = 54;
+      const chartWidth = width - left - right;
+      const chartHeight = height - top - bottom;
+      const maxValue = Math.max(...dayEntries.map(([, value]) => value), 1);
+      const step = chartWidth / Math.max(dayEntries.length, 1);
+      const barWidth = Math.max(Math.min(step * 0.65, 42), 12);
+
+      const bars = dayEntries
+        .map(([label, value], index) => {
+          const x = left + index * step + (step - barWidth) / 2;
+          const barHeight = (value / maxValue) * chartHeight;
+          const y = top + chartHeight - barHeight;
+          const shortLabel = label.slice(0, 5);
+          return `
+            <rect x="${x}" y="${y}" width="${barWidth}" height="${barHeight}" rx="8" fill="#2563eb"></rect>
+            <text x="${x + barWidth / 2}" y="${top + chartHeight + 18}" text-anchor="middle" font-size="11" fill="#475569">${shortLabel}</text>
+            <text x="${x + barWidth / 2}" y="${y - 6}" text-anchor="middle" font-size="11" fill="#0f172a">${value}</text>
+          `;
+        })
+        .join("");
+
+      const grid = [0, 0.25, 0.5, 0.75, 1]
+        .map((fraction) => {
+          const y = top + chartHeight - fraction * chartHeight;
+          const val = Math.round(fraction * maxValue);
+          return `
+            <line x1="${left}" y1="${y}" x2="${width - right}" y2="${y}" stroke="#e2e8f0" stroke-width="1"></line>
+            <text x="${left - 10}" y="${y + 4}" text-anchor="end" font-size="11" fill="#64748b">${val}</text>
+          `;
+        })
+        .join("");
+
+      return `
+        <div class="chart-block">
+          <div class="chart-title">Incidenten per dag</div>
+          <svg viewBox="0 0 ${width} ${height}" width="100%" height="${height}" role="img" aria-label="Incidenten per dag">
+            ${grid}
+            ${bars}
+          </svg>
+        </div>
+      `;
+    })();
+
     const html = `
       <html>
         <head>
           <title>Overlastrapport</title>
           <style>
-            body { font-family: Arial, sans-serif; padding: 24px; color: #111827; }
-            h1,h2 { margin-bottom: 8px; }
-            .meta { margin-bottom: 16px; color: #374151; }
-            .item { border-top: 1px solid #d1d5db; padding: 12px 0; }
-            .small { color: #4b5563; }
+            @page { size: A4; margin: 16mm; }
+            body {
+              font-family: Inter, Arial, sans-serif;
+              color: #0f172a;
+              margin: 0;
+              background: white;
+            }
+            .page {
+              width: 100%;
+            }
+            .cover {
+              border: 1px solid #cbd5e1;
+              border-radius: 18px;
+              padding: 28px;
+              margin-bottom: 22px;
+              background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+            }
+            .eyebrow {
+              font-size: 12px;
+              letter-spacing: 0.14em;
+              text-transform: uppercase;
+              color: #475569;
+              margin-bottom: 10px;
+            }
+            h1 {
+              margin: 0 0 10px;
+              font-size: 30px;
+              line-height: 1.1;
+            }
+            .sub {
+              color: #334155;
+              font-size: 14px;
+              margin-bottom: 18px;
+            }
+            .meta-grid {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 10px 18px;
+              font-size: 13px;
+            }
+            .section {
+              margin: 22px 0;
+              break-inside: avoid;
+            }
+            h2 {
+              margin: 0 0 12px;
+              font-size: 20px;
+            }
+            .summary-grid {
+              display: grid;
+              grid-template-columns: repeat(4, 1fr);
+              gap: 12px;
+            }
+            .summary-card {
+              border: 1px solid #dbeafe;
+              border-radius: 16px;
+              padding: 14px;
+              background: #f8fbff;
+            }
+            .summary-label {
+              color: #64748b;
+              font-size: 12px;
+              margin-bottom: 6px;
+            }
+            .summary-value {
+              font-size: 24px;
+              font-weight: 700;
+            }
+            .two-col {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 18px;
+              align-items: start;
+            }
+            .chart-block {
+              border: 1px solid #e2e8f0;
+              border-radius: 16px;
+              padding: 14px;
+              background: #fff;
+              break-inside: avoid;
+            }
+            .chart-title {
+              font-size: 14px;
+              font-weight: 700;
+              margin-bottom: 8px;
+            }
+            .chart-empty {
+              border: 1px dashed #cbd5e1;
+              border-radius: 14px;
+              padding: 18px;
+              color: #64748b;
+              font-size: 13px;
+            }
+            .source-list {
+              border: 1px solid #e2e8f0;
+              border-radius: 16px;
+              padding: 14px;
+              background: #fff;
+            }
+            .source-row {
+              display: flex;
+              justify-content: space-between;
+              gap: 12px;
+              padding: 8px 0;
+              border-bottom: 1px solid #f1f5f9;
+              font-size: 13px;
+            }
+            .source-row:last-child { border-bottom: 0; }
+            .timeline-item {
+              border-top: 1px solid #dbe3ee;
+              padding: 14px 0;
+              break-inside: avoid;
+            }
+            .timeline-item:first-child { border-top: 0; }
+            .timeline-head {
+              display: flex;
+              justify-content: space-between;
+              gap: 14px;
+              margin-bottom: 6px;
+              font-size: 13px;
+              color: #334155;
+            }
+            .timeline-title {
+              font-weight: 700;
+              font-size: 15px;
+              margin-bottom: 6px;
+            }
+            .pill {
+              display: inline-block;
+              border: 1px solid #cbd5e1;
+              border-radius: 999px;
+              padding: 3px 8px;
+              font-size: 11px;
+              margin-right: 6px;
+              margin-bottom: 6px;
+            }
+            .pill-night {
+              background: #eef2ff;
+              border-color: #c7d2fe;
+              color: #3730a3;
+            }
+            .muted {
+              color: #64748b;
+            }
+            .small {
+              font-size: 12px;
+            }
+            .footer-note {
+              margin-top: 28px;
+              padding-top: 12px;
+              border-top: 1px solid #e2e8f0;
+              color: #64748b;
+              font-size: 11px;
+            }
           </style>
         </head>
         <body>
-          <h1>Overlastrapport</h1>
-          <div class="meta">
-            <div><strong>Naam:</strong> ${profile.resident_name || "-"}</div>
-            <div><strong>Locatie:</strong> ${profile.location || "-"}</div>
-            <div><strong>Export:</strong> ${new Intl.DateTimeFormat("nl-NL", { dateStyle: "full", timeStyle: "short" }).format(new Date())}</div>
-            <div><strong>Bestemd voor:</strong> ${profile.authority1 || "-"} / ${profile.authority2 || "-"}</div>
-          </div>
-          <h2>Samenvatting</h2>
-          <div class="meta">
-            <div>Totaal incidenten: ${filteredIncidents.length}</div>
-            <div>Nachtincidenten: ${filteredIncidents.filter((i) => isNightIncident(i.datetime)).length}</div>
-            <div>Gemiddelde dB: ${dashboard.avgDb}</div>
-          </div>
-          <h2>Tijdlijn</h2>
-          ${sorted.map((incident, index) => `
-            <div class="item">
-              <div><strong>${index + 1}. ${formatDisplayDateTime(incident.datetime)}</strong> ${isNightIncident(incident.datetime) ? "(NACHT)" : ""}</div>
-              <div class="small">${incident.category} | ${incident.severity} | ${incident.location || "-"}</div>
-              <div><strong>Titel:</strong> ${incident.title}</div>
-              <div><strong>Beschrijving:</strong> ${incident.description}</div>
-              <div><strong>Bron:</strong> ${incident.source || "-"}</div>
-              <div><strong>dB:</strong> ${incident.db || "-"}</div>
+          <div class="page">
+            <div class="cover">
+              <div class="eyebrow">Overlastregistratie</div>
+              <h1>Pro rapportage</h1>
+              <div class="sub">Automatisch opgebouwd uit jouw incidentenlogboek, klaar voor intern gebruik, bespreking en export naar PDF.</div>
+              <div class="meta-grid">
+                <div><strong>Naam:</strong> ${profile.resident_name || "-"}</div>
+                <div><strong>Locatie:</strong> ${profile.location || "-"}</div>
+                <div><strong>Bestemd voor:</strong> ${profile.authority1 || "-"}</div>
+                <div><strong>Tweede instantie:</strong> ${profile.authority2 || "-"}</div>
+                <div><strong>Exportdatum:</strong> ${new Intl.DateTimeFormat("nl-NL", { dateStyle: "full", timeStyle: "short" }).format(new Date())}</div>
+                <div><strong>Filterset:</strong> ${filterCategory}${filterSource !== "Alles" ? ` / ${filterSource}` : ""}${filterNightOnly ? " / Alleen nacht" : ""}</div>
+              </div>
             </div>
-          `).join("")}
+
+            <div class="section">
+              <h2>Samenvatting</h2>
+              <div class="summary-grid">
+                <div class="summary-card"><div class="summary-label">Totaal incidenten</div><div class="summary-value">${filteredIncidents.length}</div></div>
+                <div class="summary-card"><div class="summary-label">Nachtincidenten</div><div class="summary-value">${filteredIncidents.filter((i) => isNightIncident(i.datetime)).length}</div></div>
+                <div class="summary-card"><div class="summary-label">Gemiddelde dB</div><div class="summary-value">${dashboard.avgDb}</div></div>
+                <div class="summary-card"><div class="summary-label">Bestanden gekoppeld</div><div class="summary-value">${filteredIncidents.reduce((acc, item) => acc + (mediaByIncident[item.id]?.length || 0), 0)}</div></div>
+              </div>
+            </div>
+
+            <div class="section two-col">
+              ${makeBarChartSvg(categoryEntries, "Verdeling per categorie", "#0f172a")}
+              <div class="source-list">
+                <div class="chart-title">Top bronnen</div>
+                ${topSources.length ? topSources.map(([source, count]) => `<div class="source-row"><span>${source}</span><strong>${count}</strong></div>`).join("") : `<div class="chart-empty">Geen brongegevens beschikbaar</div>`}
+              </div>
+            </div>
+
+            <div class="section">
+              ${timelineSvg}
+            </div>
+
+            <div class="section">
+              <h2>Tijdlijn van incidenten</h2>
+              ${sorted.map((incident, index) => `
+                <div class="timeline-item">
+                  <div class="timeline-head">
+                    <div><strong>${index + 1}. ${formatDisplayDateTime(incident.datetime)}</strong></div>
+                    <div class="small muted">${incident.location || "-"}</div>
+                  </div>
+                  <div class="timeline-title">${incident.title}</div>
+                  <div>
+                    <span class="pill">${incident.category}</span>
+                    <span class="pill">${incident.severity}</span>
+                    ${isNightIncident(incident.datetime) ? `<span class="pill pill-night">Nachtincident</span>` : ""}
+                    ${incident.source ? `<span class="pill">${incident.source}</span>` : ""}
+                  </div>
+                  <div class="small" style="margin-top:8px;"><strong>Beschrijving:</strong> ${incident.description || "-"}</div>
+                  <div class="small" style="margin-top:6px;"><strong>dB:</strong> ${incident.db || "-"} &nbsp;&nbsp; <strong>Weer:</strong> ${incident.weather || "-"}</div>
+                  <div class="small" style="margin-top:6px;"><strong>Vastlegging / actie:</strong> ${incident.actions || "-"}</div>
+                  <div class="small" style="margin-top:6px;"><strong>Bestanden:</strong> ${(mediaByIncident[incident.id] || []).map((m) => m.file_name).join(", ") || "-"}</div>
+                </div>
+              `).join("")}
+            </div>
+
+            <div class="footer-note">
+              Dit rapport is automatisch gegenereerd vanuit de live applicatie. Controleer voor formeel gebruik altijd of de ingevoerde data, omschrijvingen en gekoppelde bestanden volledig zijn.
+            </div>
+          </div>
         </body>
       </html>
     `;
@@ -722,7 +1026,7 @@ export default function App() {
     win.document.write(html);
     win.document.close();
     win.focus();
-    setTimeout(() => win.print(), 300);
+    setTimeout(() => win.print(), 400);
   };
 
   const tabs = [
