@@ -1268,9 +1268,7 @@ const analyse = useMemo(() => {
                       </Button>
                     ))}
                   </div>
-
-                  <div className="content-grid">
-                   {true && (
+ {true && (
   <Card>
     <CardHeader>
       <CardTitle>Automatische analyse</CardTitle>
@@ -1306,6 +1304,8 @@ const analyse = useMemo(() => {
       </div>
     </CardContent>
   </Card>
+                  <div className="content-grid">
+                  
                     <Card>
                       <CardHeader><CardTitle>Recente tijdlijn</CardTitle><CardDescription>Laatste 10 op incidentdatum</CardDescription></CardHeader>
                       <CardContent className="stack">
