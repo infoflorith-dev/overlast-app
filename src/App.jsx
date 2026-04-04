@@ -1656,4 +1656,4 @@ const analyse = useMemo(() => {
     </div>
   );
 }
-add analyse blok
+
