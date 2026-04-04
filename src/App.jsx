@@ -19,6 +19,8 @@ import {
   Expand,
   Loader2,
   Cloud,
+  Moon,
+  Printer,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -127,6 +129,16 @@ function downloadTextFile(filename, content, type = "text/plain;charset=utf-8") 
   URL.revokeObjectURL(url);
 }
 
+function isNightIncident(value) {
+  if (!value) return false;
+  const hour = new Date(value).getHours();
+  return hour >= 23 || hour < 7;
+}
+
+function safeLower(value) {
+  return String(value || "").toLowerCase();
+}
+
 async function signedUrlsForMedia(items) {
   if (!supabase || !items.length) return {};
   const results = await Promise.all(
@@ -147,6 +159,10 @@ export default function App() {
   const [allMedia, setAllMedia] = useState([]);
   const [search, setSearch] = useState("");
   const [filterCategory, setFilterCategory] = useState("Alles");
+  const [filterSource, setFilterSource] = useState("Alles");
+  const [filterNightOnly, setFilterNightOnly] = useState(false);
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
   const [formMessage, setFormMessage] = useState("");
   const [isError, setIsError] = useState(false);
   const [editingIncidentId, setEditingIncidentId] = useState(null);
@@ -182,19 +198,33 @@ export default function App() {
     return map;
   }, [allMedia]);
 
+  const sourceOptions = useMemo(() => {
+    const values = Array.from(new Set(incidents.map((i) => i.source).filter(Boolean)));
+    return ["Alles", ...values.sort((a, b) => a.localeCompare(b))];
+  }, [incidents]);
+
+  const incidentsSorted = useMemo(() => {
+    return [...incidents].sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
+  }, [incidents]);
+
   const filteredIncidents = useMemo(() => {
-    return incidents.filter((incident) => {
+    return incidentsSorted.filter((incident) => {
       const matchesCategory = filterCategory === "Alles" || incident.category === filterCategory;
+      const matchesSource = filterSource === "Alles" || (incident.source || "") === filterSource;
       const q = search.trim().toLowerCase();
       const matchesSearch =
         !q ||
-        incident.title.toLowerCase().includes(q) ||
-        incident.description.toLowerCase().includes(q) ||
-        (incident.location || "").toLowerCase().includes(q) ||
-        (incident.source || "").toLowerCase().includes(q);
-      return matchesCategory && matchesSearch;
+        safeLower(incident.title).includes(q) ||
+        safeLower(incident.description).includes(q) ||
+        safeLower(incident.location).includes(q) ||
+        safeLower(incident.source).includes(q);
+      const matchesNight = !filterNightOnly || isNightIncident(incident.datetime);
+      const incidentDate = new Date(incident.datetime);
+      const matchesFrom = !dateFrom || incidentDate >= new Date(`${dateFrom}T00:00`);
+      const matchesTo = !dateTo || incidentDate <= new Date(`${dateTo}T23:59`);
+      return matchesCategory && matchesSource && matchesSearch && matchesNight && matchesFrom && matchesTo;
     });
-  }, [incidents, filterCategory, search]);
+  }, [incidentsSorted, filterCategory, filterSource, search, filterNightOnly, dateFrom, dateTo]);
 
   const dashboard = useMemo(() => {
     const total = incidents.length;
@@ -202,18 +232,32 @@ export default function App() {
     const sound = incidents.filter((i) => i.category === "Geluid").length;
     const light = incidents.filter((i) => i.category === "Licht").length;
     const smell = incidents.filter((i) => i.category === "Geur").length;
-    const night = incidents.filter((i) => {
-      const hour = new Date(i.datetime).getHours();
-      return hour >= 23 || hour < 7;
-    }).length;
+    const night = incidents.filter((i) => isNightIncident(i.datetime)).length;
     const avgDbValues = incidents.map((i) => Number(i.db)).filter((n) => !Number.isNaN(n) && n > 0);
     const avgDb = avgDbValues.length ? (avgDbValues.reduce((a, b) => a + b, 0) / avgDbValues.length).toFixed(1) : "-";
     return { total, high, sound, light, smell, night, avgDb };
   }, [incidents]);
 
-  const recentTimeline = useMemo(() => {
-    return [...incidents].sort((a, b) => new Date(b.datetime) - new Date(a.datetime)).slice(0, 10);
+  const sourceSummary = useMemo(() => {
+    const counts = {};
+    incidents.forEach((incident) => {
+      const key = incident.source || "Onbekend";
+      counts[key] = (counts[key] || 0) + 1;
+    });
+    return Object.entries(counts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 6);
   }, [incidents]);
+
+  const categorySummary = useMemo(() => {
+    const counts = {};
+    incidents.forEach((incident) => {
+      counts[incident.category] = (counts[incident.category] || 0) + 1;
+    });
+    return Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  }, [incidents]);
+
+  const recentTimeline = useMemo(() => filteredIncidents.slice(0, 10), [filteredIncidents]);
 
   const showMessage = (message, error = false) => {
     setFormMessage(message);
@@ -239,9 +283,18 @@ export default function App() {
     setIsError(false);
   };
 
+  const clearFilters = () => {
+    setSearch("");
+    setFilterCategory("Alles");
+    setFilterSource("Alles");
+    setFilterNightOnly(false);
+    setDateFrom("");
+    setDateTo("");
+  };
+
   const refreshData = async () => {
     if (!supabase) {
-      showMessage("Supabase variabelen ontbreken. Voeg VITE_SUPABASE_URL en VITE_SUPABASE_ANON_KEY toe.", true);
+      showMessage("Supabase variabelen ontbreken. Voeg je VITE_SUPABASE_URL en VITE_SUPABASE_ANON_KEY toe.", true);
       setLoading(false);
       return;
     }
@@ -526,8 +579,8 @@ export default function App() {
   };
 
   const exportCSV = () => {
-    const headers = ["datum_tijd", "categorie", "ernst", "locatie", "titel", "beschrijving", "db", "weer", "bron", "acties", "bestanden"];
-    const rows = incidents.map((i) => [
+    const headers = ["datum_tijd", "categorie", "ernst", "locatie", "titel", "beschrijving", "db", "weer", "bron", "acties", "nacht", "bestanden"];
+    const rows = filteredIncidents.map((i) => [
       i.datetime,
       i.category,
       i.severity,
@@ -538,6 +591,7 @@ export default function App() {
       i.weather,
       i.source,
       i.actions,
+      isNightIncident(i.datetime) ? "ja" : "nee",
       (mediaByIncident[i.id] || []).map((m) => m.file_name).join(", "),
     ]);
     const csv = [headers, ...rows].map((row) => row.map((cell) => `"${String(cell || "").replace(/"/g, '""')}"`).join(";")).join("\n");
@@ -545,7 +599,7 @@ export default function App() {
   };
 
   const exportReport = () => {
-    const sorted = [...incidents].sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
+    const sorted = [...filteredIncidents].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
     const lines = [
       "OVERLASTRAPPORT",
       "",
@@ -555,16 +609,15 @@ export default function App() {
       `Bestemd voor: ${profile.authority1 || "-"} / ${profile.authority2 || "-"}`,
       "",
       "SAMENVATTING",
-      `Totaal incidenten: ${dashboard.total}`,
-      `Geluid: ${dashboard.sound}`,
-      `Licht: ${dashboard.light}`,
-      `Geur: ${dashboard.smell}`,
-      `Nachtincidenten: ${dashboard.night}`,
-      `Gemiddelde dB (ingevoerde metingen): ${dashboard.avgDb}`,
+      `Totaal incidenten: ${filteredIncidents.length}`,
+      `Geluid: ${filteredIncidents.filter((i) => i.category === "Geluid").length}`,
+      `Licht: ${filteredIncidents.filter((i) => i.category === "Licht").length}`,
+      `Geur: ${filteredIncidents.filter((i) => i.category === "Geur").length}`,
+      `Nachtincidenten: ${filteredIncidents.filter((i) => isNightIncident(i.datetime)).length}`,
       "",
-      "TIJDLIJN",
+      "TIJDLIJN (chronologisch)",
       ...sorted.flatMap((incident, index) => [
-        `${index + 1}. ${formatDisplayDateTime(incident.datetime)} | ${incident.category} | ${incident.severity}`,
+        `${index + 1}. ${formatDisplayDateTime(incident.datetime)} | ${incident.category} | ${incident.severity}${isNightIncident(incident.datetime) ? " | NACHT" : ""}`,
         `Titel: ${incident.title}`,
         `Locatie: ${incident.location}`,
         `Bron: ${incident.source || "-"}`,
@@ -577,6 +630,56 @@ export default function App() {
       ]),
     ].join("\n");
     downloadTextFile(`overlastrapport-${new Date().toISOString().slice(0, 10)}.txt`, lines);
+  };
+
+  const printReport = () => {
+    const sorted = [...filteredIncidents].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
+    const html = `
+      <html>
+        <head>
+          <title>Overlastrapport</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 24px; color: #111827; }
+            h1,h2 { margin-bottom: 8px; }
+            .meta { margin-bottom: 16px; color: #374151; }
+            .item { border-top: 1px solid #d1d5db; padding: 12px 0; }
+            .small { color: #4b5563; }
+          </style>
+        </head>
+        <body>
+          <h1>Overlastrapport</h1>
+          <div class="meta">
+            <div><strong>Naam:</strong> ${profile.resident_name || "-"}</div>
+            <div><strong>Locatie:</strong> ${profile.location || "-"}</div>
+            <div><strong>Export:</strong> ${new Intl.DateTimeFormat("nl-NL", { dateStyle: "full", timeStyle: "short" }).format(new Date())}</div>
+            <div><strong>Bestemd voor:</strong> ${profile.authority1 || "-"} / ${profile.authority2 || "-"}</div>
+          </div>
+          <h2>Samenvatting</h2>
+          <div class="meta">
+            <div>Totaal incidenten: ${filteredIncidents.length}</div>
+            <div>Nachtincidenten: ${filteredIncidents.filter((i) => isNightIncident(i.datetime)).length}</div>
+            <div>Gemiddelde dB: ${dashboard.avgDb}</div>
+          </div>
+          <h2>Tijdlijn</h2>
+          ${sorted.map((incident, index) => `
+            <div class="item">
+              <div><strong>${index + 1}. ${formatDisplayDateTime(incident.datetime)}</strong> ${isNightIncident(incident.datetime) ? "(NACHT)" : ""}</div>
+              <div class="small">${incident.category} | ${incident.severity} | ${incident.location || "-"}</div>
+              <div><strong>Titel:</strong> ${incident.title}</div>
+              <div><strong>Beschrijving:</strong> ${incident.description}</div>
+              <div><strong>Bron:</strong> ${incident.source || "-"}</div>
+              <div><strong>dB:</strong> ${incident.db || "-"}</div>
+            </div>
+          `).join("")}
+        </body>
+      </html>
+    `;
+    const win = window.open("", "_blank");
+    if (!win) return;
+    win.document.write(html);
+    win.document.close();
+    win.focus();
+    setTimeout(() => win.print(), 300);
   };
 
   const tabs = [
@@ -613,12 +716,12 @@ export default function App() {
             <CardHeader>
               <div className="between">
                 <div>
-                  <CardTitle className="big-title">Overlast Logboek Live</CardTitle>
-                  <CardDescription>Supabase opslag voor incidenten, media, notities, checklist en export.</CardDescription>
+                  <CardTitle className="big-title">Overlast Logboek Live — Level 2</CardTitle>
+                  <CardDescription>Filters, nachtlabels, bronoverzicht, chronologische rapportage en printbare export.</CardDescription>
                 </div>
                 <div className="badge-row">
                   <Badge><Cloud className="icon-inline" /> Cloud opslag</Badge>
-                  <Badge variant="secondary">Vercel klaar</Badge>
+                  <Badge variant="secondary">Dossiermodus</Badge>
                 </div>
               </div>
             </CardHeader>
@@ -674,11 +777,15 @@ export default function App() {
 
                   <div className="content-grid">
                     <Card>
-                      <CardHeader><CardTitle>Recente tijdlijn</CardTitle><CardDescription>Laatste 10 registraties</CardDescription></CardHeader>
+                      <CardHeader><CardTitle>Recente tijdlijn</CardTitle><CardDescription>Laatste 10 op incidentdatum</CardDescription></CardHeader>
                       <CardContent className="stack">
                         {recentTimeline.map((incident) => (
                           <div key={incident.id} className="incident-card">
-                            <div className="badge-row"><Badge>{incident.category}</Badge><Badge variant="outline">{incident.severity}</Badge></div>
+                            <div className="badge-row">
+                              <Badge>{incident.category}</Badge>
+                              <Badge variant="outline">{incident.severity}</Badge>
+                              {isNightIncident(incident.datetime) && <Badge variant="secondary"><Moon className="icon-inline" /> Nacht</Badge>}
+                            </div>
                             <p className="bold mt">{incident.title}</p>
                             <p className="muted mt-sm">{formatDisplayDateTime(incident.datetime)} • {incident.location}</p>
                             <p className="mt">{incident.description}</p>
@@ -688,10 +795,11 @@ export default function App() {
                     </Card>
 
                     <Card>
-                      <CardHeader><CardTitle>Export & back-up</CardTitle><CardDescription>Gebruik dit om je gegevens veilig op te slaan of te delen</CardDescription></CardHeader>
+                      <CardHeader><CardTitle>Export & rapport</CardTitle><CardDescription>Klaar voor dossier en print</CardDescription></CardHeader>
                       <CardContent className="stack">
                         <Button onClick={exportReport}><Download className="icon-inline" /> Exporteer rapport (.txt)</Button>
                         <Button onClick={exportCSV} variant="secondary"><Download className="icon-inline" /> Exporteer incidenten (.csv)</Button>
+                        <Button onClick={printReport} variant="outline"><Printer className="icon-inline" /> Print / PDF rapport</Button>
                         <Button onClick={exportJSON} variant="outline"><Download className="icon-inline" /> Maak back-up (.json)</Button>
                       </CardContent>
                     </Card>
@@ -703,7 +811,7 @@ export default function App() {
                 <Card>
                   <CardHeader>
                     <CardTitle>{editingIncidentId ? "Incident bewerken" : "Nieuw incident registreren"}</CardTitle>
-                    <CardDescription>Nu met Supabase opslag voor incidenten en videobestanden.</CardDescription>
+                    <CardDescription>Nu met Level 2 filters, nachtlabels en betere rapportage.</CardDescription>
                   </CardHeader>
                   <CardContent className="stack">
                     {formMessage && <div className={cn("message", isError ? "message-error" : "message-ok")}>{formMessage}</div>}
@@ -774,9 +882,12 @@ export default function App() {
 
               {activeTab === "incidenten" && (
                 <Card>
-                  <CardHeader><CardTitle>Incidentenoverzicht</CardTitle><CardDescription>Zoek en filter door je registraties</CardDescription></CardHeader>
+                  <CardHeader>
+                    <CardTitle>Incidentenoverzicht</CardTitle>
+                    <CardDescription>Nu met filters, bronselectie en chronologische sortering op incidentdatum</CardDescription>
+                  </CardHeader>
                   <CardContent className="stack">
-                    <div className="search-row">
+                    <div className="filters-grid">
                       <div className="search-wrap">
                         <Search className="search-icon" />
                         <Input className="search-input" placeholder="Zoek op titel, bron, locatie of beschrijving" value={search} onChange={(e) => setSearch(e.target.value)} />
@@ -784,6 +895,20 @@ export default function App() {
                       <select className="input" value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
                         <option>Alles</option><option>Geluid</option><option>Licht</option><option>Geur</option><option>Terras</option><option>Overig</option>
                       </select>
+                      <select className="input" value={filterSource} onChange={(e) => setFilterSource(e.target.value)}>
+                        {sourceOptions.map((source) => <option key={source}>{source}</option>)}
+                      </select>
+                      <Input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
+                      <Input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
+                      <div className="filter-check">
+                        <Checkbox checked={filterNightOnly} onCheckedChange={setFilterNightOnly} />
+                        <span>Alleen nacht</span>
+                      </div>
+                    </div>
+
+                    <div className="badge-row">
+                      <Button type="button" variant="outline" onClick={clearFilters}><Filter className="icon-inline" /> Filters wissen</Button>
+                      <Badge variant="secondary">{filteredIncidents.length} resultaten</Badge>
                     </div>
 
                     <div className="stack">
@@ -791,7 +916,12 @@ export default function App() {
                         <div key={incident.id} className="incident-card">
                           <div className="between">
                             <div>
-                              <div className="badge-row"><p className="bold">{incident.title}</p><Badge>{incident.category}</Badge><Badge variant="outline">{incident.severity}</Badge></div>
+                              <div className="badge-row">
+                                <p className="bold">{incident.title}</p>
+                                <Badge>{incident.category}</Badge>
+                                <Badge variant="outline">{incident.severity}</Badge>
+                                {isNightIncident(incident.datetime) && <Badge variant="secondary"><Moon className="icon-inline" /> Nacht</Badge>}
+                              </div>
                               <p className="muted mt-sm">{formatDisplayDateTime(incident.datetime)} • {incident.location}</p>
                             </div>
                             <div className="badge-row">
@@ -898,10 +1028,42 @@ export default function App() {
               )}
 
               {activeTab === "dashboard" && (
-                <div className="stats-page-grid">
-                  {[["Totaal incidenten", dashboard.total], ["Geluid", dashboard.sound], ["Licht", dashboard.light], ["Geur", dashboard.smell], ["Nachtincidenten", dashboard.night], ["Ernstig", dashboard.high], ["Gem. dB", dashboard.avgDb], ["Bestanden", allMedia.length]].map(([label, value]) => (
-                    <Card key={label}><CardContent><p className="muted">{label}</p><p className="stat">{value}</p></CardContent></Card>
-                  ))}
+                <div className="stack">
+                  <div className="stats-page-grid">
+                    {[["Totaal incidenten", dashboard.total], ["Geluid", dashboard.sound], ["Licht", dashboard.light], ["Geur", dashboard.smell], ["Nachtincidenten", dashboard.night], ["Ernstig", dashboard.high], ["Gem. dB", dashboard.avgDb], ["Bestanden", allMedia.length]].map(([label, value]) => (
+                      <Card key={label}><CardContent><p className="muted">{label}</p><p className="stat">{value}</p></CardContent></Card>
+                    ))}
+                  </div>
+
+                  <div className="content-grid">
+                    <Card>
+                      <CardHeader><CardTitle>Bronnenoverzicht</CardTitle><CardDescription>Welke bron komt het meest voor</CardDescription></CardHeader>
+                      <CardContent className="stack">
+                        {!sourceSummary.length && <p className="muted">Nog geen brongegevens.</p>}
+                        {sourceSummary.map(([source, count]) => (
+                          <div key={source} className="summary-row">
+                            <div className="summary-label">{source}</div>
+                            <div className="summary-bar-wrap"><div className="summary-bar" style={{ width: `${Math.max((count / Math.max(...sourceSummary.map(([, c]) => c))) * 100, 8)}%` }} /></div>
+                            <div className="summary-count">{count}</div>
+                          </div>
+                        ))}
+                      </CardContent>
+                    </Card>
+
+                    <Card>
+                      <CardHeader><CardTitle>Categorieoverzicht</CardTitle><CardDescription>Verdeling van type overlast</CardDescription></CardHeader>
+                      <CardContent className="stack">
+                        {!categorySummary.length && <p className="muted">Nog geen categorieën.</p>}
+                        {categorySummary.map(([category, count]) => (
+                          <div key={category} className="summary-row">
+                            <div className="summary-label">{category}</div>
+                            <div className="summary-bar-wrap"><div className="summary-bar" style={{ width: `${Math.max((count / Math.max(...categorySummary.map(([, c]) => c))) * 100, 8)}%` }} /></div>
+                            <div className="summary-count">{count}</div>
+                          </div>
+                        ))}
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
               )}
 
