@@ -1288,6 +1288,49 @@ const analyse = useMemo(() => {
                       </CardContent>
                     </Card>
 
+
+
+{analyse && (
+  <Card>
+    <CardHeader>
+      <CardTitle>Automatische analyse</CardTitle>
+      <CardDescription>Direct inzicht in patroon en zwaarte</CardDescription>
+    </CardHeader>
+    <CardContent className="stack">
+      <div className="stats-grid">
+        <div className="stat-box">
+          <p className="muted">Totaal</p>
+          <p className="stat">{analyse.total}</p>
+        </div>
+        <div className="stat-box">
+          <p className="muted">Nacht</p>
+          <p className="stat">{analyse.night}</p>
+        </div>
+        <div className="stat-box">
+          <p className="muted">Gem. dB</p>
+          <p className="stat">{analyse.avg}</p>
+        </div>
+        <div className="stat-box">
+          <p className="muted">Meest</p>
+          <p className="stat">{analyse.topCategory}</p>
+        </div>
+      </div>
+
+      <div className="incident-card">
+        <p className="bold">Snelle conclusie</p>
+        <p className="mt">
+          {analyse.night > 0
+            ? `Er is sprake van terugkerende overlast, met ${analyse.night} nachtincidenten en ${analyse.topCategory.toLowerCase()} als meest voorkomende categorie.`
+            : `Er is sprake van terugkerende overlast, waarbij ${analyse.topCategory.toLowerCase()} momenteel de meest voorkomende categorie is.`}
+        </p>
+      </div>
+    </CardContent>
+  </Card>
+)}
+
+<Card>
+  <CardHeader>
+    <CardTitle>Export & rapport</CardTitle>
                     <Card>
                       <CardHeader><CardTitle>Export & rapport</CardTitle><CardDescription>Klaar voor dossier en print</CardDescription></CardHeader>
                       <CardContent className="stack">
