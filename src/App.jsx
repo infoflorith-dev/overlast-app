@@ -243,7 +243,37 @@ export default function App() {
     const avgDb = avgDbValues.length ? (avgDbValues.reduce((a, b) => a + b, 0) / avgDbValues.length).toFixed(1) : "-";
     return { total, high, sound, light, smell, night, avgDb };
   }, [incidents]);
+const analyse = useMemo(() => {
+  if (!incidents.length) return null;
 
+  const avgDb = incidents
+    .map(i => Number(i.db))
+    .filter(n => !isNaN(n) && n > 0);
+
+  const avg = avgDb.length
+    ? (avgDb.reduce((a, b) => a + b, 0) / avgDb.length).toFixed(1)
+    : "-";
+
+  const night = incidents.filter(i => {
+    const h = new Date(i.datetime).getHours();
+    return h >= 23 || h < 7;
+  }).length;
+
+  const categories = {};
+  incidents.forEach(i => {
+    categories[i.category] = (categories[i.category] || 0) + 1;
+  });
+
+  const topCategory = Object.entries(categories)
+    .sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+
+  return {
+    total: incidents.length,
+    night,
+    avg,
+    topCategory
+  };
+}, [incidents]);
   const sourceSummary = useMemo(() => {
     const counts = {};
     incidents.forEach((incident) => {
