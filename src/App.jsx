@@ -20,6 +20,9 @@ import {
   Cloud,
   Moon,
   Printer,
+  Mic,
+  Sun,
+  Wind,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -172,9 +175,12 @@ export default function App() {
   const [selectedMediaIds, setSelectedMediaIds] = useState([]);
   const [noteInput, setNoteInput] = useState("");
   const [taskInput, setTaskInput] = useState("");
+  const [quickCaptureCategory, setQuickCaptureCategory] = useState(null);
+
   const mediaInputRef = useRef(null);
   const incidentMediaInputRef = useRef(null);
   const previewVideoRef = useRef(null);
+  const quickCaptureRef = useRef(null);
 
   const [incidentForm, setIncidentForm] = useState({
     datetime: formatDateTimeLocal(),
@@ -339,9 +345,9 @@ export default function App() {
   }, []);
 
   const handleMediaUpload = async (e, incidentId = null, selectForForm = false) => {
-    if (!supabase) return;
+    if (!supabase) return [];
     const files = Array.from(e.target.files || []);
-    if (!files.length) return;
+    if (!files.length) return [];
 
     setUploading(true);
     try {
@@ -380,8 +386,10 @@ export default function App() {
         setSelectedMediaIds((prev) => [...new Set([...prev, ...uploaded.map((item) => item.id)])]);
       }
       showMessage("Bestand(en) geüpload.");
+      return uploaded;
     } catch {
       showMessage("Uploaden van bestand mislukt.", true);
+      return [];
     } finally {
       setUploading(false);
       e.target.value = "";
@@ -482,6 +490,82 @@ export default function App() {
     else {
       showMessage("Snel incident opgeslagen.");
       refreshData();
+    }
+  };
+
+  const startQuickCapture = (category) => {
+    setQuickCaptureCategory(category);
+    quickCaptureRef.current?.click();
+  };
+
+  const handleQuickCapture = async (e) => {
+    if (!supabase || !quickCaptureCategory) return;
+    const category = quickCaptureCategory;
+    const uploaded = await handleMediaUpload(e, null, false);
+
+    if (!uploaded.length) {
+      setQuickCaptureCategory(null);
+      return;
+    }
+
+    const now = new Date();
+    const nowIso = now.toISOString();
+
+    const defaultTitles = {
+      Geluid: "Snelle opname geluidsoverlast",
+      Licht: "Snelle opname lichthinder",
+      Geur: "Snelle opname geuroverlast",
+    };
+
+    const defaultDescriptions = {
+      Geluid: "Incident direct vastgelegd via 1 klik opname. Vul details later aan.",
+      Licht: "Incident direct vastgelegd via 1 klik opname. Vul details later aan.",
+      Geur: "Incident direct vastgelegd via 1 klik opname. Vul details later aan.",
+    };
+
+    try {
+      const { data, error } = await supabase
+        .from("incidents")
+        .insert({
+          datetime: nowIso,
+          category,
+          severity: isNightIncident(nowIso) ? "Hoog" : "Middel",
+          location: profile.standard_location || "Slaapkamer / tuinzijde",
+          title: defaultTitles[category],
+          description: defaultDescriptions[category],
+          db: "",
+          weather: "",
+          source: "Nog aan te vullen",
+          actions: "Directe opname via snelle knop.",
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      await Promise.all(uploaded.map((item) => supabase.from("media").update({ incident_id: data.id }).eq("id", item.id)));
+      await refreshData();
+
+      setEditingIncidentId(data.id);
+      setIncidentForm({
+        datetime: formatDateTimeLocal(now),
+        category,
+        severity: isNightIncident(nowIso) ? "Hoog" : "Middel",
+        location: profile.standard_location || "Slaapkamer / tuinzijde",
+        title: defaultTitles[category],
+        description: defaultDescriptions[category],
+        db: "",
+        weather: "",
+        source: "Nog aan te vullen",
+        actions: "Directe opname via snelle knop.",
+      });
+      setSelectedMediaIds(uploaded.map((item) => item.id));
+      setActiveTab("registratie");
+      showMessage(`Snelle ${category.toLowerCase()}-opname opgeslagen. Vul nu eventueel bron, dB en beschrijving aan.`);
+    } catch {
+      showMessage("Snelle opname opslaan mislukt.", true);
+    } finally {
+      setQuickCaptureCategory(null);
     }
   };
 
@@ -1114,6 +1198,39 @@ export default function App() {
             <div className="stack">
               {activeTab === "home" && (
                 <div className="stack">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>1 klik opname</CardTitle>
+                      <CardDescription>
+                        Op je telefoon opent dit direct de camera-opnamekeuze. Na stoppen wordt incident + bestand automatisch opgeslagen. Daarna hoef je alleen nog details aan te vullen.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="quick-grid">
+                        <Button onClick={() => startQuickCapture("Geluid")} className="quick-btn">
+                          <Mic className="icon-inline" />
+                          <div><div className="bold">Geluid</div><div className="tiny">Direct opnemen en als geluidincident opslaan</div></div>
+                        </Button>
+                        <Button onClick={() => startQuickCapture("Licht")} className="quick-btn" variant="secondary">
+                          <Sun className="icon-inline" />
+                          <div><div className="bold">Licht</div><div className="tiny">Direct opnemen en als lichthinder opslaan</div></div>
+                        </Button>
+                        <Button onClick={() => startQuickCapture("Geur")} className="quick-btn" variant="outline">
+                          <Wind className="icon-inline" />
+                          <div><div className="bold">Geur</div><div className="tiny">Direct vastleggen en later aanvullen</div></div>
+                        </Button>
+                      </div>
+                      <input
+                        ref={quickCaptureRef}
+                        type="file"
+                        accept="video/*,image/*"
+                        capture="environment"
+                        className="hidden"
+                        onChange={handleQuickCapture}
+                      />
+                    </CardContent>
+                  </Card>
+
                   <div className="quick-grid">
                     {[{ label: "Snel geluid registreren", category: "Geluid" }, { label: "Snel licht registreren", category: "Licht" }, { label: "Snel geur registreren", category: "Geur" }].map((item) => (
                       <Button key={item.category} onClick={() => addQuickIncident(item.category)} className="quick-btn">
