@@ -1270,7 +1270,7 @@ const analyse = useMemo(() => {
                   </div>
 
                   <div className="content-grid">
-                    {analyse && (
+                   {true && (
   <Card>
     <CardHeader>
       <CardTitle>Automatische analyse</CardTitle>
