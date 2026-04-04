@@ -1,5 +1,4 @@
-
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import {
   AlertTriangle,
@@ -175,6 +174,7 @@ export default function App() {
   const [taskInput, setTaskInput] = useState("");
   const mediaInputRef = useRef(null);
   const incidentMediaInputRef = useRef(null);
+  const previewVideoRef = useRef(null);
 
   const [incidentForm, setIncidentForm] = useState({
     datetime: formatDateTimeLocal(),
@@ -567,8 +567,51 @@ export default function App() {
     setSelectedMediaIds((prev) => prev.filter((item) => item !== id));
   };
 
+  const stopPreviewVideo = useCallback(() => {
+    const video = previewVideoRef.current;
+    if (!video) return;
+    try {
+      video.pause();
+      video.currentTime = 0;
+      video.removeAttribute("src");
+      video.load();
+    } catch {
+      // ignore cleanup errors on mobile browsers
+    }
+  }, []);
+
   const openMediaPreview = (item) => setActivePreviewMedia(item);
-  const closeMediaPreview = () => setActivePreviewMedia(null);
+  const closeMediaPreview = () => {
+    stopPreviewVideo();
+    setActivePreviewMedia(null);
+  };
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) stopPreviewVideo();
+    };
+
+    const handlePageHide = () => {
+      stopPreviewVideo();
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("pagehide", handlePageHide);
+    window.addEventListener("beforeunload", handlePageHide);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("pagehide", handlePageHide);
+      window.removeEventListener("beforeunload", handlePageHide);
+      stopPreviewVideo();
+    };
+  }, [stopPreviewVideo]);
+
+  useEffect(() => {
+    if (!activePreviewMedia) {
+      stopPreviewVideo();
+    }
+  }, [activePreviewMedia, stopPreviewVideo]);
 
   const exportJSON = () => {
     downloadTextFile(
@@ -1084,7 +1127,7 @@ export default function App() {
 
                     <div className="modal-media mt">
                       {activePreviewMedia.type === "video" ? (
-                        <video key={activePreviewMedia.id} src={activePreviewMedia.url || undefined} controls playsInline preload="metadata" className="modal-media-el" />
+                        <video ref={previewVideoRef} key={activePreviewMedia.id} src={activePreviewMedia.url || undefined} controls playsInline preload="metadata" className="modal-media-el" />
                       ) : (
                         <img src={activePreviewMedia.url || undefined} alt={activePreviewMedia.file_name} className="modal-media-el" />
                       )}
