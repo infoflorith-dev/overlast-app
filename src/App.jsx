@@ -280,8 +280,67 @@ export default function App() {
     const avgDb = avgDbValues.length ? (avgDbValues.reduce((a, b) => a + b, 0) / avgDbValues.length).toFixed(1) : "-";
     return { total, high, sound, light, smell, night, avgDb };
   }, [incidents]);
+  const dbSummary = useMemo(() => {
+    const incidentsWithExceedance = incidents
+      .map((incident) => {
+        const dbInfo = getDbExceedance(incident);
+        const hour = incident?.datetime ? new Date(incident.datetime).getHours() : null;
 
+        let period = "Dag";
+        if (hour !== null) {
+          if (hour >= 23 || hour < 7) period = "Nacht";
+          else if (hour >= 19) period = "Avond";
+        }
+
+        return {
+          ...incident,
+          ...dbInfo,
+          period,
+        };
+      })
+      .filter((incident) => incident.exceeded);
+
+    const total = incidentsWithExceedance.length;
+
+    const highest = total
+      ? Math.max(...incidentsWithExceedance.map((i) => i.exceedance))
+      : 0;
+
+    const night = incidentsWithExceedance.filter((i) => i.period === "Nacht").length;
+    const evening = incidentsWithExceedance.filter((i) => i.period === "Avond").length;
+    const day = incidentsWithExceedance.filter((i) => i.period === "Dag").length;
+
+    const periodChart = [
+      { label: "Dag", value: day },
+      { label: "Avond", value: evening },
+      { label: "Nacht", value: night },
+    ];
+
+    const topExceedances = [...incidentsWithExceedance]
+      .sort((a, b) => b.exceedance - a.exceedance)
+      .slice(0, 5)
+      .map((incident) => ({
+        label: incident.title || "Incident",
+        shortLabel:
+          (incident.title || "Incident").length > 24
+            ? `${(incident.title || "Incident").slice(0, 24)}...`
+            : incident.title || "Incident",
+        value: incident.exceedance,
+        datetime: incident.datetime,
+      }));
+
+    return {
+      total,
+      highest,
+      night,
+      evening,
+      day,
+      periodChart,
+      topExceedances,
+    };
+  }, [incidents]);
   const analyse = useMemo(() => {
+    
     if (!incidents.length) return null;
 
     const avgDb = incidents
