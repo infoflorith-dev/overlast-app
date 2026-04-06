@@ -1684,6 +1684,61 @@ export default function App() {
     </Card>
   ))}
 </div>
+  <div className="content-grid">
+  <Card>
+    <CardHeader>
+      <CardTitle>Normoverschrijdingen</CardTitle>
+      <CardDescription>Verdeling van dB-overschrijdingen per normperiode</CardDescription>
+    </CardHeader>
+    <CardContent className="stack">
+      {!dbSummary.total && <p className="muted">Nog geen dB-overschrijdingen gevonden.</p>}
+      {!!dbSummary.total && dbSummary.periodChart.map((item) => (
+        <div key={item.label} className="summary-row">
+          <div className="summary-label">{item.label}</div>
+          <div className="summary-bar-wrap">
+            <div
+              className="summary-bar"
+              style={{
+                width: `${Math.max(
+                  (item.value / Math.max(...dbSummary.periodChart.map((x) => x.value), 1)) * 100,
+                  item.value > 0 ? 8 : 0
+                )}%`,
+              }}
+            />
+          </div>
+          <div className="summary-count">{item.value}</div>
+        </div>
+      ))}
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardHeader>
+      <CardTitle>Zwaarste overschrijdingen</CardTitle>
+      <CardDescription>Top 5 hoogste dB-overschrijdingen</CardDescription>
+    </CardHeader>
+    <CardContent className="stack">
+      {!dbSummary.topExceedances.length && <p className="muted">Nog geen overschrijdingen met dB-waarde.</p>}
+      {!!dbSummary.topExceedances.length && dbSummary.topExceedances.map((item, index) => (
+        <div key={`${item.label}-${index}`} className="summary-row">
+          <div className="summary-label" title={item.label}>{item.shortLabel}</div>
+          <div className="summary-bar-wrap">
+            <div
+              className="summary-bar"
+              style={{
+                width: `${Math.max(
+                  (item.value / Math.max(...dbSummary.topExceedances.map((x) => x.value), 1)) * 100,
+                  8
+                )}%`,
+              }}
+            />
+          </div>
+          <div className="summary-count">+{item.value}</div>
+        </div>
+      ))}
+    </CardContent>
+  </Card>
+</div>                
                   <Card>
                     <CardHeader>
                       <CardTitle>Automatische analyse</CardTitle>
