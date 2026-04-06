@@ -1475,6 +1475,9 @@ ${profile.resident_name}
                         <Button onClick={exportJSON} variant="outline">
                           <Download className="icon-inline" /> Maak back-up (.json)
                         </Button>
+                        <Button onClick={generateHandhavingRequest} variant="secondary">
+  <FileText className="icon-inline" /> Genereer handhavingsverzoek
+</Button>
                       </CardContent>
                     </Card>
                   </div>
