@@ -1339,18 +1339,17 @@ const analyse = useMemo(() => {
 <Card>
   <CardHeader>
     <CardTitle>Export & rapport</CardTitle>
-                    <Card>
-                      <CardHeader><CardTitle>Export & rapport</CardTitle><CardDescription>Klaar voor dossier en print</CardDescription></CardHeader>
-                      <CardContent className="stack">
-                        <Button onClick={exportReport}><Download className="icon-inline" /> Exporteer rapport (.txt)</Button>
-                        <Button onClick={exportCSV} variant="secondary"><Download className="icon-inline" /> Exporteer incidenten (.csv)</Button>
-                        <Button onClick={printReport} variant="outline"><Printer className="icon-inline" /> Print / PDF rapport</Button>
-                        <Button onClick={exportJSON} variant="outline"><Download className="icon-inline" /> Maak back-up (.json)</Button>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-              )}
+    <CardDescription>Klaar voor dossier en print</CardDescription>
+  </CardHeader>
+  <CardContent className="stack">
+    <Button onClick={exportReport}><Download className="icon-inline" /> Exporteer rapport (.txt)</Button>
+    <Button onClick={exportCSV} variant="secondary"><Download className="icon-inline" /> Exporteer incidenten (.csv)</Button>
+    <Button onClick={printReport} variant="outline"><Printer className="icon-inline" /> Print / PDF rapport</Button>
+    <Button onClick={exportJSON} variant="outline"><Download className="icon-inline" /> Maak back-up (.json)</Button>
+  </CardContent>
+</Card>
+</div>
+)}
 
               {activeTab === "registratie" && (
                 <Card>
