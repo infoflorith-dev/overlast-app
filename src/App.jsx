@@ -1508,34 +1508,67 @@ ${profile.resident_name}
                             <p className="mt">{incident.description}</p>
                           </div>
                         ))}
-<div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "10px" }}>
-  <label>
-    <input
-      type="checkbox"
-      checked={options.juridisch}
-      onChange={(e) => setOptions({ ...options, juridisch: e.target.checked })}
-    />{" "}
-    Juridische onderbouwing toevoegen
-  </label>
+</CardContent>
+</Card>
+   <Card>
+  <CardHeader>
+    <CardTitle>Export & rapport</CardTitle>
+    <CardDescription>Klaar voor dossier en print</CardDescription>
+  </CardHeader>
 
-  <label>
-    <input
-      type="checkbox"
-      checked={options.laatste4Weken}
-      onChange={(e) => setOptions({ ...options, laatste4Weken: e.target.checked })}
-    />{" "}
-    Alleen laatste 4 weken
-  </label>
+  <CardContent className="stack">
 
-  <label>
-    <input
-      type="checkbox"
-      checked={options.alleenNacht}
-      onChange={(e) => setOptions({ ...options, alleenNacht: e.target.checked })}
-    />{" "}
-    Alleen nachtincidenten
-  </label>
-</div>
+    <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "10px" }}>
+      <label>
+        <input
+          type="checkbox"
+          checked={options.juridisch}
+          onChange={(e) => setOptions({ ...options, juridisch: e.target.checked })}
+        />{" "}
+        Juridische onderbouwing toevoegen
+      </label>
+
+      <label>
+        <input
+          type="checkbox"
+          checked={options.laatste4Weken}
+          onChange={(e) => setOptions({ ...options, laatste4Weken: e.target.checked })}
+        />{" "}
+        Alleen laatste 4 weken
+      </label>
+
+      <label>
+        <input
+          type="checkbox"
+          checked={options.alleenNacht}
+          onChange={(e) => setOptions({ ...options, alleenNacht: e.target.checked })}
+        />{" "}
+        Alleen nachtincidenten
+      </label>
+    </div>
+
+    <Button onClick={exportReport}>
+      <Download className="icon-inline" /> Exporteer rapport (.txt)
+    </Button>
+
+    <Button onClick={exportCSV} variant="secondary">
+      <Download className="icon-inline" /> Exporteer incidenten (.csv)
+    </Button>
+
+    <Button onClick={printReport} variant="outline">
+      <Printer className="icon-inline" /> Print / PDF rapport
+    </Button>
+
+    <Button onClick={exportJSON} variant="outline">
+      <Download className="icon-inline" /> Maak back-up (.json)
+    </Button>
+
+    <Button onClick={generateHandhavingRequest} variant="secondary">
+      <FileText className="icon-inline" /> Genereer handhavingsverzoek
+    </Button>
+
+  </CardContent>
+</Card>                     
                         <Button onClick={exportReport}>
                           <Download className="icon-inline" /> Exporteer rapport (.txt)
                         </Button>
