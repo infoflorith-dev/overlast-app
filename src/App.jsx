@@ -1305,11 +1305,15 @@ const overschrijdingen = incidentsWithDb
 
   const tekst = `
 VERZOEK HANDHAVING
-${generateSmartSummary(incidents, overschrijdingen)}
+
 Geachte ${profile.authority1 || "gemeente"},
 
-Hierbij dien ik een formeel verzoek tot handhaving in wegens structurele overlast afkomstig van Restaurant Cuisine by Tromp, gevestigd aan de Burgemeester Letteweg 6, 3233AG te Oostvoorne. De overlast bestaat uit onder andere geluid (afzuiginstallatie en terras), lichthinder en geurhinder.
+... geuroverlast.
 
+FEITELIJK BEELD:
+${generateSmartSummary(incidents, overschrijdingen)}
+
+SAMENVATTING:
 SAMENVATTING:
 - Totaal aantal incidenten: ${incidents.length}
 - Aantal dB-overschrijdingen: ${overschrijdingen.length}
