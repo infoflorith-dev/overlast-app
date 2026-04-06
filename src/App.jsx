@@ -1297,7 +1297,7 @@ ${overschrijdingen.slice(0,10).map(i => `
 `).join("")}
 
 De overlast is structureel en duurt al geruime tijd voort.
-Daarnaast is naar mijn mening sprake van strijd met de geldende regelgeving, waaronder de APV (aantasting woon- en leefklimaat), de exploitatievergunning (gebruik en openingstijden) en de zorgplicht zoals opgenomen in artikel 1.7 van de Omgevingswet.
+Daarnaast lijkt de huidige situatie in de praktijk niet in lijn met de geldende kaders rondom woon- en leefklimaat, exploitatie en de algemene zorgplicht.
 Ik verzoek u om:
 - Handhavend op te treden
 - Concrete en afdwingbare maatregelen op te leggen
