@@ -1568,7 +1568,8 @@ ${profile.resident_name}
     </CardContent>
   </Card>
 </div>
-
+</div>
+)}
               {activeTab === "registratie" && (
                 <Card>
                   <CardHeader>
