@@ -137,6 +137,43 @@ function isNightIncident(value) {
   return hour >= 23 || hour < 7;
 }
 
+function getDbNorm(value) {
+  if (!value) return 50;
+  const hour = new Date(value).getHours();
+  if (hour >= 23 || hour < 7) return 40;
+  if (hour >= 19) return 45;
+  return 50;
+}
+
+function getDbValue(value) {
+  if (value === null || value === undefined || value === "") return null;
+  const num = Number(String(value).replace(",", "."));
+  return Number.isNaN(num) ? null : num;
+}
+
+function getDbExceedance(incident) {
+  const dbValue = getDbValue(incident?.db);
+  const norm = getDbNorm(incident?.datetime);
+
+  if (dbValue === null) {
+    return {
+      dbValue: null,
+      norm,
+      exceedance: null,
+      exceeded: false,
+    };
+  }
+
+  const exceedance = Number((dbValue - norm).toFixed(1));
+
+  return {
+    dbValue,
+    norm,
+    exceedance,
+    exceeded: exceedance > 0,
+  };
+}
+
 function safeLower(value) {
   return String(value || "").toLowerCase();
 }
@@ -243,37 +280,39 @@ export default function App() {
     const avgDb = avgDbValues.length ? (avgDbValues.reduce((a, b) => a + b, 0) / avgDbValues.length).toFixed(1) : "-";
     return { total, high, sound, light, smell, night, avgDb };
   }, [incidents]);
-const analyse = useMemo(() => {
-  if (!incidents.length) return null;
 
-  const avgDb = incidents
-    .map(i => Number(i.db))
-    .filter(n => !isNaN(n) && n > 0);
+  const analyse = useMemo(() => {
+    if (!incidents.length) return null;
 
-  const avg = avgDb.length
-    ? (avgDb.reduce((a, b) => a + b, 0) / avgDb.length).toFixed(1)
-    : "-";
+    const avgDb = incidents
+      .map((i) => Number(i.db))
+      .filter((n) => !isNaN(n) && n > 0);
 
-  const night = incidents.filter(i => {
-    const h = new Date(i.datetime).getHours();
-    return h >= 23 || h < 7;
-  }).length;
+    const avg = avgDb.length
+      ? (avgDb.reduce((a, b) => a + b, 0) / avgDb.length).toFixed(1)
+      : "-";
 
-  const categories = {};
-  incidents.forEach(i => {
-    categories[i.category] = (categories[i.category] || 0) + 1;
-  });
+    const night = incidents.filter((i) => {
+      const h = new Date(i.datetime).getHours();
+      return h >= 23 || h < 7;
+    }).length;
 
-  const topCategory = Object.entries(categories)
-    .sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+    const categories = {};
+    incidents.forEach((i) => {
+      categories[i.category] = (categories[i.category] || 0) + 1;
+    });
 
-  return {
-    total: incidents.length,
-    night,
-    avg,
-    topCategory
-  };
-}, [incidents]);
+    const topCategory = Object.entries(categories)
+      .sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+
+    return {
+      total: incidents.length,
+      night,
+      avg,
+      topCategory,
+    };
+  }, [incidents]);
+
   const sourceSummary = useMemo(() => {
     const counts = {};
     incidents.forEach((incident) => {
@@ -757,6 +796,8 @@ const analyse = useMemo(() => {
 
   const exportReport = () => {
     const sorted = [...filteredIncidents].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
+    const exceedances = sorted.filter((incident) => getDbExceedance(incident).exceeded);
+
     const lines = [
       "OVERLASTRAPPORT",
       "",
@@ -771,26 +812,35 @@ const analyse = useMemo(() => {
       `Licht: ${filteredIncidents.filter((i) => i.category === "Licht").length}`,
       `Geur: ${filteredIncidents.filter((i) => i.category === "Geur").length}`,
       `Nachtincidenten: ${filteredIncidents.filter((i) => isNightIncident(i.datetime)).length}`,
+      `dB-overschrijdingen: ${exceedances.length}`,
       "",
       "TIJDLIJN (chronologisch)",
-      ...sorted.flatMap((incident, index) => [
-        `${index + 1}. ${formatDisplayDateTime(incident.datetime)} | ${incident.category} | ${incident.severity}${isNightIncident(incident.datetime) ? " | NACHT" : ""}`,
-        `Titel: ${incident.title}`,
-        `Locatie: ${incident.location}`,
-        `Bron: ${incident.source || "-"}`,
-        `Beschrijving: ${incident.description}`,
-        `dB: ${incident.db || "-"}`,
-        `Weer: ${incident.weather || "-"}`,
-        `Vastlegging / actie: ${incident.actions || "-"}`,
-        `Gekoppelde bestanden: ${(mediaByIncident[incident.id] || []).map((m) => m.file_name).join(", ") || "-"}`,
-        "",
-      ]),
+      ...sorted.flatMap((incident, index) => {
+        const dbInfo = getDbExceedance(incident);
+        return [
+          `${index + 1}. ${formatDisplayDateTime(incident.datetime)} | ${incident.category} | ${incident.severity}${isNightIncident(incident.datetime) ? " | NACHT" : ""}`,
+          `Titel: ${incident.title}`,
+          `Locatie: ${incident.location}`,
+          `Bron: ${incident.source || "-"}`,
+          `Beschrijving: ${incident.description}`,
+          `dB: ${incident.db || "-"} | Norm: ${dbInfo.norm} | Overschrijding: ${dbInfo.exceeded ? `+${dbInfo.exceedance} dB` : "geen"}`,
+          `Weer: ${incident.weather || "-"}`,
+          `Vastlegging / actie: ${incident.actions || "-"}`,
+          `Gekoppelde bestanden: ${(mediaByIncident[incident.id] || []).map((m) => m.file_name).join(", ") || "-"}`,
+          "",
+        ];
+      }),
     ].join("\n");
+
     downloadTextFile(`overlastrapport-${new Date().toISOString().slice(0, 10)}.txt`, lines);
   };
 
   const printReport = () => {
     const sorted = [...filteredIncidents].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
+    const exceedances = sorted.filter((incident) => getDbExceedance(incident).exceeded);
+    const highestExceedance = exceedances.length
+      ? Math.max(...exceedances.map((incident) => getDbExceedance(incident).exceedance))
+      : 0;
 
     const categoryCounts = sorted.reduce((acc, incident) => {
       acc[incident.category] = (acc[incident.category] || 0) + 1;
@@ -1090,6 +1140,8 @@ const analyse = useMemo(() => {
                 <div class="summary-card"><div class="summary-label">Nachtincidenten</div><div class="summary-value">${filteredIncidents.filter((i) => isNightIncident(i.datetime)).length}</div></div>
                 <div class="summary-card"><div class="summary-label">Gemiddelde dB</div><div class="summary-value">${dashboard.avgDb}</div></div>
                 <div class="summary-card"><div class="summary-label">Bestanden gekoppeld</div><div class="summary-value">${filteredIncidents.reduce((acc, item) => acc + (mediaByIncident[item.id]?.length || 0), 0)}</div></div>
+                <div class="summary-card"><div class="summary-label">dB-overschrijdingen</div><div class="summary-value">${exceedances.length}</div></div>
+                <div class="summary-card"><div class="summary-label">Hoogste overschrijding</div><div class="summary-value">${exceedances.length ? `+${highestExceedance}` : "-"}</div></div>
               </div>
             </div>
 
@@ -1107,7 +1159,9 @@ const analyse = useMemo(() => {
 
             <div class="section">
               <h2>Tijdlijn van incidenten</h2>
-              ${sorted.map((incident, index) => `
+              ${sorted.map((incident, index) => {
+                const dbInfo = getDbExceedance(incident);
+                return `
                 <div class="timeline-item">
                   <div class="timeline-head">
                     <div><strong>${index + 1}. ${formatDisplayDateTime(incident.datetime)}</strong></div>
@@ -1121,11 +1175,12 @@ const analyse = useMemo(() => {
                     ${incident.source ? `<span class="pill">${incident.source}</span>` : ""}
                   </div>
                   <div class="small" style="margin-top:8px;"><strong>Beschrijving:</strong> ${incident.description || "-"}</div>
-                  <div class="small" style="margin-top:6px;"><strong>dB:</strong> ${incident.db || "-"} &nbsp;&nbsp; <strong>Weer:</strong> ${incident.weather || "-"}</div>
+                  <div class="small" style="margin-top:6px;"><strong>dB:</strong> ${incident.db || "-"} &nbsp;&nbsp; <strong>Norm:</strong> ${dbInfo.norm} &nbsp;&nbsp; <strong>Overschrijding:</strong> ${dbInfo.exceeded ? `+${dbInfo.exceedance} dB` : "geen"} &nbsp;&nbsp; <strong>Weer:</strong> ${incident.weather || "-"}</div>
                   <div class="small" style="margin-top:6px;"><strong>Vastlegging / actie:</strong> ${incident.actions || "-"}</div>
                   <div class="small" style="margin-top:6px;"><strong>Bestanden:</strong> ${(mediaByIncident[incident.id] || []).map((m) => m.file_name).join(", ") || "-"}</div>
                 </div>
-              `).join("")}
+              `;
+              }).join("")}
             </div>
 
             <div class="footer-note">
@@ -1171,7 +1226,7 @@ const analyse = useMemo(() => {
 
   return (
     <div className="app-shell">
-           <div className="container">
+      <div className="container">
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }} className="hero-grid">
           <Card>
             <CardHeader>
@@ -1269,57 +1324,57 @@ const analyse = useMemo(() => {
                     ))}
                   </div>
 
-<div className="content-grid">
-  <Card>
-    <CardHeader>
-      <CardTitle>Recente tijdlijn</CardTitle>
-      <CardDescription>Laatste 10 op incidentdatum</CardDescription>
-    </CardHeader>
-    <CardContent className="stack">
-      {recentTimeline.map((incident) => (
-        <div key={incident.id} className="incident-card">
-          <div className="badge-row">
-            <Badge>{incident.category}</Badge>
-            <Badge variant="outline">{incident.severity}</Badge>
-            {isNightIncident(incident.datetime) && (
-              <Badge variant="secondary">
-                <Moon className="icon-inline" /> Nacht
-              </Badge>
-            )}
-          </div>
-          <p className="bold mt">{incident.title}</p>
-          <p className="muted mt-sm">
-            {formatDisplayDateTime(incident.datetime)} • {incident.location}
-          </p>
-          <p className="mt">{incident.description}</p>
-        </div>
-      ))}
-    </CardContent>
-  </Card>
+                  <div className="content-grid">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Recente tijdlijn</CardTitle>
+                        <CardDescription>Laatste 10 op incidentdatum</CardDescription>
+                      </CardHeader>
+                      <CardContent className="stack">
+                        {recentTimeline.map((incident) => (
+                          <div key={incident.id} className="incident-card">
+                            <div className="badge-row">
+                              <Badge>{incident.category}</Badge>
+                              <Badge variant="outline">{incident.severity}</Badge>
+                              {isNightIncident(incident.datetime) && (
+                                <Badge variant="secondary">
+                                  <Moon className="icon-inline" /> Nacht
+                                </Badge>
+                              )}
+                            </div>
+                            <p className="bold mt">{incident.title}</p>
+                            <p className="muted mt-sm">
+                              {formatDisplayDateTime(incident.datetime)} • {incident.location}
+                            </p>
+                            <p className="mt">{incident.description}</p>
+                          </div>
+                        ))}
+                      </CardContent>
+                    </Card>
 
-  <Card>
-    <CardHeader>
-      <CardTitle>Export & rapport</CardTitle>
-      <CardDescription>Klaar voor dossier en print</CardDescription>
-    </CardHeader>
-    <CardContent className="stack">
-      <Button onClick={exportReport}>
-        <Download className="icon-inline" /> Exporteer rapport (.txt)
-      </Button>
-      <Button onClick={exportCSV} variant="secondary">
-        <Download className="icon-inline" /> Exporteer incidenten (.csv)
-      </Button>
-      <Button onClick={printReport} variant="outline">
-        <Printer className="icon-inline" /> Print / PDF rapport
-      </Button>
-      <Button onClick={exportJSON} variant="outline">
-        <Download className="icon-inline" /> Maak back-up (.json)
-      </Button>
-    </CardContent>
-  </Card>
-</div>
-</div>
-)}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Export & rapport</CardTitle>
+                        <CardDescription>Klaar voor dossier en print</CardDescription>
+                      </CardHeader>
+                      <CardContent className="stack">
+                        <Button onClick={exportReport}>
+                          <Download className="icon-inline" /> Exporteer rapport (.txt)
+                        </Button>
+                        <Button onClick={exportCSV} variant="secondary">
+                          <Download className="icon-inline" /> Exporteer incidenten (.csv)
+                        </Button>
+                        <Button onClick={printReport} variant="outline">
+                          <Printer className="icon-inline" /> Print / PDF rapport
+                        </Button>
+                        <Button onClick={exportJSON} variant="outline">
+                          <Download className="icon-inline" /> Maak back-up (.json)
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              )}
 
               {activeTab === "registratie" && (
                 <Card>
@@ -1426,48 +1481,52 @@ const analyse = useMemo(() => {
                     </div>
 
                     <div className="stack">
-                      {filteredIncidents.map((incident) => (
-                        <div key={incident.id} className="incident-card">
-                          <div className="between">
-                            <div>
-                              <div className="badge-row">
-                                <p className="bold">{incident.title}</p>
-                                <Badge>{incident.category}</Badge>
-                                <Badge variant="outline">{incident.severity}</Badge>
-                                {isNightIncident(incident.datetime) && <Badge variant="secondary"><Moon className="icon-inline" /> Nacht</Badge>}
-                              </div>
-                              <p className="muted mt-sm">{formatDisplayDateTime(incident.datetime)} • {incident.location}</p>
-                            </div>
-                            <div className="badge-row">
-                              <Button type="button" variant="outline" size="sm" onClick={() => startEditIncident(incident)}><Pencil className="icon-inline" /> Bewerk</Button>
-                              <Button type="button" variant="ghost" size="icon" onClick={() => deleteIncident(incident.id)}><Trash2 className="icon-sm" /></Button>
-                            </div>
-                          </div>
-                          <div className="stack mt">
-                            <p><strong>Beschrijving:</strong> {incident.description}</p>
-                            <p><strong>Bron:</strong> {incident.source || "-"}</p>
-                            <p><strong>dB:</strong> {incident.db || "-"}</p>
-                            <p><strong>Weer:</strong> {incident.weather || "-"}</p>
-                            <p><strong>Vastlegging:</strong> {incident.actions || "-"}</p>
-                            <div>
-                              <p><strong>Gekoppelde bestanden:</strong>{(mediaByIncident[incident.id] || []).length ? "" : " -"}</p>
-                              {!!(mediaByIncident[incident.id] || []).length && (
-                                <div className="media-grid mt">
-                                  {(mediaByIncident[incident.id] || []).map((item) => (
-                                    <div key={item.id} className="media-card">
-                                      <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
-                                        {item.type === "video" ? <video src={item.url || undefined} className="media-thumb" muted playsInline preload="metadata" /> : <img src={item.url || undefined} alt={item.file_name} className="media-thumb" />}
-                                        <div className="preview-chip"><Expand className="icon-sm" /></div>
-                                      </button>
-                                      <div className="media-body tiny">{item.file_name}</div>
-                                    </div>
-                                  ))}
+                      {filteredIncidents.map((incident) => {
+                        const dbInfo = getDbExceedance(incident);
+                        return (
+                          <div key={incident.id} className="incident-card">
+                            <div className="between">
+                              <div>
+                                <div className="badge-row">
+                                  <p className="bold">{incident.title}</p>
+                                  <Badge>{incident.category}</Badge>
+                                  <Badge variant="outline">{incident.severity}</Badge>
+                                  {isNightIncident(incident.datetime) && <Badge variant="secondary"><Moon className="icon-inline" /> Nacht</Badge>}
+                                  {dbInfo.exceeded && <Badge variant="secondary">+{dbInfo.exceedance} dB boven norm</Badge>}
                                 </div>
-                              )}
+                                <p className="muted mt-sm">{formatDisplayDateTime(incident.datetime)} • {incident.location}</p>
+                              </div>
+                              <div className="badge-row">
+                                <Button type="button" variant="outline" size="sm" onClick={() => startEditIncident(incident)}><Pencil className="icon-inline" /> Bewerk</Button>
+                                <Button type="button" variant="ghost" size="icon" onClick={() => deleteIncident(incident.id)}><Trash2 className="icon-sm" /></Button>
+                              </div>
+                            </div>
+                            <div className="stack mt">
+                              <p><strong>Beschrijving:</strong> {incident.description}</p>
+                              <p><strong>Bron:</strong> {incident.source || "-"}</p>
+                              <p><strong>dB:</strong> {incident.db || "-"} {incident.db ? `| Norm: ${dbInfo.norm} | Overschrijding: ${dbInfo.exceeded ? `+${dbInfo.exceedance} dB` : "geen"}` : ""}</p>
+                              <p><strong>Weer:</strong> {incident.weather || "-"}</p>
+                              <p><strong>Vastlegging:</strong> {incident.actions || "-"}</p>
+                              <div>
+                                <p><strong>Gekoppelde bestanden:</strong>{(mediaByIncident[incident.id] || []).length ? "" : " -"}</p>
+                                {!!(mediaByIncident[incident.id] || []).length && (
+                                  <div className="media-grid mt">
+                                    {(mediaByIncident[incident.id] || []).map((item) => (
+                                      <div key={item.id} className="media-card">
+                                        <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
+                                          {item.type === "video" ? <video src={item.url || undefined} className="media-thumb" muted playsInline preload="metadata" /> : <img src={item.url || undefined} alt={item.file_name} className="media-thumb" />}
+                                          <div className="preview-chip"><Expand className="icon-sm" /></div>
+                                        </button>
+                                        <div className="media-body tiny">{item.file_name}</div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </CardContent>
                 </Card>
@@ -1548,41 +1607,43 @@ const analyse = useMemo(() => {
                       <Card key={label}><CardContent><p className="muted">{label}</p><p className="stat">{value}</p></CardContent></Card>
                     ))}
                   </div>
-<Card>
-  <CardHeader>
-    <CardTitle>Automatische analyse</CardTitle>
-    <CardDescription>Snelle samenvatting van patroon en zwaarte</CardDescription>
-  </CardHeader>
-  <CardContent className="stack">
-    <div className="stats-grid">
-      <div className="stat-box">
-        <p className="muted">Totaal</p>
-        <p className="stat">{analyse?.total}</p>
-      </div>
-      <div className="stat-box">
-        <p className="muted">Nacht</p>
-        <p className="stat">{analyse?.night}</p>
-      </div>
-      <div className="stat-box">
-        <p className="muted">Gem. dB</p>
-        <p className="stat">{analyse?.avg}</p>
-      </div>
-      <div className="stat-box">
-        <p className="muted">Meest</p>
-        <p className="stat">{analyse?.topCategory}</p>
-      </div>
-    </div>
 
-    <div className="incident-card">
-      <p className="bold">Korte conclusie</p>
-   <p className="mt">
-{(analyse?.night ?? 0) > 0
-    ? `Er is sprake van terugkerende overlast, met ${analyse?.night ?? 0} nachtincidenten en ${(analyse?.topCategory || "-").toLowerCase()} als meest voorkomende categorie.`
-    : `Er is sprake van terugkerende overlast, waarbij ${(analyse?.topCategory || "-").toLowerCase()} momenteel de meest voorkomende categorie is.`}
-</p>
-    </div>
-  </CardContent>
-</Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Automatische analyse</CardTitle>
+                      <CardDescription>Snelle samenvatting van patroon en zwaarte</CardDescription>
+                    </CardHeader>
+                    <CardContent className="stack">
+                      <div className="stats-grid">
+                        <div className="stat-box">
+                          <p className="muted">Totaal</p>
+                          <p className="stat">{analyse?.total}</p>
+                        </div>
+                        <div className="stat-box">
+                          <p className="muted">Nacht</p>
+                          <p className="stat">{analyse?.night}</p>
+                        </div>
+                        <div className="stat-box">
+                          <p className="muted">Gem. dB</p>
+                          <p className="stat">{analyse?.avg}</p>
+                        </div>
+                        <div className="stat-box">
+                          <p className="muted">Meest</p>
+                          <p className="stat">{analyse?.topCategory}</p>
+                        </div>
+                      </div>
+
+                      <div className="incident-card">
+                        <p className="bold">Korte conclusie</p>
+                        <p className="mt">
+                          {(analyse?.night ?? 0) > 0
+                            ? `Er is sprake van terugkerende overlast, met ${analyse?.night ?? 0} nachtincidenten en ${(analyse?.topCategory || "-").toLowerCase()} als meest voorkomende categorie.`
+                            : `Er is sprake van terugkerende overlast, waarbij ${(analyse?.topCategory || "-").toLowerCase()} momenteel de meest voorkomende categorie is.`}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+
                   <div className="content-grid">
                     <Card>
                       <CardHeader><CardTitle>Bronnenoverzicht</CardTitle><CardDescription>Welke bron komt het meest voor</CardDescription></CardHeader>
@@ -1658,12 +1719,11 @@ const analyse = useMemo(() => {
                     </div>
                   </CardContent>
                 </Card>
-)}
-</div>
-</div>
-)}
-</div>
-</div>
-);
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
-
