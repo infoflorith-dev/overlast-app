@@ -1974,9 +1974,12 @@ style={{
                 </div>
               )}
 
-              {activeTab === "instellingen" && (
+                         {activeTab === "instellingen" && (
                 <Card>
-                  <CardHeader><CardTitle>Instellingen</CardTitle><CardDescription>Pas standaardvelden aan en sla ze op in Supabase</CardDescription></CardHeader>
+                  <CardHeader>
+                    <CardTitle>Instellingen</CardTitle>
+                    <CardDescription>Pas standaardvelden aan en sla ze op in Supabase</CardDescription>
+                  </CardHeader>
                   <CardContent className="stack">
                     <div className="form-grid-2">
                       <div><Label>Naam</Label><Input value={profile.resident_name || ""} onChange={(e) => setProfile({ ...profile, resident_name: e.target.value })} /></div>
@@ -1989,9 +1992,13 @@ style={{
                       <Button variant="outline" onClick={saveProfile}>Instellingen opslaan</Button>
                       <Button variant="outline" onClick={refreshData}>Ververs uit cloud</Button>
                     </div>
-</CardContent>
-</Card>
-</div>
-</div>
- )}
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
