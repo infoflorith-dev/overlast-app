@@ -1325,7 +1325,6 @@ VERZOEK HANDHAVING
 Geachte ${profile.authority1 || "gemeente"},
 ${options.juridisch ? `
 JURIDISCHE DUIDING:
-Daarnaast lijkt de huidige situatie in de praktijk niet in lijn met de geldende kaders rondom woon- en leefklimaat, exploitatie en de algemene zorgplicht.
 
 ` : ""}
 
@@ -1355,7 +1354,7 @@ ${filtered
   .join("")}
 
 De overlast is structureel en duurt al geruime tijd voort.
-Daarnaast lijkt de huidige situatie in de praktijk niet in lijn met de geldende kaders rondom woon- en leefklimaat, exploitatie en de algemene zorgplicht.
+
 Ik verzoek u om:
 - Handhavend op te treden
 - Concrete en afdwingbare maatregelen op te leggen
