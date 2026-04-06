@@ -1548,7 +1548,41 @@ const analyse = useMemo(() => {
                       <Card key={label}><CardContent><p className="muted">{label}</p><p className="stat">{value}</p></CardContent></Card>
                     ))}
                   </div>
+<Card>
+  <CardHeader>
+    <CardTitle>Automatische analyse</CardTitle>
+    <CardDescription>Snelle samenvatting van patroon en zwaarte</CardDescription>
+  </CardHeader>
+  <CardContent className="stack">
+    <div className="stats-grid">
+      <div className="stat-box">
+        <p className="muted">Totaal</p>
+        <p className="stat">{analyse?.total}</p>
+      </div>
+      <div className="stat-box">
+        <p className="muted">Nacht</p>
+        <p className="stat">{analyse?.night}</p>
+      </div>
+      <div className="stat-box">
+        <p className="muted">Gem. dB</p>
+        <p className="stat">{analyse?.avg}</p>
+      </div>
+      <div className="stat-box">
+        <p className="muted">Meest</p>
+        <p className="stat">{analyse?.topCategory}</p>
+      </div>
+    </div>
 
+    <div className="incident-card">
+      <p className="bold">Korte conclusie</p>
+   <p className="mt">
+{(analyse?.night ?? 0) > 0
+    ? `Er is sprake van terugkerende overlast, met ${analyse?.night ?? 0} nachtincidenten en ${(analyse?.topCategory || "-").toLowerCase()} als meest voorkomende categorie.`
+    : `Er is sprake van terugkerende overlast, waarbij ${(analyse?.topCategory || "-").toLowerCase()} momenteel de meest voorkomende categorie is.`}
+</p>
+    </div>
+  </CardContent>
+</Card>
                   <div className="content-grid">
                     <Card>
                       <CardHeader><CardTitle>Bronnenoverzicht</CardTitle><CardDescription>Welke bron komt het meest voor</CardDescription></CardHeader>
