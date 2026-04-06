@@ -1990,8 +1990,7 @@ style={{
                       <Button variant="outline" onClick={refreshData}>Ververs uit cloud</Button>
                     </div>
                   </CardContent>
-                </Card>
-            )}
+                </Card> 
       </div>
     </div>
  )}
