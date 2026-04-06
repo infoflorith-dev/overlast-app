@@ -1483,112 +1483,91 @@ ${profile.resident_name}
                     ))}
                   </div>
 
-                  <div className="content-grid">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Recente tijdlijn</CardTitle>
-                        <CardDescription>Laatste 10 op incidentdatum</CardDescription>
-                      </CardHeader>
-                      <CardContent className="stack">
-                        {recentTimeline.map((incident) => (
-                          <div key={incident.id} className="incident-card">
-                            <div className="badge-row">
-                              <Badge>{incident.category}</Badge>
-                              <Badge variant="outline">{incident.severity}</Badge>
-                              {isNightIncident(incident.datetime) && (
-                                <Badge variant="secondary">
-                                  <Moon className="icon-inline" /> Nacht
-                                </Badge>
-                              )}
-                            </div>
-                            <p className="bold mt">{incident.title}</p>
-                            <p className="muted mt-sm">
-                              {formatDisplayDateTime(incident.datetime)} • {incident.location}
-                            </p>
-                            <p className="mt">{incident.description}</p>
-                          </div>
-                        ))}
-</CardContent>
-</Card>
-   <Card>
-  <CardHeader>
-    <CardTitle>Export & rapport</CardTitle>
-    <CardDescription>Klaar voor dossier en print</CardDescription>
-  </CardHeader>
+                <div className="content-grid">
+  <Card>
+    <CardHeader>
+      <CardTitle>Recente tijdlijn</CardTitle>
+      <CardDescription>Laatste 10 op incidentdatum</CardDescription>
+    </CardHeader>
+    <CardContent className="stack">
+      {recentTimeline.map((incident) => (
+        <div key={incident.id} className="incident-card">
+          <div className="badge-row">
+            <Badge>{incident.category}</Badge>
+            <Badge variant="outline">{incident.severity}</Badge>
+            {isNightIncident(incident.datetime) && (
+              <Badge variant="secondary">
+                <Moon className="icon-inline" /> Nacht
+              </Badge>
+            )}
+          </div>
+          <p className="bold mt">{incident.title}</p>
+          <p className="muted mt-sm">
+            {formatDisplayDateTime(incident.datetime)} • {incident.location}
+          </p>
+          <p className="mt">{incident.description}</p>
+        </div>
+      ))}
+    </CardContent>
+  </Card>
 
-  <CardContent className="stack">
+  <Card>
+    <CardHeader>
+      <CardTitle>Export & rapport</CardTitle>
+      <CardDescription>Klaar voor dossier en print</CardDescription>
+    </CardHeader>
+    <CardContent className="stack">
+      <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "10px" }}>
+        <label>
+          <input
+            type="checkbox"
+            checked={options.juridisch}
+            onChange={(e) => setOptions({ ...options, juridisch: e.target.checked })}
+          />{" "}
+          Juridische onderbouwing toevoegen
+        </label>
 
-    <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "10px" }}>
-      <label>
-        <input
-          type="checkbox"
-          checked={options.juridisch}
-          onChange={(e) => setOptions({ ...options, juridisch: e.target.checked })}
-        />{" "}
-        Juridische onderbouwing toevoegen
-      </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={options.laatste4Weken}
+            onChange={(e) => setOptions({ ...options, laatste4Weken: e.target.checked })}
+          />{" "}
+          Alleen laatste 4 weken
+        </label>
 
-      <label>
-        <input
-          type="checkbox"
-          checked={options.laatste4Weken}
-          onChange={(e) => setOptions({ ...options, laatste4Weken: e.target.checked })}
-        />{" "}
-        Alleen laatste 4 weken
-      </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={options.alleenNacht}
+            onChange={(e) => setOptions({ ...options, alleenNacht: e.target.checked })}
+          />{" "}
+          Alleen nachtincidenten
+        </label>
+      </div>
 
-      <label>
-        <input
-          type="checkbox"
-          checked={options.alleenNacht}
-          onChange={(e) => setOptions({ ...options, alleenNacht: e.target.checked })}
-        />{" "}
-        Alleen nachtincidenten
-      </label>
-    </div>
+      <Button onClick={exportReport}>
+        <Download className="icon-inline" /> Exporteer rapport (.txt)
+      </Button>
 
-    <Button onClick={exportReport}>
-      <Download className="icon-inline" /> Exporteer rapport (.txt)
-    </Button>
+      <Button onClick={exportCSV} variant="secondary">
+        <Download className="icon-inline" /> Exporteer incidenten (.csv)
+      </Button>
 
-    <Button onClick={exportCSV} variant="secondary">
-      <Download className="icon-inline" /> Exporteer incidenten (.csv)
-    </Button>
+      <Button onClick={printReport} variant="outline">
+        <Printer className="icon-inline" /> Print / PDF rapport
+      </Button>
 
-    <Button onClick={printReport} variant="outline">
-      <Printer className="icon-inline" /> Print / PDF rapport
-    </Button>
+      <Button onClick={exportJSON} variant="outline">
+        <Download className="icon-inline" /> Maak back-up (.json)
+      </Button>
 
-    <Button onClick={exportJSON} variant="outline">
-      <Download className="icon-inline" /> Maak back-up (.json)
-    </Button>
-
-    <Button onClick={generateHandhavingRequest} variant="secondary">
-      <FileText className="icon-inline" /> Genereer handhavingsverzoek
-    </Button>
-
-  </CardContent>
-</Card>                     
-                        <Button onClick={exportReport}>
-                          <Download className="icon-inline" /> Exporteer rapport (.txt)
-                        </Button>
-                        <Button onClick={exportCSV} variant="secondary">
-                          <Download className="icon-inline" /> Exporteer incidenten (.csv)
-                        </Button>
-                        <Button onClick={printReport} variant="outline">
-                          <Printer className="icon-inline" /> Print / PDF rapport
-                        </Button>
-                        <Button onClick={exportJSON} variant="outline">
-                          <Download className="icon-inline" /> Maak back-up (.json)
-                        </Button>
-                        <Button onClick={generateHandhavingRequest} variant="secondary">
-  <FileText className="icon-inline" /> Genereer handhavingsverzoek
-</Button>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-              )}
+      <Button onClick={generateHandhavingRequest} variant="secondary">
+        <FileText className="icon-inline" /> Genereer handhavingsverzoek
+      </Button>
+    </CardContent>
+  </Card>
+</div>
 
               {activeTab === "registratie" && (
                 <Card>
