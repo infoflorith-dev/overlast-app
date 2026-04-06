@@ -1698,11 +1698,15 @@ export default function App() {
           <div className="summary-bar-wrap">
             <div
               className="summary-bar"
-              style={{
-                width: `${Math.max(
-                  (item.value / Math.max(...dbSummary.periodChart.map((x) => x.value), 1)) * 100,
-                  item.value > 0 ? 8 : 0
-                )}%`,
+             style={{
+  width: `${Math.max(
+    (item.value / Math.max(...dbSummary.periodChart.map((x) => x.value), 1)) * 100,
+    item.value > 0 ? 8 : 0
+  )}%`,
+  height: "8px",
+  background: "#2563eb",
+  borderRadius: "4px"
+}}
               }}
             />
           </div>
