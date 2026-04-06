@@ -1343,11 +1343,12 @@ Let op: dit betreft slechts een selectie van recente incidenten. De volledige re
 ${filtered
   .sort((a, b) => (b.db || 0) - (a.db || 0))
   .slice(0,10)
-  .map(i =>
+  .map(i => `
 - ${formatDisplayDateTime(i.datetime)}
   ${i.category} | ${i.db} dB
   ${i.title}
-`).join("")}
+`)
+  .join("")}
 
 De overlast is structureel en duurt al geruime tijd voort.
 Daarnaast lijkt de huidige situatie in de praktijk niet in lijn met de geldende kaders rondom woon- en leefklimaat, exploitatie en de algemene zorgplicht.
