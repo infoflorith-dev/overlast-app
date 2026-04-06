@@ -1508,24 +1508,13 @@ ${profile.resident_name}
                             <p className="mt">{incident.description}</p>
                           </div>
                         ))}
-                      </CardContent>
-                    </Card>
-
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Export & rapport</CardTitle>
-                        <CardDescription>Klaar voor dossier en print</CardDescription>
-                      </CardHeader>
-                      <CardContent className="stack">
-        <CardContent className="stack">
-  <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "10px" }}>
+<div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "10px" }}>
+  <label>
     <input
       type="checkbox"
       checked={options.juridisch}
-      onChange={(e) =>
-        setOptions({ ...options, juridisch: e.target.checked })
-      }
-    />
+      onChange={(e) => setOptions({ ...options, juridisch: e.target.checked })}
+    />{" "}
     Juridische onderbouwing toevoegen
   </label>
 
@@ -1533,10 +1522,8 @@ ${profile.resident_name}
     <input
       type="checkbox"
       checked={options.laatste4Weken}
-      onChange={(e) =>
-        setOptions({ ...options, laatste4Weken: e.target.checked })
-      }
-    />
+      onChange={(e) => setOptions({ ...options, laatste4Weken: e.target.checked })}
+    />{" "}
     Alleen laatste 4 weken
   </label>
 
@@ -1544,10 +1531,8 @@ ${profile.resident_name}
     <input
       type="checkbox"
       checked={options.alleenNacht}
-      onChange={(e) =>
-        setOptions({ ...options, alleenNacht: e.target.checked })
-      }
-    />
+      onChange={(e) => setOptions({ ...options, alleenNacht: e.target.checked })}
+    />{" "}
     Alleen nachtincidenten
   </label>
 </div>
