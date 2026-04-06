@@ -1989,10 +1989,10 @@ style={{
                       <Button variant="outline" onClick={saveProfile}>Instellingen opslaan</Button>
                       <Button variant="outline" onClick={refreshData}>Ververs uit cloud</Button>
                     </div>
-                  </CardContent>
-                </Card> 
-      </div>
-    </div>
- )}
-  );      
+</CardContent>
+</Card>
+)}
+</div>
+</div>
+);
 }
