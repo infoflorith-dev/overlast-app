@@ -1343,7 +1343,7 @@ ${profile.resident_name}
             <CardHeader>
               <div className="between">
                 <div>
-                  <CardTitle className="big-title">Overlast Logboek Live — Level 2</CardTitle>
+                 <CardTitle className="big-title">Overlast door Cuisine by Tromp – Logboek</CardTitle>
                   <CardDescription>Filters, nachtlabels, bronoverzicht, chronologische rapportage en printbare export.</CardDescription>
                 </div>
                 <div className="badge-row">
