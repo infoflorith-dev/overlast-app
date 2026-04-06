@@ -1256,6 +1256,11 @@ export default function App() {
     win.focus();
     setTimeout(() => win.print(), 400);
   };
+  const [options, setOptions] = useState({
+  juridisch: false,
+  laatste4Weken: true,
+  alleenNacht: false
+});
  const generateSmartSummary = (incidents, overschrijdingen) => {
   const totaal = incidents.length;
 
@@ -1289,31 +1294,40 @@ export default function App() {
 const generateHandhavingRequest = () => {
   const incidentsWithDb = incidents.filter(i => Number(i.db) > 0);
 
- const vierWekenGeleden = new Date();
-vierWekenGeleden.setDate(vierWekenGeleden.getDate() - 28);
+let filtered = incidentsWithDb;
 
-const overschrijdingen = incidentsWithDb
-  .filter(i => new Date(i.datetime) >= vierWekenGeleden)
-  .filter(i => {
-    const db = Number(i.db);
-    const hour = new Date(i.datetime).getHours();
+if (options.laatste4Weken) {
+  const vierWekenGeleden = new Date();
+  vierWekenGeleden.setDate(vierWekenGeleden.getDate() - 28);
+  filtered = filtered.filter(i => new Date(i.datetime) >= vierWekenGeleden);
+}
 
-    if (hour >= 23 || hour < 7) return db > 40;
-    if (hour >= 19) return db > 45;
-    return db > 50;
+if (options.alleenNacht) {
+  filtered = filtered.filter(i => {
+    const h = new Date(i.datetime).getHours();
+    return h >= 23 || h < 7;
   });
+}
+
+const overschrijdingen = filtered.filter(i => {
+  const db = Number(i.db);
+  const hour = new Date(i.datetime).getHours();
+
+  if (hour >= 23 || hour < 7) return db > 40;
+  if (hour >= 19) return db > 45;
+  return db > 50;
+});
 
   const tekst = `
 VERZOEK HANDHAVING
 
 Geachte ${profile.authority1 || "gemeente"},
 
-... geuroverlast.
+${options.juridisch ? `Daarnaast lijkt de huidige situatie in de praktijk niet in lijn met de geldende kaders rondom woon- en leefklimaat, exploitatie en de algemene zorgplicht.` : ""}
 
 FEITELIJK BEELD:
 ${generateSmartSummary(incidents, overschrijdingen)}
 
-SAMENVATTING:
 SAMENVATTING:
 - Totaal aantal incidenten: ${incidents.length}
 - Aantal dB-overschrijdingen: ${overschrijdingen.length}
@@ -1503,6 +1517,40 @@ ${profile.resident_name}
                         <CardDescription>Klaar voor dossier en print</CardDescription>
                       </CardHeader>
                       <CardContent className="stack">
+        <CardContent className="stack">
+  <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "10px" }}>
+    <input
+      type="checkbox"
+      checked={options.juridisch}
+      onChange={(e) =>
+        setOptions({ ...options, juridisch: e.target.checked })
+      }
+    />
+    Juridische onderbouwing toevoegen
+  </label>
+
+  <label>
+    <input
+      type="checkbox"
+      checked={options.laatste4Weken}
+      onChange={(e) =>
+        setOptions({ ...options, laatste4Weken: e.target.checked })
+      }
+    />
+    Alleen laatste 4 weken
+  </label>
+
+  <label>
+    <input
+      type="checkbox"
+      checked={options.alleenNacht}
+      onChange={(e) =>
+        setOptions({ ...options, alleenNacht: e.target.checked })
+      }
+    />
+    Alleen nachtincidenten
+  </label>
+</div>
                         <Button onClick={exportReport}>
                           <Download className="icon-inline" /> Exporteer rapport (.txt)
                         </Button>
