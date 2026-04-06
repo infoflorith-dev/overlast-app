@@ -1269,6 +1269,11 @@ const analyse = useMemo(() => {
                     ))}
                   </div>
  {true && (
+
+<>
+  <div style={{background: "red", padding: 20, color: "white"}}>
+    TEST ANALYSE BLOK
+  </div>
   <Card>
     <CardHeader>
       <CardTitle>Automatische analyse</CardTitle>
