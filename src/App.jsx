@@ -1259,13 +1259,18 @@ export default function App() {
 const generateHandhavingRequest = () => {
   const incidentsWithDb = incidents.filter(i => Number(i.db) > 0);
 
-  const overschrijdingen = incidentsWithDb.filter(i => {
+ const vierWekenGeleden = new Date();
+vierWekenGeleden.setDate(vierWekenGeleden.getDate() - 28);
+
+const overschrijdingen = incidentsWithDb
+  .filter(i => new Date(i.datetime) >= vierWekenGeleden)
+  .filter(i => {
     const db = Number(i.db);
     const hour = new Date(i.datetime).getHours();
 
-    if (hour >= 23 || hour < 7) return db > 40;   // nacht
-    if (hour >= 19) return db > 45;              // avond
-    return db > 50;                              // dag
+    if (hour >= 23 || hour < 7) return db > 40;
+    if (hour >= 19) return db > 45;
+    return db > 50;
   });
 
   const tekst = `
@@ -1283,8 +1288,9 @@ SAMENVATTING:
     return h >= 23 || h < 7;
   }).length}
 
-VOORBEELDEN:
-${overschrijdingen.slice(0,5).map(i => `
+VOORBEELDEN (laatste 4 weken, selectie van max 10):
+Let op: dit betreft slechts een selectie van recente incidenten. De volledige registratie bevat aanzienlijk meer meldingen.
+${overschrijdingen.slice(0,10).map(i => `
 - ${formatDisplayDateTime(i.datetime)}
   ${i.category} | ${i.db} dB
   ${i.title}
