@@ -1309,6 +1309,7 @@ const analyse = useMemo(() => {
       </div>
     </CardContent>
   </Card>
+  </>
                   )}
                   <div className="content-grid">
                   
