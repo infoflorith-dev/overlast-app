@@ -1322,7 +1322,7 @@ const overschrijdingen = filtered.filter(i => {
 
   const tekst = `
 VERZOEK HANDHAVING
-
+Geachte ${profile.authority1 || "gemeente"},
 ${options.juridisch ? `
 JURIDISCHE DUIDING:
 Daarnaast lijkt de huidige situatie in de praktijk niet in lijn met de geldende kaders rondom woon- en leefklimaat, exploitatie en de algemene zorgplicht.
