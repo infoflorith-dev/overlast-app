@@ -1323,16 +1323,12 @@ const overschrijdingen = filtered.filter(i => {
   const tekst = `
 VERZOEK HANDHAVING
 Geachte ${profile.authority1 || "gemeente"},
-${options.juridisch ? `
-JURIDISCHE DUIDING:
-
-` : ""}
-
-${options.juridisch ? `Daarnaast lijkt de huidige situatie in de praktijk niet in lijn met de geldende kaders rondom woon- en leefklimaat, exploitatie en de algemene zorgplicht.` : ""}
-
 FEITELIJK BEELD:
 ${generateSmartSummary(incidents, overschrijdingen)}
-
+${options.juridisch ? `
+JURIDISCHE DUIDING:
+Daarnaast lijkt de huidige situatie in de praktijk niet in lijn met de geldende kaders rondom woon- en leefklimaat, exploitatie en de algemene zorgplicht.
+` : ""}
 SAMENVATTING:
 - Totaal aantal incidenten: ${incidents.length}
 - Aantal dB-overschrijdingen: ${overschrijdingen.length}
