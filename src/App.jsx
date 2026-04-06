@@ -1705,8 +1705,7 @@ export default function App() {
   )}%`,
   height: "8px",
   background: "#2563eb",
-  borderRadius: "4px"
-}
+  borderRadius: "4px"}
               }}
             />
           </div>
