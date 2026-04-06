@@ -1661,12 +1661,29 @@ export default function App() {
 
               {activeTab === "dashboard" && (
                 <div className="stack">
-                  <div className="stats-page-grid">
-                    {[["Totaal incidenten", dashboard.total], ["Geluid", dashboard.sound], ["Licht", dashboard.light], ["Geur", dashboard.smell], ["Nachtincidenten", dashboard.night], ["Ernstig", dashboard.high], ["Gem. dB", dashboard.avgDb], ["Bestanden", allMedia.length]].map(([label, value]) => (
-                      <Card key={label}><CardContent><p className="muted">{label}</p><p className="stat">{value}</p></CardContent></Card>
-                    ))}
-                  </div>
-
+<div className="stats-page-grid">
+  {[
+    ["Totaal incidenten", dashboard.total],
+    ["Geluid", dashboard.sound],
+    ["Licht", dashboard.light],
+    ["Geur", dashboard.smell],
+    ["Nachtincidenten", dashboard.night],
+    ["Ernstig", dashboard.high],
+    ["Gem. dB", dashboard.avgDb],
+    ["Bestanden", allMedia.length],
+    ["dB-overschrijdingen", dbSummary.total],
+    ["Hoogste overschr.", dbSummary.total ? `+${dbSummary.highest} dB` : "-"],
+    ["Avond overschr.", dbSummary.evening],
+    ["Nacht overschr.", dbSummary.night],
+  ].map(([label, value]) => (
+    <Card key={label}>
+      <CardContent>
+        <p className="muted">{label}</p>
+        <p className="stat">{value}</p>
+      </CardContent>
+    </Card>
+  ))}
+</div>
                   <Card>
                     <CardHeader>
                       <CardTitle>Automatische analyse</CardTitle>
