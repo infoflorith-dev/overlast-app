@@ -1258,7 +1258,7 @@ export default function App() {
   };
   const [options, setOptions] = useState({
   juridisch: false,
-  laatste4Weken: true,
+  laatste4Weken: false,
   alleenNacht: false
 });
  const generateSmartSummary = (incidents, overschrijdingen) => {
