@@ -1256,7 +1256,53 @@ export default function App() {
     win.focus();
     setTimeout(() => win.print(), 400);
   };
+const generateHandhavingRequest = () => {
+  const incidentsWithDb = incidents.filter(i => Number(i.db) > 0);
 
+  const overschrijdingen = incidentsWithDb.filter(i => {
+    const db = Number(i.db);
+    const hour = new Date(i.datetime).getHours();
+
+    if (hour >= 23 || hour < 7) return db > 40;   // nacht
+    if (hour >= 19) return db > 45;              // avond
+    return db > 50;                              // dag
+  });
+
+  const tekst = `
+VERZOEK HANDHAVING
+
+Geachte ${profile.authority1 || "gemeente"},
+
+Hierbij dien ik een formeel verzoek tot handhaving in wegens structurele overlast.
+
+SAMENVATTING:
+- Totaal aantal incidenten: ${incidents.length}
+- Aantal dB-overschrijdingen: ${overschrijdingen.length}
+- Nachtincidenten: ${incidents.filter(i => {
+    const h = new Date(i.datetime).getHours();
+    return h >= 23 || h < 7;
+  }).length}
+
+VOORBEELDEN:
+${overschrijdingen.slice(0,5).map(i => `
+- ${formatDisplayDateTime(i.datetime)}
+  ${i.category} | ${i.db} dB
+  ${i.title}
+`).join("")}
+
+De overlast is structureel en duurt al geruime tijd voort.
+
+Ik verzoek u om:
+- Handhavend op te treden
+- Concrete en afdwingbare maatregelen op te leggen
+- Controle en toezicht uit te voeren
+
+Met vriendelijke groet,  
+${profile.resident_name}
+`;
+
+  downloadTextFile("handhaving-verzoek.txt", tekst);
+};
   const tabs = [
     { id: "home", label: "Start", icon: Home },
     { id: "registratie", label: editingIncidentId ? "Incident bewerken" : "Nieuw incident", icon: Plus },
