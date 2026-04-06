@@ -1256,6 +1256,36 @@ export default function App() {
     win.focus();
     setTimeout(() => win.print(), 400);
   };
+ const generateSmartSummary = (incidents, overschrijdingen) => {
+  const totaal = incidents.length;
+
+  const nacht = incidents.filter(i => {
+    const h = new Date(i.datetime).getHours();
+    return h >= 23 || h < 7;
+  }).length;
+
+  const overs = overschrijdingen.length;
+
+  let tekst = "";
+
+  if (overs > 5) {
+    tekst += "Er is sprake van herhaaldelijke normoverschrijding. ";
+  }
+
+  if (nacht > 0) {
+    tekst += "De overlast vindt tevens plaats in de nachtperiode, wat als extra belastend wordt ervaren. ";
+  }
+
+  if (totaal > 10) {
+    tekst += "Het aantal incidenten wijst op een structureel patroon en niet op incidentele overlast. ";
+  }
+
+  if (!tekst) {
+    tekst = "Er is sprake van overlast die nader beoordeeld dient te worden.";
+  }
+
+  return tekst;
+}; 
 const generateHandhavingRequest = () => {
   const incidentsWithDb = incidents.filter(i => Number(i.db) > 0);
 
@@ -1275,7 +1305,7 @@ const overschrijdingen = incidentsWithDb
 
   const tekst = `
 VERZOEK HANDHAVING
-
+${generateSmartSummary(incidents, overschrijdingen)}
 Geachte ${profile.authority1 || "gemeente"},
 
 Hierbij dien ik een formeel verzoek tot handhaving in wegens structurele overlast afkomstig van Restaurant Cuisine by Tromp, gevestigd aan de Burgemeester Letteweg 6, 3233AG te Oostvoorne. De overlast bestaat uit onder andere geluid (afzuiginstallatie en terras), lichthinder en geurhinder.
