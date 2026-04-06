@@ -1727,13 +1727,16 @@ style={{
           <div className="summary-label" title={item.label}>{item.shortLabel}</div>
           <div className="summary-bar-wrap">
             <div
-              className="summary-bar"
-              style={{
-                width: `${Math.max(
-                  (item.value / Math.max(...dbSummary.topExceedances.map((x) => x.value), 1)) * 100,
-                  8
-                )}%`,
-              }}
+         className="summary-bar"
+style={{
+  width: `${Math.max(
+    (item.value / Math.max(...dbSummary.topExceedances.map((x) => x.value), 1)) * 100,
+    8
+  )}%`,
+  height: "8px",
+  background: "#2563eb",
+  borderRadius: "4px"
+}}
             />
           </div>
           <div className="summary-count">+{item.value}</div>
