@@ -1608,10 +1608,11 @@ const analyse = useMemo(() => {
                     </div>
                   </CardContent>
                 </Card>
-          )}
-</div>
-
 )}
+</div>
+</div>
+)}
+</div>
 </div>
 );
 }
