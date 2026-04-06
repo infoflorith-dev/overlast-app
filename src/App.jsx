@@ -1308,7 +1308,9 @@ if (options.alleenNacht) {
     return h >= 23 || h < 7;
   });
 }
-
+const geluidIncidenten = filtered.filter(i => i.category === "Geluid");
+const lichtIncidenten = filtered.filter(i => i.category === "Licht");
+const geurIncidenten = filtered.filter(i => i.category === "Geur");
 const overschrijdingen = filtered.filter(i => {
   const db = Number(i.db);
   const hour = new Date(i.datetime).getHours();
@@ -1338,7 +1340,10 @@ SAMENVATTING:
 
 VOORBEELDEN (laatste 4 weken, selectie van max 10):
 Let op: dit betreft slechts een selectie van recente incidenten. De volledige registratie bevat aanzienlijk meer meldingen.
-${overschrijdingen.slice(0,10).map(i => `
+${filtered
+  .sort((a, b) => (b.db || 0) - (a.db || 0))
+  .slice(0,10)
+  .map(i =>
 - ${formatDisplayDateTime(i.datetime)}
   ${i.category} | ${i.db} dB
   ${i.title}
