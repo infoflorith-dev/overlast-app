@@ -1991,8 +1991,7 @@ style={{
                     </div>
 </CardContent>
 </Card>
-)}
 </div>
 </div>
-);
+ )}
 }
