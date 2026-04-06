@@ -1278,7 +1278,7 @@ VERZOEK HANDHAVING
 
 Geachte ${profile.authority1 || "gemeente"},
 
-Hierbij dien ik een formeel verzoek tot handhaving in wegens structurele overlast.
+Hierbij dien ik een formeel verzoek tot handhaving in wegens structurele overlast afkomstig van Restaurant Cuisine by Tromp, gevestigd aan de Burgemeester Letteweg 6, 3233AG te Oostvoorne. De overlast bestaat uit onder andere geluid (afzuiginstallatie en terras), lichthinder en geurhinder.
 
 SAMENVATTING:
 - Totaal aantal incidenten: ${incidents.length}
@@ -1297,7 +1297,7 @@ ${overschrijdingen.slice(0,10).map(i => `
 `).join("")}
 
 De overlast is structureel en duurt al geruime tijd voort.
-
+Daarnaast is naar mijn mening sprake van strijd met de geldende regelgeving, waaronder de APV (aantasting woon- en leefklimaat), de exploitatievergunning (gebruik en openingstijden) en de zorgplicht zoals opgenomen in artikel 1.7 van de Omgevingswet.
 Ik verzoek u om:
 - Handhavend op te treden
 - Concrete en afdwingbare maatregelen op te leggen
