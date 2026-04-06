@@ -1613,6 +1613,5 @@ const analyse = useMemo(() => {
 
 )}
 </div>
-</div>
 );
 }
