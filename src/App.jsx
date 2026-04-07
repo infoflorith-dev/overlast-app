@@ -895,7 +895,31 @@ export default function App() {
   };
 
   const printReport = () => {
-    const sorted = [...filteredIncidents].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
+    let filtered = [...filteredIncidents];
+
+if (options.laatste4Weken) {
+  const vierWekenGeleden = new Date();
+  vierWekenGeleden.setDate(vierWekenGeleden.getDate() - 28);
+  filtered = filtered.filter(i => new Date(i.datetime) >= vierWekenGeleden);
+}
+
+if (options.alleenNacht) {
+  filtered = filtered.filter(i => {
+    const h = new Date(i.datetime).getHours();
+    return h >= 23 || h < 7;
+  });
+}
+
+const overschrijdingen = filtered.filter(i => {
+  const db = Number(i.db);
+  const hour = new Date(i.datetime).getHours();
+
+  if (!db) return false;
+  if (hour >= 23 || hour < 7) return db > 40;
+  if (hour >= 19) return db > 45;
+  return db > 50;
+});
+  const sorted = [...filtered].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
     const exceedances = sorted.filter((incident) => getDbExceedance(incident).exceeded);
     const highestExceedance = exceedances.length
       ? Math.max(...exceedances.map((incident) => getDbExceedance(incident).exceedance))
