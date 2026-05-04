@@ -196,6 +196,7 @@ export default function App() {
   const [notes, setNotes] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [allMedia, setAllMedia] = useState([]);
+  const [mediaUrls, setMediaUrls] = useState({});
   const [search, setSearch] = useState("");
   const [filterCategory, setFilterCategory] = useState("Alles");
   const [filterSource, setFilterSource] = useState("Alles");
@@ -449,13 +450,12 @@ export default function App() {
         if (insertedProfile) setProfile(insertedProfile);
       }
 
-      const mediaRows = mediaRes.data || [];
-      const urlMap = await signedUrlsForMedia(mediaRows);
-      const enrichedMedia = mediaRows.map((item) => ({
-        ...item,
-        url: urlMap[item.id] || null,
-        type: item.mime_type?.startsWith("video/") ? "video" : "image",
-      }));
+     const mediaRows = mediaRes.data || [];
+const enrichedMedia = mediaRows.map((item) => ({
+  ...item,
+  url: null,
+  type: item.mime_type?.startsWith("video/") ? "video" : "image",
+}));
 
       setIncidents(incidentsRes.data || []);
       setNotes(notesRes.data || []);
@@ -501,12 +501,11 @@ export default function App() {
         const { data: inserted, error: insertError } = await supabase.from("media").insert(rowToInsert).select().single();
         if (insertError) throw insertError;
 
-        const { data: signed } = await supabase.storage.from("evidence").createSignedUrl(path, 3600);
         uploaded.push({
-          ...inserted,
-          url: signed?.signedUrl || null,
-          type: file.type?.startsWith("video/") ? "video" : "image",
-        });
+  ...inserted,
+  url: null,
+  type: file.type?.startsWith("video/") ? "video" : "image",
+});
       }
 
       setAllMedia((prev) => [...uploaded, ...prev]);
@@ -792,7 +791,30 @@ export default function App() {
     }
   }, []);
 
-  const openMediaPreview = (item) => setActivePreviewMedia(item);
+  const openMediaPreview = async (item) => {
+  if (!supabase || !item?.file_path) return;
+
+  if (mediaUrls[item.id]) {
+    setActivePreviewMedia({ ...item, url: mediaUrls[item.id] });
+    return;
+  }
+
+  const { data, error } = await supabase.storage
+    .from("evidence")
+    .createSignedUrl(item.file_path, 3600);
+
+  if (error || !data?.signedUrl) {
+    showMessage("Bestand openen mislukt.", true);
+    return;
+  }
+
+  setMediaUrls((prev) => ({
+    ...prev,
+    [item.id]: data.signedUrl,
+  }));
+
+  setActivePreviewMedia({ ...item, url: data.signedUrl });
+};
   const closeMediaPreview = () => {
     stopPreviewVideo();
     setActivePreviewMedia(null);
