@@ -1568,7 +1568,9 @@ ${profile.resident_name}
                             {allMedia.map((item) => (
                               <div key={item.id} className={cn("media-card", selectedMediaIds.includes(item.id) && "media-selected")}>
                                 <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
-                                  {item.type === "video" ? <video src={item.url || undefined} className="media-thumb" muted playsInline preload="metadata" /> : <img src={item.url || undefined} alt={item.file_name} className="media-thumb" />}
+                                 <div className="media-thumb">
+  {item.type === "video" ? "▶ Video" : "🖼 Foto"}
+</div>
                                   <div className="preview-chip"><Expand className="icon-sm" /></div>
                                 </button>
                                 <div className="media-body">
@@ -1661,7 +1663,9 @@ ${profile.resident_name}
                                     {(mediaByIncident[incident.id] || []).map((item) => (
                                       <div key={item.id} className="media-card">
                                         <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
-                                          {item.type === "video" ? <video src={item.url || undefined} className="media-thumb" muted playsInline preload="metadata" /> : <img src={item.url || undefined} alt={item.file_name} className="media-thumb" />}
+                                         <div className="media-thumb">
+  {item.type === "video" ? "▶ Video" : "🖼 Foto"}
+</div>
                                           <div className="preview-chip"><Expand className="icon-sm" /></div>
                                         </button>
                                         <div className="media-body tiny">{item.file_name}</div>
@@ -1694,7 +1698,9 @@ ${profile.resident_name}
                       {allMedia.map((item) => (
                         <div key={item.id} className="media-card">
                           <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
-                            {item.type === "video" ? <video src={item.url || undefined} className="media-thumb-large" muted playsInline preload="metadata" /> : <img src={item.url || undefined} alt={item.file_name} className="media-thumb-large" />}
+                           <div className="media-thumb-large">
+  {item.type === "video" ? "▶ Video" : "🖼 Foto"}
+</div>
                             <div className="preview-chip"><Expand className="icon-sm" /></div>
                           </button>
                           <div className="media-body">
