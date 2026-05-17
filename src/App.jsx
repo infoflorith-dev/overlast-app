@@ -197,6 +197,7 @@ export default function App() {
   const [tasks, setTasks] = useState([]);
   const [allMedia, setAllMedia] = useState([]);
   const [mediaUrls, setMediaUrls] = useState({});
+  const [thumbnailUrls, setThumbnailUrls] = useState({});
   const [search, setSearch] = useState("");
   const [filterCategory, setFilterCategory] = useState("Alles");
   const [filterSource, setFilterSource] = useState("Alles");
