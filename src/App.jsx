@@ -1728,27 +1728,14 @@ ${profile.resident_name}
                       {allMedia.map((item) => (
                         <div key={item.id} className="media-card">
                           <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
-                        {thumbnailUrls[item.id] ? (
-  item.type === "video" ? (
-    <video
-      src={thumbnailUrls[item.id]}
-      className="media-thumb-large"
-      muted
-      playsInline
-      preload="metadata"
-    />
-  ) : (
-    <img
-      src={thumbnailUrls[item.id]}
-      alt={item.file_name}
-      className="media-thumb-large"
-    />
-  )
-) : (
-  <div className="media-thumb-large">
-    {item.type === "video" ? "▶ Video" : "🖼 Foto"}
+          <div className="media-thumb-large">
+  <div style={{ fontWeight: 700 }}>
+    {item.type === "video" ? "🎥 Video" : "🖼 Foto"}
   </div>
-)}
+  <div style={{ fontSize: "11px", opacity: 0.7 }}>
+    Klik om te openen
+  </div>
+</div>
                             <div className="preview-chip"><Expand className="icon-sm" /></div>
                           </button>
                           <div className="media-body">
