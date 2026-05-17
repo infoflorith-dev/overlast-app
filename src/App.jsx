@@ -815,6 +815,12 @@ const enrichedMedia = mediaRows.map((item) => ({
   }));
 
   setActivePreviewMedia({ ...item, url: data.signedUrl });
+    if (!thumbnailUrls[item.id]) {
+  setThumbnailUrls((prev) => ({
+    ...prev,
+    [item.id]: data.signedUrl,
+  }));
+}
 };
   const closeMediaPreview = () => {
     stopPreviewVideo();
