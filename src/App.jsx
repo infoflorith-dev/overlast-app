@@ -1688,8 +1688,13 @@ ${profile.resident_name}
                                     {(mediaByIncident[incident.id] || []).map((item) => (
                                       <div key={item.id} className="media-card">
                                         <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
-                                         <div className="media-thumb">
-  {item.type === "video" ? "▶ Video" : "🖼 Foto"}
+     <div className="media-thumb">
+  <div style={{ fontWeight: 700 }}>
+    {item.type === "video" ? "🎥 Video" : "🖼 Foto"}
+  </div>
+  <div style={{ fontSize: "11px", opacity: 0.7 }}>
+    Klik om te openen
+  </div>
 </div>
                                           <div className="preview-chip"><Expand className="icon-sm" /></div>
                                         </button>
