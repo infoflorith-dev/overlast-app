@@ -240,12 +240,13 @@ async function handleDbExcelUpload(event) {
 
   const parsed = rows
     .map((row) => {
-      const time =
-        row.Time ||
-        row.time ||
-        row.Datum ||
-        row.datetime ||
-        row.Date;
+     const time =
+  row.DateTime ||
+  row.datetime ||
+  row.Time ||
+  row.time ||
+  row.Datum ||
+  row.Date;
 
       const db =
         row.Value ||
