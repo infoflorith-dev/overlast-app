@@ -1721,6 +1721,43 @@ ${profile.resident_name}
       <CardDescription>Laatste 10 op incidentdatum</CardDescription>
     </CardHeader>
     <CardContent className="stack">
+      <div style={{ marginTop: 20 }}>
+  <ResponsiveContainer width="100%" height={260}>
+    <LineChart data={chartData}>
+      <XAxis dataKey="time" hide />
+      <YAxis />
+
+      {/* dB lijn */}
+      <Line
+        type="monotone"
+        dataKey="db"
+        stroke="#3b82f6"
+        dot={false}
+        strokeWidth={2}
+      />
+
+      {/* Norm lijn */}
+      <Line
+        type="monotone"
+        dataKey="norm"
+        stroke="#f59e0b"
+        dot={false}
+        strokeDasharray="5 5"
+        strokeWidth={2}
+      />
+
+      {/* Piek lijn */}
+      <Line
+        type="monotone"
+        dataKey="peak"
+        stroke="#ef4444"
+        dot={false}
+        strokeDasharray="3 3"
+        strokeWidth={2}
+      />
+    </LineChart>
+  </ResponsiveContainer>
+</div>
       {recentTimeline.map((incident) => (
         <div key={incident.id} className="incident-card">
           <div className="badge-row">
