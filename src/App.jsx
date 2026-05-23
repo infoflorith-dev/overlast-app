@@ -2426,6 +2426,7 @@ style={{
 
 {dbAnalysis && (
   <div className="stats-page-grid">
+
     <Card>
       <CardContent>
         <p className="muted">Gemiddelde dB</p>
@@ -2468,73 +2469,84 @@ style={{
         )}
       </CardContent>
     </Card>
+
+    <Card>
+      <CardContent>
+        <p className="muted">Norm overschrijdingen</p>
+        <p className="stat">{dbAnalysis.averageExceedances}</p>
+      </CardContent>
+    </Card>
+
+    <Card>
+      <CardContent>
+        <p className="muted">Piek overschrijdingen</p>
+        <p className="stat">{dbAnalysis.peakExceedances}</p>
+      </CardContent>
+    </Card>
+
+    <Card>
+      <CardContent>
+        <p className="muted">Start meting</p>
+        <p className="stat">{dbAnalysis.startTime}</p>
+      </CardContent>
+    </Card>
+
+    <Card>
+      <CardContent>
+        <p className="muted">Einde meting</p>
+        <p className="stat">{dbAnalysis.endTime}</p>
+      </CardContent>
+    </Card>
+
+    <Card>
+      <CardContent>
+        <p className="muted">Duur meting</p>
+        <p className="stat">{dbAnalysis.duration}</p>
+      </CardContent>
+    </Card>
+
   </div>
 )}
 
-<Card>
-  <CardContent>
-    <p className="muted">Norm overschrijdingen</p>
-    <p className="stat">{dbAnalysis.averageExceedances}</p>
-  </CardContent>
-</Card>
+{activeTab === "instellingen" && (
+  <Card>
+    <CardHeader>
+      <CardTitle>Instellingen</CardTitle>
+      <CardDescription>Pas standaardvelden aan en sla ze op in Supabase</CardDescription>
+    </CardHeader>
 
-<Card>
-  <CardContent>
-    <p className="muted">Piek overschrijdingen</p>
-    <p className="stat">{dbAnalysis.peakExceedances}</p>
-  </CardContent>
-</Card>
+    <CardContent className="stack">
+      <div className="form-grid-2">
+        <div>
+          <Label>Naam</Label>
+          <Input value={profile.resident_name || ""} onChange={(e) => setProfile({ ...profile, resident_name: e.target.value })} />
+        </div>
 
-<Card>
-  <CardContent>
-    <p className="muted">Start meting</p>
-    <p className="stat">{dbAnalysis.startTime}</p>
-  </CardContent>
-</Card>
+        <div>
+          <Label>Locatie / adresomschrijving</Label>
+          <Input value={profile.location || ""} onChange={(e) => setProfile({ ...profile, location: e.target.value })} />
+        </div>
 
-<Card>
-  <CardContent>
-    <p className="muted">Einde meting</p>
-    <p className="stat">{dbAnalysis.endTime}</p>
-  </CardContent>
-</Card>
+        <div>
+          <Label>Standaard meetlocatie</Label>
+          <Input value={profile.standard_location || ""} onChange={(e) => setProfile({ ...profile, standard_location: e.target.value })} />
+        </div>
 
-<Card>
-  <CardContent>
-    <p className="muted">Duur meting</p>
-    <p className="stat">{dbAnalysis.duration}</p>
-  </CardContent>
-</Card>
-</Card>
-      )}
+        <div>
+          <Label>Instantie 1</Label>
+          <Input value={profile.authority1 || ""} onChange={(e) => setProfile({ ...profile, authority1: e.target.value })} />
+        </div>
+
+        <div>
+          <Label>Instantie 2</Label>
+          <Input value={profile.authority2 || ""} onChange={(e) => setProfile({ ...profile, authority2: e.target.value })} />
+        </div>
+      </div>
+
+      <div className="badge-row">
+        <Button variant="outline" onClick={saveProfile}>Instellingen opslaan</Button>
+        <Button variant="outline" onClick={refreshData}>Ververs uit cloud</Button>
+      </div>
     </CardContent>
   </Card>
 )}
-                         {activeTab === "instellingen" && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Instellingen</CardTitle>
-                    <CardDescription>Pas standaardvelden aan en sla ze op in Supabase</CardDescription>
-                  </CardHeader>
-                  <CardContent className="stack">
-                    <div className="form-grid-2">
-                      <div><Label>Naam</Label><Input value={profile.resident_name || ""} onChange={(e) => setProfile({ ...profile, resident_name: e.target.value })} /></div>
-                      <div><Label>Locatie / adresomschrijving</Label><Input value={profile.location || ""} onChange={(e) => setProfile({ ...profile, location: e.target.value })} /></div>
-                      <div><Label>Standaard meetlocatie</Label><Input value={profile.standard_location || ""} onChange={(e) => setProfile({ ...profile, standard_location: e.target.value })} /></div>
-                      <div><Label>Instantie 1</Label><Input value={profile.authority1 || ""} onChange={(e) => setProfile({ ...profile, authority1: e.target.value })} /></div>
-                      <div><Label>Instantie 2</Label><Input value={profile.authority2 || ""} onChange={(e) => setProfile({ ...profile, authority2: e.target.value })} /></div>
-                    </div>
-                    <div className="badge-row">
-                      <Button variant="outline" onClick={saveProfile}>Instellingen opslaan</Button>
-                      <Button variant="outline" onClick={refreshData}>Ververs uit cloud</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
