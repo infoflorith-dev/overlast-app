@@ -157,7 +157,7 @@ async function handleDbExcelUpload(event) {
   const sheet = workbook.Sheets[sheetName];
 
  const rows = XLSX.utils.sheet_to_json(sheet, { range: 5 });
-
+console.log(rows[0]);
   const parsed = rows
     .map((row) => {
       const time =
