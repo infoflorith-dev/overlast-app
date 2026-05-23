@@ -228,7 +228,7 @@ async function handleDbExcelUpload(event) {
   if (!file) return;
 
   setDbUploadName(file.name);
-
+setDbUploadFile(file);
   const data = await file.arrayBuffer();
   const workbook = XLSX.read(data);
 
