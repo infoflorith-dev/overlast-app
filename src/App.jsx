@@ -1868,11 +1868,7 @@ ${profile.resident_name}
 ) : (
   <p><strong>Beschrijving:</strong> {incident.description}</p>
 )}
-                              <p><strong>Bron:</strong> {incident.source || "-"}</p>
-                              <p><strong>dB:</strong> {incident.db || "-"} {incident.db ? `| Norm: ${dbInfo.norm} | Overschrijding: ${dbInfo.exceeded ? `+${dbInfo.exceedance} dB` : "geen"}` : ""}</p>
-                              <p><strong>Weer:</strong> {incident.weather || "-"}</p>
-                              <p><strong>Vastlegging:</strong> {incident.actions || "-"}</p>
-                              <div>
+                                  <div>
                                 <p><strong>Gekoppelde bestanden:</strong>{(mediaByIncident[incident.id] || []).length ? "" : " -"}</p>
                                 {!!(mediaByIncident[incident.id] || []).length && (
                                   <div className="media-grid mt">
