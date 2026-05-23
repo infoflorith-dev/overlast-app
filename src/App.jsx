@@ -731,7 +731,55 @@ const enrichedMedia = mediaRows.map((item) => ({
       refreshData();
     }
   };
+const saveDbAnalysisAsIncident = async () => {
+  if (!supabase || !dbAnalysis) return;
 
+  const severity =
+    dbAnalysis.averageExceedances > 0 ||
+    dbAnalysis.peakExceedances > 0
+      ? "Hoog"
+      : "Middel";
+
+  const title = `dB analyse ${dbAnalysis.startTime}`;
+
+  const description = `
+PCE dB analyse
+
+Start meting: ${dbAnalysis.startTime}
+Einde meting: ${dbAnalysis.endTime}
+Duur: ${dbAnalysis.duration}
+
+Gemiddelde dB: ${dbAnalysis.totalAverage}
+Maximum dB: ${dbAnalysis.max}
+Minimum dB: ${dbAnalysis.min}
+
+Metingen: ${dbAnalysis.count}
+Norm overschrijdingen: ${dbAnalysis.averageExceedances}
+Piek overschrijdingen: ${dbAnalysis.peakExceedances}
+`;
+
+  const { error } = await supabase
+    .from("incidents")
+    .insert({
+      datetime: new Date(startTime).toISOString(),
+      category: "Geluid",
+      severity,
+      location: profile.standard_location || "Slaapkamer / tuinzijde",
+      title,
+      description,
+      db: dbAnalysis.totalAverage,
+      weather: "",
+      source: "PCE dB analyse",
+      actions: "",
+    });
+
+  if (error) {
+    showMessage("Opslaan dB analyse mislukt.", true);
+  } else {
+    showMessage("dB analyse opgeslagen als incident.");
+    refreshData();
+  }
+};
   const startQuickCapture = (category) => {
     setQuickCaptureCategory(category);
     quickCaptureRef.current?.click();
