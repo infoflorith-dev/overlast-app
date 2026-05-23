@@ -1325,6 +1325,7 @@ ${profile.resident_name}
     { id: "notities", label: "Notities", icon: FileText },
     { id: "checklist", label: "Checklist", icon: CheckSquare },
     { id: "dashboard", label: "Dashboard", icon: BarChart3 },
+    { id: "db-analyse", label: "dB Analyse", icon: BarChart3 },
     { id: "instellingen", label: "Instellingen", icon: Filter },
   ];
 
