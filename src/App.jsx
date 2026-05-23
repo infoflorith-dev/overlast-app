@@ -318,7 +318,36 @@ const peakExceedances = parsed.filter((item) => {
   } else if (hour >= 19) {
     peakNorm = 65;
   }
+const maxChartPoints = 500;
+const step = Math.max(1, Math.floor(parsed.length / maxChartPoints));
 
+const chartData = parsed
+  .filter((_, index) => index % step === 0)
+  .map((item) => {
+    const date = new Date(item.datetime);
+    const hour = date.getHours();
+
+    let norm = 50;
+    let peakNorm = 70;
+
+    if (hour >= 23 || hour < 7) {
+      norm = 40;
+      peakNorm = 60;
+    } else if (hour >= 19) {
+      norm = 45;
+      peakNorm = 65;
+    }
+
+    return {
+      time: date.toLocaleTimeString("nl-NL", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      db: item.db,
+      norm,
+      peakNorm,
+    };
+  });
   return item.db > peakNorm;
 }).length;
  setDbAnalysis({
