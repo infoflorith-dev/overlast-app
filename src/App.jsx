@@ -758,7 +758,7 @@ Norm overschrijdingen: ${dbAnalysis.averageExceedances}
 Piek overschrijdingen: ${dbAnalysis.peakExceedances}
 `;
 
-  const { error } = await supabase
+ const { data, error } = await supabase
     .from("incidents")
     .insert({
    datetime: new Date(dbAnalysis.startTime).toISOString(),
