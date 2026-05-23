@@ -1916,6 +1916,32 @@ ${profile.resident_name}
           </p>
         </CardContent>
       </Card>
+      <Card>
+  <CardContent>
+    <p className="muted">Metingen</p>
+    <p className="stat">
+      {incident.description?.match(/Metingen: (\d+)/)?.[1] || "-"}
+    </p>
+  </CardContent>
+</Card>
+
+<Card>
+  <CardContent>
+    <p className="muted">Norm overschrijdingen</p>
+    <p className="stat">
+      {incident.description?.match(/Norm overschrijdingen: (\d+)/)?.[1] || "-"}
+    </p>
+  </CardContent>
+</Card>
+
+<Card>
+  <CardContent>
+    <p className="muted">Piek overschrijdingen</p>
+    <p className="stat">
+      {incident.description?.match(/Piek overschrijdingen: (\d+)/)?.[1] || "-"}
+    </p>
+  </CardContent>
+</Card>
     </div>
 
     <p><strong>Vastlegging:</strong> Gecertificeerde PCE dB meter</p>
