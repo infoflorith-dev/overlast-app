@@ -1714,7 +1714,9 @@ ${profile.resident_name}
                       </Button>
                     ))}
                   </div>
-
+</CardContent>
+</Card>
+)}
                 <div className="content-grid">
   <Card>
     <CardHeader>
