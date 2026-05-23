@@ -1766,14 +1766,24 @@ ${profile.resident_name}
   )
 ) : (
   <div className="media-thumb">
-    {item.type === "video" ? "▶ Video" : "🖼 Foto"}
+    {item.mime_type?.includes("spreadsheet")
+  ? "📄 Excel"
+  : item.type === "video"
+  ? "▶ Video"
+  : "🖼 Foto"}
   </div>
 )}
                                   <div className="preview-chip"><Expand className="icon-sm" /></div>
                                 </button>
                                 <div className="media-body">
                                   <p className="truncate bold">{item.file_name}</p>
-                                  <p className="muted tiny">{item.mime_type?.startsWith("video/") ? "Video" : "Foto"}</p>
+                                <p className="muted tiny">
+  {item.mime_type?.includes("spreadsheet")
+    ? "Excel bestand"
+    : item.mime_type?.startsWith("video/")
+    ? "Video"
+    : "Foto"}
+</p>
                                   <div className="badge-row mt">
                                     <Button type="button" variant={selectedMediaIds.includes(item.id) ? "secondary" : "outline"} onClick={() => toggleSelectedMedia(item.id)}>
                                       {selectedMediaIds.includes(item.id) ? "Geselecteerd" : "Kies voor incident"}
