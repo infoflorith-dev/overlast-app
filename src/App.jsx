@@ -218,6 +218,7 @@ export default function App() {
 const [dbExcelData, setDbExcelData] = useState([]);
 const [dbAnalysis, setDbAnalysis] = useState(null);
 const [dbUploadName, setDbUploadName] = useState("");
+  const [dbUploadFile, setDbUploadFile] = useState(null);
   const mediaInputRef = useRef(null);
   const incidentMediaInputRef = useRef(null);
   const previewVideoRef = useRef(null);
