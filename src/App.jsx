@@ -144,65 +144,7 @@ function getDbNorm(value) {
   if (hour >= 19) return 45;
   return 50;
 }
-async function handleDbExcelUpload(event) {
-  const file = event.target.files?.[0];
-  if (!file) return;
 
-  setDbUploadName(file.name);
-
-  const data = await file.arrayBuffer();
-  const workbook = XLSX.read(data);
-
-  const sheetName = workbook.SheetNames[0];
-  const sheet = workbook.Sheets[sheetName];
-
- const rows = XLSX.utils.sheet_to_json(sheet, { range: 5 });
-console.log(rows[0]);
-  const parsed = rows
-    .map((row) => {
-      const time =
-        row.Time ||
-        row.time ||
-        row.Datum ||
-        row.datetime ||
-        row.Date;
-
-      const db =
-        row.Value ||
-        row.value ||
-        row.dB ||
-        row.DB ||
-        row.db;
-
-      const dbValue = Number(String(db).replace(",", "."));
-
-      return {
-        datetime: time,
-        db: dbValue,
-      };
-    })
-    .filter((r) => r.datetime && !Number.isNaN(r.db));
-
-  setDbExcelData(parsed);
-
-  if (!parsed.length) {
-    setDbAnalysis(null);
-    return;
-  }
-
-  const total =
-    parsed.reduce((sum, item) => sum + item.db, 0) / parsed.length;
-
-  const max = Math.max(...parsed.map((x) => x.db));
-  const min = Math.min(...parsed.map((x) => x.db));
-
-  setDbAnalysis({
-    totalAverage: total.toFixed(1),
-    max: max.toFixed(1),
-    min: min.toFixed(1),
-    count: parsed.length,
-  });
-}
 function getDbValue(value) {
   if (value === null || value === undefined || value === "") return null;
   const num = Number(String(value).replace(",", "."));
@@ -280,7 +222,67 @@ const [dbUploadName, setDbUploadName] = useState("");
   const incidentMediaInputRef = useRef(null);
   const previewVideoRef = useRef(null);
   const quickCaptureRef = useRef(null);
+async function handleDbExcelUpload(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
 
+  setDbUploadName(file.name);
+
+  const data = await file.arrayBuffer();
+  const workbook = XLSX.read(data);
+
+  const sheetName = workbook.SheetNames[0];
+  const sheet = workbook.Sheets[sheetName];
+
+  const rows = XLSX.utils.sheet_to_json(sheet, { range: 5 });
+
+  console.log(rows[0]);
+
+  const parsed = rows
+    .map((row) => {
+      const time =
+        row.Time ||
+        row.time ||
+        row.Datum ||
+        row.datetime ||
+        row.Date;
+
+      const db =
+        row.Value ||
+        row.value ||
+        row.dB ||
+        row.DB ||
+        row.db;
+
+      const dbValue = Number(String(db).replace(",", "."));
+
+      return {
+        datetime: time,
+        db: dbValue,
+      };
+    })
+    .filter((r) => r.datetime && !Number.isNaN(r.db));
+
+  setDbExcelData(parsed);
+
+  if (!parsed.length) {
+    setDbAnalysis(null);
+    return;
+  }
+
+  const total =
+    parsed.reduce((sum, item) => sum + item.db, 0) / parsed.length;
+
+  const max = Math.max(...parsed.map((x) => x.db));
+  const min = Math.min(...parsed.map((x) => x.db));
+
+  setDbAnalysis({
+    totalAverage: total.toFixed(1),
+    max: max.toFixed(1),
+    min: min.toFixed(1),
+    count: parsed.length,
+  });
+}
   const [incidentForm, setIncidentForm] = useState({
     datetime: formatDateTimeLocal(),
     category: "Geluid",
