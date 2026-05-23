@@ -1900,7 +1900,11 @@ ${profile.resident_name}
                                         <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
      <div className="media-thumb">
   <div style={{ fontWeight: 700 }}>
-    {item.type === "video" ? "🎥 Video" : "🖼 Foto"}
+    {item.mime_type?.includes("spreadsheet")
+  ? "📄 Excel"
+  : item.type === "video"
+  ? "🎥 Video"
+  : "🖼 Foto"}
   </div>
   <div style={{ fontSize: "11px", opacity: 0.7 }}>
     Klik om te openen
