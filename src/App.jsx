@@ -777,7 +777,7 @@ Piek overschrijdingen: ${dbAnalysis.peakExceedances}
 .single();
 const insertedIncident = data;
 
-if (insertedIncident && dbUploadName) {
+if (insertedIncident && dbUploadFile) {
   await supabase.from("media").insert({
     incident_id: insertedIncident.id,
     file_name: dbUploadName,
