@@ -2484,7 +2484,8 @@ style={{
     <p className="stat">{dbAnalysis.peakExceedances}</p>
   </CardContent>
 </Card>
-          <Card>
+
+<Card>
   <CardContent>
     <p className="muted">Start meting</p>
     <p className="stat">{dbAnalysis.startTime}</p>
@@ -2504,7 +2505,7 @@ style={{
     <p className="stat">{dbAnalysis.duration}</p>
   </CardContent>
 </Card>
-            </div>
+</Card>
       )}
     </CardContent>
   </Card>
