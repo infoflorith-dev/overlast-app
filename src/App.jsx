@@ -778,6 +778,15 @@ Piek overschrijdingen: ${dbAnalysis.peakExceedances}
 const insertedIncident = data;
 
 if (insertedIncident && dbUploadFile) {
+  const filePath = `db-analyses/${insertedIncident.id}/${dbUploadFile.name}`;
+
+const { error: uploadError } = await supabase.storage
+  .from("evidence")
+  .upload(filePath, dbUploadFile, {
+    upsert: true,
+  });
+
+if (uploadError) throw uploadError;
   await supabase.from("media").insert({
     incident_id: insertedIncident.id,
     file_name: dbUploadName,
