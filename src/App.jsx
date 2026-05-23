@@ -2106,20 +2106,7 @@ style={{
             </CardContent>
           </Card>
 
-          <Card>
-  <CardContent>
-    <p className="muted">Norm overschrijdingen</p>
-    <p className="stat">{dbAnalysis.averageExceedances}</p>
-  </CardContent>
-</Card>
-
-<Card>
-  <CardContent>
-    <p className="muted">Piek overschrijdingen</p>
-    <p className="stat">{dbAnalysis.peakExceedances}</p>
-  </CardContent>
-</Card>
-          </Card>
+                </Card>
         </div>
       )}
     </CardContent>
