@@ -281,6 +281,16 @@ const time = new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
 
   const max = Math.max(...parsed.map((x) => x.db));
   const min = Math.min(...parsed.map((x) => x.db));
+  const sortedDates = parsed
+  .map((x) => new Date(x.datetime))
+  .sort((a, b) => a - b);
+
+const startTime = sortedDates[0];
+const endTime = sortedDates[sortedDates.length - 1];
+
+const durationMs = endTime - startTime;
+const durationHours = Math.floor(durationMs / 1000 / 60 / 60);
+const durationMinutes = Math.floor((durationMs / 1000 / 60) % 60);
 const averageExceedances = parsed.filter((item) => {
   const date = new Date(item.datetime);
   const hour = date.getHours();
