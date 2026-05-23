@@ -327,6 +327,9 @@ const peakExceedances = parsed.filter((item) => {
   count: parsed.length,
   averageExceedances,
   peakExceedances,
+   startTime: startTime.toLocaleString("nl-NL"),
+endTime: endTime.toLocaleString("nl-NL"),
+duration: `${durationHours}u ${durationMinutes}m`,
 });
 }
   const [incidentForm, setIncidentForm] = useState({
@@ -2138,6 +2141,26 @@ style={{
   <CardContent>
     <p className="muted">Piek overschrijdingen</p>
     <p className="stat">{dbAnalysis.peakExceedances}</p>
+  </CardContent>
+</Card>
+          <Card>
+  <CardContent>
+    <p className="muted">Start meting</p>
+    <p className="stat">{dbAnalysis.startTime}</p>
+  </CardContent>
+</Card>
+
+<Card>
+  <CardContent>
+    <p className="muted">Einde meting</p>
+    <p className="stat">{dbAnalysis.endTime}</p>
+  </CardContent>
+</Card>
+
+<Card>
+  <CardContent>
+    <p className="muted">Duur meting</p>
+    <p className="stat">{dbAnalysis.duration}</p>
   </CardContent>
 </Card>
             </div>
