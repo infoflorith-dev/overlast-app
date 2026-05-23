@@ -1939,7 +1939,7 @@ ${profile.resident_name}
   : "🖼 Foto"}
   </div>
   <div style={{ fontSize: "11px", opacity: 0.7 }}>
-    Klik om te openen
+   {item.mime_type?.includes("spreadsheet") ? "Download Excel-bestand" : "Klik om te openen"}
   </div>
 </div>
                                           <div className="preview-chip"><Expand className="icon-sm" /></div>
