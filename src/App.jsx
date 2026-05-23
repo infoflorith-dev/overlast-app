@@ -215,7 +215,9 @@ export default function App() {
   const [noteInput, setNoteInput] = useState("");
   const [taskInput, setTaskInput] = useState("");
   const [quickCaptureCategory, setQuickCaptureCategory] = useState(null);
-
+const [dbExcelData, setDbExcelData] = useState([]);
+const [dbAnalysis, setDbAnalysis] = useState(null);
+const [dbUploadName, setDbUploadName] = useState("");
   const mediaInputRef = useRef(null);
   const incidentMediaInputRef = useRef(null);
   const previewVideoRef = useRef(null);
