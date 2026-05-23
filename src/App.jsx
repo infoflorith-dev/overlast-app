@@ -1951,7 +1951,17 @@ ${profile.resident_name}
                     <div className="media-grid">
                       {allMedia.map((item) => (
                         <div key={item.id} className="media-card">
-                          <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
+                          <button
+  type="button"
+  className="media-preview-btn"
+  onClick={() => {
+    if (item.mime_type?.includes("spreadsheet")) {
+      window.open(item.url, "_blank");
+    } else {
+      openMediaPreview(item);
+    }
+  }}
+>
           <div className="media-thumb-large">
   <div style={{ fontWeight: 700 }}>
     {item.type === "video" ? "🎥 Video" : "🖼 Foto"}
