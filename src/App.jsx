@@ -2332,10 +2332,10 @@ style={{
                       <div className="incident-card">
                         <p className="bold">Korte conclusie</p>
                         <p className="mt">
-                          {(analyse?.night ?? 0) > 0
-                            ? `Er is sprake van terugkerende overlast, met ${analyse?.night ?? 0} nachtincidenten en ${(analyse?.topCategory || "-").toLowerCase()} als meest voorkomende categorie.`
-                            : `Er is sprake van terugkerende overlast, waarbij ${(analyse?.topCategory || "-").toLowerCase()} momenteel de meest voorkomende categorie is.`}
-                        </p>
+                        {(analyse?.night ?? 0) > 0
+  ? `Er is sprake van terugkerende overlast, met ${analyse?.night ?? 0} nachtcincidenten en ${analyse?.topCategory || "-"} als meest voorkomende bron.`
+  : `Er is sprake van terugkerende overlast, waarbij ${analyse?.topCategory || "-"} momenteel de meest voorkomende bron is.`
+}
                       </div>
                     </CardContent>
                   </Card>
