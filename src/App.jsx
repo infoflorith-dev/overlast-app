@@ -276,7 +276,35 @@ async function handleDbExcelUpload(event) {
 
   const max = Math.max(...parsed.map((x) => x.db));
   const min = Math.min(...parsed.map((x) => x.db));
+const averageExceedances = parsed.filter((item) => {
+  const date = new Date(item.datetime);
+  const hour = date.getHours();
 
+  let norm = 50;
+
+  if (hour >= 23 || hour < 7) {
+    norm = 40;
+  } else if (hour >= 19) {
+    norm = 45;
+  }
+
+  return item.db > norm;
+}).length;
+
+const peakExceedances = parsed.filter((item) => {
+  const date = new Date(item.datetime);
+  const hour = date.getHours();
+
+  let peakNorm = 70;
+
+  if (hour >= 23 || hour < 7) {
+    peakNorm = 60;
+  } else if (hour >= 19) {
+    peakNorm = 65;
+  }
+
+  return item.db > peakNorm;
+}).length;
   setDbAnalysis({
     totalAverage: total.toFixed(1),
     max: max.toFixed(1),
