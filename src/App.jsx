@@ -2148,7 +2148,13 @@ style={{
           Bestand: {dbUploadName}
         </p>
       )}
-
+{dbAnalysis && (
+  <div className="badge-row">
+    <Button onClick={saveDbAnalysisAsIncident}>
+      Opslaan als incident
+    </Button>
+  </div>
+)}
       {dbAnalysis && (
         <div className="stats-page-grid">
           <Card>
