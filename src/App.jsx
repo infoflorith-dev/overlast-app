@@ -1836,32 +1836,37 @@ ${profile.resident_name}
                               </div>
                             </div>
                             <div className="stack mt">
-                              <p><strong>Beschrijving:</strong> {incident.description}</p>
-                              {incident.source === "PCE dB analyse" && (
-  <div className="stats-page-grid mt">
-    <Card>
-      <CardContent>
-        <p className="muted">Gemiddelde dB</p>
-        <p className="stat">{incident.db}</p>
-      </CardContent>
-    </Card>
+                         {incident.source === "PCE dB analyse" ? (
+  <div className="stack mt">
+    <div className="stats-page-grid mt">
+      <Card>
+        <CardContent>
+          <p className="muted">Gemiddelde dB</p>
+          <p className="stat">{incident.db}</p>
+        </CardContent>
+      </Card>
 
-    <Card>
-      <CardContent>
-        <p className="muted">Norm</p>
-        <p className="stat">{dbInfo.norm}</p>
-      </CardContent>
-    </Card>
+      <Card>
+        <CardContent>
+          <p className="muted">Norm</p>
+          <p className="stat">{dbInfo.norm}</p>
+        </CardContent>
+      </Card>
 
-    <Card>
-      <CardContent>
-        <p className="muted">Overschrijding</p>
-        <p className="stat">
-          {dbInfo.exceeded ? `+${dbInfo.exceedance} dB` : "0 dB"}
-        </p>
-      </CardContent>
-    </Card>
+      <Card>
+        <CardContent>
+          <p className="muted">Overschrijding</p>
+          <p className="stat">
+            {dbInfo.exceeded ? `+${dbInfo.exceedance} dB` : "0 dB"}
+          </p>
+        </CardContent>
+      </Card>
+    </div>
+
+    <p><strong>Vastlegging:</strong> Gecertificeerde PCE dB meter</p>
   </div>
+) : (
+  <p><strong>Beschrijving:</strong> {incident.description}</p>
 )}
                               <p><strong>Bron:</strong> {incident.source || "-"}</p>
                               <p><strong>dB:</strong> {incident.db || "-"} {incident.db ? `| Norm: ${dbInfo.norm} | Overschrijding: ${dbInfo.exceeded ? `+${dbInfo.exceedance} dB` : "geen"}` : ""}</p>
