@@ -1929,7 +1929,18 @@ ${profile.resident_name}
                                   <div className="media-grid mt">
                                     {(mediaByIncident[incident.id] || []).map((item) => (
                                       <div key={item.id} className="media-card">
-                                        <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
+                                       <button
+  type="button"
+  className="media-preview-btn"
+  onClick={() => {
+    if (item.mime_type?.includes("spreadsheet")) {
+      window.location.href = item.url;
+      return;
+    }
+
+    openMediaPreview(item);
+  }}
+>
      <div className="media-thumb">
   <div style={{ fontWeight: 700 }}>
     {item.mime_type?.includes("spreadsheet")
