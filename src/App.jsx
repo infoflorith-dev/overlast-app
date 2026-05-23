@@ -269,7 +269,36 @@ const time = new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
       };
     })
     .filter((r) => r.datetime && !Number.isNaN(r.db));
+const maxChartPoints = 500;
+const step = Math.max(1, Math.floor(parsed.length / maxChartPoints));
 
+const chartData = parsed
+  .filter((_, index) => index % step === 0)
+  .map((item) => {
+    const date = new Date(item.datetime);
+    const hour = date.getHours();
+
+    let norm = 50;
+    let peak = 70;
+
+    if (hour >= 23 || hour < 7) {
+      norm = 40;
+      peak = 60;
+    } else if (hour >= 19) {
+      norm = 45;
+      peak = 65;
+    }
+
+    return {
+      time: date.toLocaleTimeString("nl-NL", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      db: item.db,
+      norm,
+      peak,
+    };
+  });
   setDbExcelData(parsed);
 
   if (!parsed.length) {
