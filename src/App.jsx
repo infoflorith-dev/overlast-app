@@ -790,7 +790,7 @@ if (uploadError) throw uploadError;
   await supabase.from("media").insert({
     incident_id: insertedIncident.id,
     file_name: dbUploadName,
-    file_path: dbUploadName,
+    file_path: filePath,
     mime_type:
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     size_bytes: 0,
