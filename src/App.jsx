@@ -2028,7 +2028,62 @@ style={{
                   </div>
                 </div>
               )}
+{activeTab === "db-analyse" && (
+  <Card>
+    <CardHeader>
+      <CardTitle>dB Analyse</CardTitle>
+      <CardDescription>
+        Importeer een PCE Excel-bestand voor automatische analyse
+      </CardDescription>
+    </CardHeader>
 
+    <CardContent className="stack">
+      <Input
+        type="file"
+        accept=".xlsx,.xls"
+        onChange={handleDbExcelUpload}
+      />
+
+      {dbUploadName && (
+        <p className="muted">
+          Bestand: {dbUploadName}
+        </p>
+      )}
+
+      {dbAnalysis && (
+        <div className="stats-page-grid">
+          <Card>
+            <CardContent>
+              <p className="muted">Gemiddelde dB</p>
+              <p className="stat">{dbAnalysis.totalAverage}</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent>
+              <p className="muted">Maximum</p>
+              <p className="stat">{dbAnalysis.max}</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent>
+              <p className="muted">Minimum</p>
+              <p className="stat">{dbAnalysis.min}</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent>
+              <p className="muted">Metingen</p>
+              <p className="stat">{dbAnalysis.count}</p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+    </CardContent>
+  </Card>
+)}
                          {activeTab === "instellingen" && (
                 <Card>
                   <CardHeader>
