@@ -1932,11 +1932,20 @@ ${profile.resident_name}
                                        <button
   type="button"
   className="media-preview-btn"
-  onClick={() => {
-    if (item.mime_type?.includes("spreadsheet")) {
-      window.location.href = item.url;
-      return;
-    }
+ onClick={async () => {
+   if (item.mime_type?.includes("spreadsheet")) {
+  const { data, error } = await supabase.storage
+    .from("evidence")
+    .createSignedUrl(item.file_path, 3600);
+
+  if (error || !data?.signedUrl) {
+    showMessage("Excel openen mislukt.", true);
+    return;
+  }
+
+  window.location.href = data.signedUrl;
+  return;
+}
 
     openMediaPreview(item);
   }}
