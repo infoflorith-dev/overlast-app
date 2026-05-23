@@ -2105,7 +2105,26 @@ style={{
               <p className="stat">{dbAnalysis.min}</p>
             </CardContent>
           </Card>
+<Card>
+  <CardContent>
+    <p className="muted">Metingen</p>
+    <p className="stat">{dbAnalysis.count}</p>
+  </CardContent>
+</Card>
 
+<Card>
+  <CardContent>
+    <p className="muted">Norm overschrijdingen</p>
+    <p className="stat">{dbAnalysis.averageExceedances}</p>
+  </CardContent>
+</Card>
+
+<Card>
+  <CardContent>
+    <p className="muted">Piek overschrijdingen</p>
+    <p className="stat">{dbAnalysis.peakExceedances}</p>
+  </CardContent>
+</Card>
             </div>
       )}
     </CardContent>
