@@ -2395,7 +2395,6 @@ style={{
                   </div>
                 </div>
               )}
-{activeTab === "db-analyse" && (
   <Card>
     <CardHeader>
       <CardTitle>dB Analyse</CardTitle>
