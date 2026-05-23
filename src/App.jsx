@@ -305,12 +305,14 @@ const peakExceedances = parsed.filter((item) => {
 
   return item.db > peakNorm;
 }).length;
-  setDbAnalysis({
-    totalAverage: total.toFixed(1),
-    max: max.toFixed(1),
-    min: min.toFixed(1),
-    count: parsed.length,
-  });
+ setDbAnalysis({
+  totalAverage: total.toFixed(1),
+  max: max.toFixed(1),
+  min: min.toFixed(1),
+  count: parsed.length,
+  averageExceedances,
+  peakExceedances,
+});
 }
   const [incidentForm, setIncidentForm] = useState({
     datetime: formatDateTimeLocal(),
