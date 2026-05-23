@@ -812,7 +812,7 @@ const enrichedMedia = mediaRows.map((item) => ({
       weather: "",
       source: "",
       actions: "",
-    });
+          });
 
     if (error) showMessage("Snel incident opslaan mislukt.", true);
     else {
@@ -860,6 +860,7 @@ Piek overschrijdingen: ${dbAnalysis.peakExceedances}
       weather: "",
       source: "PCE dB analyse",
       actions: "",
+      chartData,
   })
 .select()
 .single();
@@ -2409,12 +2410,12 @@ style={{
         accept=".xlsx,.xls"
         onChange={handleDbExcelUpload}
       />
+{dbUploadName && (
+  <p className="muted">
+    Bestand: {dbUploadName}
+  </p>
+)}
 
-      {dbUploadName && (
-        <p className="muted">
-          Bestand: {dbUploadName}
-        </p>
-      )}
 {dbAnalysis && (
   <div className="badge-row">
     <Button onClick={saveDbAnalysisAsIncident}>
@@ -2422,34 +2423,53 @@ style={{
     </Button>
   </div>
 )}
-      {dbAnalysis && (
-        <div className="stats-page-grid">
-          <Card>
-            <CardContent>
-              <p className="muted">Gemiddelde dB</p>
-              <p className="stat">{dbAnalysis.totalAverage}</p>
-            </CardContent>
-          </Card>
 
-          <Card>
-            <CardContent>
-              <p className="muted">Maximum</p>
-              <p className="stat">{dbAnalysis.max}</p>
-            </CardContent>
-          </Card>
+{dbAnalysis && (
+  <div className="stats-page-grid">
+    <Card>
+      <CardContent>
+        <p className="muted">Gemiddelde dB</p>
+        <p className="stat">{dbAnalysis.totalAverage}</p>
+      </CardContent>
+    </Card>
 
-          <Card>
-            <CardContent>
-              <p className="muted">Minimum</p>
-              <p className="stat">{dbAnalysis.min}</p>
-            </CardContent>
-          </Card>
-<Card>
-  <CardContent>
-    <p className="muted">Metingen</p>
-    <p className="stat">{dbAnalysis.count}</p>
-  </CardContent>
-</Card>
+    <Card>
+      <CardContent>
+        <p className="muted">Maximum</p>
+        <p className="stat">{dbAnalysis.max}</p>
+      </CardContent>
+    </Card>
+
+    <Card>
+      <CardContent>
+        <p className="muted">Minimum</p>
+        <p className="stat">{dbAnalysis.min}</p>
+      </CardContent>
+    </Card>
+
+    <Card>
+      <CardContent>
+        <p className="muted">Metingen</p>
+        <p className="stat">{dbAnalysis.chartData?.length || 0}</p>
+
+        {dbAnalysis.chartData?.length > 0 && (
+          <div style={{ marginTop: 20 }}>
+            <ResponsiveContainer width="100%" height={220}>
+              <LineChart data={dbAnalysis.chartData}>
+                <XAxis dataKey="time" hide />
+                <YAxis />
+
+                <Line type="monotone" dataKey="db" stroke="#3b82f6" dot={false} />
+                <Line type="monotone" dataKey="norm" stroke="#f59e0b" dot={false} strokeDasharray="5 5" />
+                <Line type="monotone" dataKey="peak" stroke="#ef4444" dot={false} strokeDasharray="3 3" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  </div>
+)}
 
 <Card>
   <CardContent>
