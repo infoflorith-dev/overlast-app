@@ -424,6 +424,36 @@ duration: `${durationHours}u ${durationMinutes}m`,
     return { total, high, sound, light, smell, night, avgDb };
   }, [incidents]);
   const dbSummary = useMemo(() => {
+    const maxChartPoints = 500;
+const step = Math.max(1, Math.floor(incidents.length / maxChartPoints));
+
+const chartData = incidents
+  .filter((i, index) => index % step === 0 && i.db)
+  .map((item) => {
+    const date = new Date(item.datetime);
+    const hour = date.getHours();
+
+    let norm = 50;
+    let peakNorm = 70;
+
+    if (hour >= 23 || hour < 7) {
+      norm = 40;
+      peakNorm = 60;
+    } else if (hour >= 19) {
+      norm = 45;
+      peakNorm = 65;
+    }
+
+    return {
+      time: date.toLocaleTimeString("nl-NL", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      db: Number(item.db),
+      norm,
+      peakNorm,
+    };
+  });
     const incidentsWithExceedance = incidents
       .map((incident) => {
         const dbInfo = getDbExceedance(incident);
