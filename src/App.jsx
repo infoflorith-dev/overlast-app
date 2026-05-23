@@ -771,8 +771,21 @@ Piek overschrijdingen: ${dbAnalysis.peakExceedances}
       weather: "",
       source: "PCE dB analyse",
       actions: "",
-    });
+  })
+.select()
+.single();
+const insertedIncident = data;
 
+if (insertedIncident && dbUploadName) {
+  await supabase.from("media").insert({
+    incident_id: insertedIncident.id,
+    file_name: dbUploadName,
+    file_path: dbUploadName,
+    mime_type:
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    size_bytes: 0,
+  });
+}
   if (error) {
     showMessage("Opslaan dB analyse mislukt.", true);
   } else {
