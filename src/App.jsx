@@ -2106,8 +2106,7 @@ style={{
             </CardContent>
           </Card>
 
-                </Card>
-        </div>
+            </div>
       )}
     </CardContent>
   </Card>
