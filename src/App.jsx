@@ -240,13 +240,18 @@ async function handleDbExcelUpload(event) {
 
   const parsed = rows
     .map((row) => {
-     const time =
+const rawTime =
   row.DateTime ||
   row.datetime ||
   row.Time ||
   row.time ||
   row.Datum ||
   row.Date;
+
+const [datePart, timePart] = String(rawTime).split(",");
+const [day, month, year] = datePart.split("-");
+
+const time = new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
 
       const db =
         row.Value ||
