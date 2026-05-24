@@ -1724,7 +1724,7 @@ ${profile.resident_name}
     <CardContent className="stack">
       <div style={{ marginTop: 20 }}>
   <ResponsiveContainer width="100%" height={260}>
-   <LineChart data={dbAnalysis?.chartData || []}>
+  <LineChart data={Array.isArray(dbAnalysis?.chartData) ? dbAnalysis.chartData : []}>
       <XAxis dataKey="time" hide />
       <YAxis />
 
