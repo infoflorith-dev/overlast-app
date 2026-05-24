@@ -1919,6 +1919,8 @@ ${profile.resident_name}
                     <div className="stack">
                       {filteredIncidents.map((incident) => {
                         const dbInfo = getDbExceedance(incident);
+                  const chartNorm =
+  incident.chart_data?.[0]?.norm || dbInfo.norm;
                         return (
                           <div key={incident.id} className="incident-card">
                             <div className="between">
@@ -1952,7 +1954,7 @@ ${profile.resident_name}
         <CardContent>
           <p className="muted">Norm</p>
          <p className="stat">
-  {getDbNorm(incident.datetime)}
+  {chartNorm}
 </p>
         </CardContent>
       </Card>
