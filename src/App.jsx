@@ -370,18 +370,21 @@ duration: `${durationHours}u ${durationMinutes}m`,
   .map((item) => {
   const date = new Date(item.datetime);
   const hour = date.getHours();
-
-  let norm = 50;
-  let peak = 70;
+const getNormPeak = (date) => {
+  const hour = date.getHours();
 
   if (hour >= 23 || hour < 7) {
-    norm = 40;
-    peak = 60;
-  } else if (hour >= 19) {
-    norm = 45;
-    peak = 65;
+    return { norm: 40, peak: 60 };
   }
 
+  if (hour >= 19) {
+    return { norm: 45, peak: 65 };
+  }
+
+  return { norm: 50, peak: 70 };
+};
+
+const { norm, peak } = getNormPeak(date);
   return {
     time: date.toLocaleTimeString("nl-NL", {
       hour: "2-digit",
