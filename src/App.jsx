@@ -28,13 +28,11 @@ async function handleDbExcelUpload(event) {
       const datePart = parts[0];
       const timePart = parts[1] || "00:00:00";
 
-      const d = datePart.split("-");
+const [day, month, year] = datePart.split("-");
 
-      const day = d[0]?.padStart(2, "0");
-      const month = d[1]?.padStart(2, "0");
-      const year = d[2];
-
-const date = new Date(`${year}-${month}-${day}T${timePart}`);
+const date = new Date(
+  `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}T${timePart}`
+);
       const db =
         row.Value ||
         row.value ||
