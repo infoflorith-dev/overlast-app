@@ -370,9 +370,7 @@ const peakExceedances = parsed.filter((item) => {
   ? new Date(parsed[0].datetime).toLocaleString("nl-NL")
   : "-",
 
-endTime: parsed[parsed.length - 1]?.datetime
-  ? new Date(parsed[parsed.length - 1].datetime).toLocaleString("nl-NL")
-  : "-",
+endTime: fixedEndTime.toLocaleString("nl-NL"),
 duration: `${durationHours}u ${durationMinutes}m`,
    chartData: parsed
   .filter((_, index) => index % Math.max(1, Math.ceil(parsed.length / 500)) === 0)
