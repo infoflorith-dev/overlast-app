@@ -323,7 +323,13 @@ const time = new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
 const startTime = sortedDates[0];
 const endTime = sortedDates[sortedDates.length - 1];
 
-const durationMs = endTime - startTime;
+const fixedEndTime = new Date(endTime);
+
+if (fixedEndTime < startTime) {
+  fixedEndTime.setDate(fixedEndTime.getDate() + 1);
+}
+
+const durationMs = fixedEndTime - startTime;
 const durationHours = Math.floor(durationMs / 1000 / 60 / 60);
 const durationMinutes = Math.floor((durationMs / 1000 / 60) % 60);
 const averageExceedances = parsed.filter((item) => {
