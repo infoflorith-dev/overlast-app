@@ -269,19 +269,16 @@ setDbUploadFile(file);
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
 
-  const rows = XLSX.utils.sheet_to_json(sheet, { range: 5 });
+const rows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
 
   console.log(rows[0]);
 
   const parsed = rows
   .map((row) => {
     const rawTime =
-      row.DateTime ||
-      row.datetime ||
-      row.Time ||
-      row.time ||
-      row.Datum ||
-      row.Date;
+   const rawTime = Object.values(row).find(v =>
+  String(v).match(/\d{1,2}-\d{1,2}-\d{4}/)
+);
 
     const parts = String(rawTime).split(" ");
     const datePart = parts[0];
