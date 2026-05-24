@@ -168,7 +168,7 @@ function DbChart({ data }) {
           <ResponsiveContainer width="100%" height="100%">
   <LineChart data={data}>
     <XAxis dataKey="time" />
-   <YAxis domain={[0, (dataMax) => Math.ceil(dataMax * 1.1)]} />
+    <YAxis />
     <Line type="monotone" dataKey="db" stroke="#2563eb" dot={false} strokeWidth={2} />
     <Line type="monotone" dataKey="norm" stroke="#f59e0b" dot={false} strokeDasharray="5 5" />
     <Line type="monotone" dataKey="peak" stroke="#ef4444" dot={false} strokeDasharray="3 3" />
@@ -369,18 +369,10 @@ duration: `${durationHours}u ${durationMinutes}m`,
   .filter((_, index) => index % Math.max(1, Math.ceil(parsed.length / 500)) === 0)
   .map((item) => {
   const date = new Date(item.datetime);
-  const minutes = date.getHours() * 60 + date.getMinutes();
+  const hour = date.getHours();
 
-let norm = 50;
-let peak = 70;
-
-if (minutes >= 23 * 60 || minutes < 7 * 60) {
-  norm = 40;
-  peak = 60;
-} else if (minutes >= 19 * 60) {
-  norm = 45;
-  peak = 65;
-}
+  let norm = 50;
+  let peak = 70;
 
   if (hour >= 23 || hour < 7) {
     norm = 40;
