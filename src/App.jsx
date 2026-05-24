@@ -1,54 +1,308 @@
-```js id="fixed_1_205"
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+import {
+  AlertTriangle,
+  BarChart3,
+  Camera,
+  CheckSquare,
+  Download,
+  FileText,
+  Filter,
+  Home,
+  Plus,
+  Search,
+  Trash2,
+  Upload,
+  Pencil,
+  X,
+  Expand,
+  Loader2,
+  Cloud,
+  Moon,
+  Printer,
+  Mic,
+  Sun,
+  Wind,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import * as XLSX from "xlsx";
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+} from "recharts";
+const env = typeof import.meta !== "undefined" && import.meta?.env ? import.meta.env : {};
+const supabaseUrl = env.VITE_SUPABASE_URL || "";
+const supabaseAnonKey = env.VITE_SUPABASE_ANON_KEY || "";
+const supabase = supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null;
+
+const defaultProfile = {
+  resident_name: "Theo",
+  location: "Oostvoorne / thuis",
+  standard_location: "Slaapkamer / tuinzijde",
+  authority1: "Gemeente Voorne aan Zee",
+  authority2: "DCMR",
+};
+
+function cn(...parts) {
+  return parts.filter(Boolean).join(" ");
+}
+
+function Card({ className = "", children }) {
+  return <div className={cn("card", className)}>{children}</div>;
+}
+function CardHeader({ className = "", children }) {
+  return <div className={cn("card-header", className)}>{children}</div>;
+}
+function CardTitle({ className = "", children }) {
+  return <h2 className={cn("card-title", className)}>{children}</h2>;
+}
+function CardDescription({ className = "", children }) {
+  return <p className={cn("card-description", className)}>{children}</p>;
+}
+function CardContent({ className = "", children }) {
+  return <div className={cn("card-content", className)}>{children}</div>;
+}
+function Button({ className = "", variant = "default", size = "md", children, ...props }) {
+  return (
+    <button
+      className={cn(
+        "btn",
+        variant !== "default" && `btn-${variant}`,
+        size === "sm" && "btn-sm",
+        size === "icon" && "btn-icon",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}
+function Input(props) {
+  return <input className={cn("input", props.className)} {...props} />;
+}
+function Textarea(props) {
+  return <textarea className={cn("textarea", props.className)} {...props} />;
+}
+function Checkbox({ checked, onCheckedChange }) {
+  return (
+    <input
+      type="checkbox"
+      checked={!!checked}
+      onChange={(e) => onCheckedChange?.(e.target.checked)}
+      className="checkbox"
+    />
+  );
+}
+function Badge({ className = "", variant = "default", children }) {
+  return <span className={cn("badge", variant !== "default" && `badge-${variant}`, className)}>{children}</span>;
+}
+function Label({ children }) {
+  return <label className="label">{children}</label>;
+}
+
+function formatDateTimeLocal(date = new Date()) {
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+function toLocalInputValue(value) {
+  if (!value) return formatDateTimeLocal();
+  const date = new Date(value);
+  const offset = date.getTimezoneOffset();
+  const local = new Date(date.getTime() - offset * 60 * 1000);
+  return local.toISOString().slice(0, 16);
+}
+
+function formatDisplayDateTime(value) {
+  if (!value) return "";
+  return new Intl.DateTimeFormat("nl-NL", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(value));
+}
+
+function downloadTextFile(filename, content, type = "text/plain;charset=utf-8") {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function isNightIncident(value) {
+  if (!value) return false;
+  const hour = new Date(value).getHours();
+  return hour >= 23 || hour < 7;
+}
+
+function getDbNorm(value) {
+  if (!value) return 50;
+  const hour = new Date(value).getHours();
+  if (hour >= 23 || hour < 7) return 40;
+  if (hour >= 19) return 45;
+  return 50;
+}
+function DbChart({ data }) {
+  if (!data?.length) return null;
+
+  return (
+    <Card className="mt">
+      <CardHeader>
+        <CardTitle>dB tijdlijn</CardTitle>
+        <CardDescription>
+          Grafische weergave van de meting
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <div style={{ width: "100%", height: 300 }}>
+          <ResponsiveContainer width="100%" height="100%">
+  <LineChart data={data}>
+    <XAxis dataKey="time" />
+   <YAxis domain={[0, (dataMax) => Math.ceil(dataMax * 1.1)]} />
+    <Line type="monotone" dataKey="db" stroke="#2563eb" dot={false} strokeWidth={2} />
+    <Line type="monotone" dataKey="norm" stroke="#f59e0b" dot={false} strokeDasharray="5 5" />
+    <Line type="monotone" dataKey="peak" stroke="#ef4444" dot={false} strokeDasharray="3 3" />
+  </LineChart>
+</ResponsiveContainer>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+function getDbValue(value) {
+  if (value === null || value === undefined || value === "") return null;
+  const num = Number(String(value).replace(",", "."));
+  return Number.isNaN(num) ? null : num;
+}
+
+function getDbExceedance(incident) {
+  const dbValue = getDbValue(incident?.db);
+  const norm = getDbNorm(incident?.datetime);
+
+  if (dbValue === null) {
+    return {
+      dbValue: null,
+      norm,
+      exceedance: null,
+      exceeded: false,
+    };
+  }
+
+  const exceedance = Number((dbValue - norm).toFixed(1));
+
+  return {
+    dbValue,
+    norm,
+    exceedance,
+    exceeded: exceedance > 0,
+  };
+}
+
+function safeLower(value) {
+  return String(value || "").toLowerCase();
+}
+
+async function signedUrlsForMedia(items) {
+  if (!supabase || !items.length) return {};
+  const results = await Promise.all(
+    items.map(async (item) => {
+      const { data } = await supabase.storage.from("evidence").createSignedUrl(item.file_path, 3600);
+      return [item.id, data?.signedUrl || null];
+    })
+  );
+  return Object.fromEntries(results);
+}
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState("home");
+  const [profile, setProfile] = useState(defaultProfile);
+  const [incidents, setIncidents] = useState([]);
+  const [notes, setNotes] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [allMedia, setAllMedia] = useState([]);
+  const [mediaUrls, setMediaUrls] = useState({});
+  const [thumbnailUrls, setThumbnailUrls] = useState({});
+  const [search, setSearch] = useState("");
+  const [filterCategory, setFilterCategory] = useState("Alles");
+  const [filterSource, setFilterSource] = useState("Alles");
+  const [filterNightOnly, setFilterNightOnly] = useState(false);
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [formMessage, setFormMessage] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [editingIncidentId, setEditingIncidentId] = useState(null);
+  const [activePreviewMedia, setActivePreviewMedia] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [selectedMediaIds, setSelectedMediaIds] = useState([]);
+  const [noteInput, setNoteInput] = useState("");
+  const [taskInput, setTaskInput] = useState("");
+  const [quickCaptureCategory, setQuickCaptureCategory] = useState(null);
+const [dbExcelData, setDbExcelData] = useState([]);
+const [dbAnalysis, setDbAnalysis] = useState(null);
+const [dbUploadName, setDbUploadName] = useState("");
+  const [dbUploadFile, setDbUploadFile] = useState(null);
+  const mediaInputRef = useRef(null);
+  const incidentMediaInputRef = useRef(null);
+  const previewVideoRef = useRef(null);
+  const quickCaptureRef = useRef(null);
 async function handleDbExcelUpload(event) {
   const file = event.target.files?.[0];
   if (!file) return;
 
   setDbUploadName(file.name);
-  setDbUploadFile(file);
-
+setDbUploadFile(file);
   const data = await file.arrayBuffer();
   const workbook = XLSX.read(data);
 
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
 
-  const rows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+  const rows = XLSX.utils.sheet_to_json(sheet, { range: 5 });
 
   console.log(rows[0]);
 
   const parsed = rows
     .map((row) => {
-      const rawTime = Object.values(row).find((v) =>
-       String(v ?? "").match(/\d{1,2}-\d{1,2}-\d{4}/)
-      );
+const rawTime =
+  row.DateTime ||
+  row.datetime ||
+  row.Time ||
+  row.time ||
+  row.Datum ||
+  row.Date;
 
-      if (!rawTime) return null;
-
-      const parts = String(rawTime).split(" ");
-      const datePart = parts[0];
-      const timePart = parts[1] || "00:00:00";
-
+const [datePart, timePart] = String(rawTime).split(",");
 const [day, month, year] = datePart.split("-");
 
-const date = new Date(
-  `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}T${timePart}`
-);
+const time = new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
+
       const db =
         row.Value ||
         row.value ||
+        row.dB ||
         row.DB ||
         row.db;
 
       const dbValue = Number(String(db).replace(",", "."));
 
-      if (!date || Number.isNaN(dbValue)) return null;
-
       return {
-        datetime: date,
+        datetime: time,
         db: dbValue,
       };
     })
-   .filter((r) => r && r.datetime && !Number.isNaN(r.db))
+    .filter((r) => r.datetime && !Number.isNaN(r.db));
 
   setDbExcelData(parsed);
 
@@ -62,85 +316,141 @@ const date = new Date(
 
   const max = Math.max(...parsed.map((x) => x.db));
   const min = Math.min(...parsed.map((x) => x.db));
-
   const sortedDates = parsed
-    .map((x) => new Date(x.datetime))
-    .sort((a, b) => a - b);
+  .map((x) => new Date(x.datetime))
+  .sort((a, b) => a - b);
 
-  const startTime = sortedDates[0];
-  const endTime = sortedDates[sortedDates.length - 1];
+const startTime = sortedDates[0];
+const endTime = sortedDates[sortedDates.length - 1];
 
-  const durationMs = endTime - startTime;
-  const durationHours = Math.floor(durationMs / 1000 / 60 / 60);
-  const durationMinutes = Math.floor((durationMs / 1000 / 60) % 60);
+const durationMs = endTime - startTime;
+const durationHours = Math.floor(durationMs / 1000 / 60 / 60);
+const durationMinutes = Math.floor((durationMs / 1000 / 60) % 60);
+const averageExceedances = parsed.filter((item) => {
+  const date = new Date(item.datetime);
+  const hour = date.getHours();
 
-  const averageExceedances = parsed.filter((item) => {
-    const date = new Date(item.datetime);
-    const minutes = date.getHours() * 60 + date.getMinutes();
+  let norm = 50;
 
-    let norm = 50;
-    if (minutes >= 23 * 60 || minutes < 7 * 60) norm = 40;
-    else if (minutes >= 19 * 60) norm = 45;
+  if (hour >= 23 || hour < 7) {
+    norm = 40;
+  } else if (hour >= 19) {
+    norm = 45;
+  }
 
-    return item.db > norm;
-  }).length;
+  return item.db > norm;
+}).length;
 
-  const peakExceedances = parsed.filter((item) => {
-    const date = new Date(item.datetime);
-    const minutes = date.getHours() * 60 + date.getMinutes();
+const peakExceedances = parsed.filter((item) => {
+  const date = new Date(item.datetime);
+  const hour = date.getHours();
 
-    let peak = 70;
-    if (minutes >= 23 * 60 || minutes < 7 * 60) peak = 60;
-    else if (minutes >= 19 * 60) peak = 65;
+  let peakNorm = 70;
 
-    return item.db > peak;
-  }).length;
+  if (hour >= 23 || hour < 7) {
+    peakNorm = 60;
+  } else if (hour >= 19) {
+    peakNorm = 65;
+  }
 
-  setDbAnalysis({
-    totalAverage: total.toFixed(1),
-    max: max.toFixed(1),
-    min: min.toFixed(1),
-    count: parsed.length,
-    averageExceedances,
-    peakExceedances,
-    startTime: startTime.toLocaleString("nl-NL"),
-    endTime: endTime.toLocaleString("nl-NL"),
-    duration: `${durationHours}u ${durationMinutes}m`,
+  return item.db > peakNorm;
+}).length;
+ setDbAnalysis({
+  totalAverage: total.toFixed(1),
+  max: max.toFixed(1),
+  min: min.toFixed(1),
+  count: parsed.length,
+  averageExceedances,
+  peakExceedances,
+   startTime: startTime.toLocaleString("nl-NL"),
+endTime: endTime.toLocaleString("nl-NL"),
+duration: `${durationHours}u ${durationMinutes}m`,
+   chartData: parsed
+  .filter((_, index) => index % Math.max(1, Math.ceil(parsed.length / 500)) === 0)
+  .map((item) => {
+  const date = new Date(item.datetime);
+  const minutes = date.getHours() * 60 + date.getMinutes();
 
-    chartData: parsed
-      .filter(
-        (_, index) =>
-          index % Math.max(1, Math.ceil(parsed.length / 500)) === 0
-      )
-      .map((item) => {
-        const date = new Date(item.datetime);
-        const minutes = date.getHours() * 60 + date.getMinutes();
+let norm = 50;
+let peak = 70;
 
-        let norm = 50;
-        let peak = 70;
-
-        if (minutes >= 23 * 60 || minutes < 7 * 60) {
-          norm = 40;
-          peak = 60;
-        } else if (minutes >= 19 * 60) {
-          norm = 45;
-          peak = 65;
-        }
-
-        return {
-          time: date.toLocaleTimeString("nl-NL", {
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
-          db: item.db,
-          norm,
-          peak,
-        };
-      }),
-  });
+if (minutes >= 23 * 60 || minutes < 7 * 60) {
+  norm = 40;
+  peak = 60;
+} else if (minutes >= 19 * 60) {
+  norm = 45;
+  peak = 65;
 }
-```
 
+  if (hour >= 23 || hour < 7) {
+    norm = 40;
+    peak = 60;
+  } else if (hour >= 19) {
+    norm = 45;
+    peak = 65;
+  }
+
+  return {
+    time: date.toLocaleTimeString("nl-NL", {
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+    db: item.db,
+    norm,
+    peak,
+  };
+}),
+});
+}
+  const [incidentForm, setIncidentForm] = useState({
+    datetime: formatDateTimeLocal(),
+    category: "Geluid",
+    severity: "Middel",
+    location: defaultProfile.standard_location,
+    title: "",
+    description: "",
+    db: "",
+    weather: "",
+    source: "",
+    actions: "",
+  });
+
+  const mediaByIncident = useMemo(() => {
+    const map = {};
+    for (const item of allMedia) {
+      if (!map[item.incident_id]) map[item.incident_id] = [];
+      map[item.incident_id].push(item);
+    }
+    return map;
+  }, [allMedia]);
+
+  const sourceOptions = useMemo(() => {
+    const values = Array.from(new Set(incidents.map((i) => i.source).filter(Boolean)));
+    return ["Alles", ...values.sort((a, b) => a.localeCompare(b))];
+  }, [incidents]);
+
+  const incidentsSorted = useMemo(() => {
+    return [...incidents].sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
+  }, [incidents]);
+
+  const filteredIncidents = useMemo(() => {
+    return incidentsSorted.filter((incident) => {
+      const matchesCategory = filterCategory === "Alles" || incident.category === filterCategory;
+      const matchesSource = filterSource === "Alles" || (incident.source || "") === filterSource;
+      const q = search.trim().toLowerCase();
+      const matchesSearch =
+        !q ||
+        safeLower(incident.title).includes(q) ||
+        safeLower(incident.description).includes(q) ||
+        safeLower(incident.location).includes(q) ||
+        safeLower(incident.source).includes(q);
+      const matchesNight = !filterNightOnly || isNightIncident(incident.datetime);
+      const incidentDate = new Date(incident.datetime);
+      const matchesFrom = !dateFrom || incidentDate >= new Date(`${dateFrom}T00:00`);
+      const matchesTo = !dateTo || incidentDate <= new Date(`${dateTo}T23:59`);
+      return matchesCategory && matchesSource && matchesSearch && matchesNight && matchesFrom && matchesTo;
+    });
+  }, [incidentsSorted, filterCategory, filterSource, search, filterNightOnly, dateFrom, dateTo]);
 
   const dashboard = useMemo(() => {
     const total = incidents.length;
