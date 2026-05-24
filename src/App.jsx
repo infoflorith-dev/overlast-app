@@ -787,14 +787,16 @@ const { error: uploadError } = await supabase.storage
   });
 
 if (uploadError) throw uploadError;
-  await supabase.from("media").insert({
-    incident_id: insertedIncident.id,
-   file_path: filePath,
-    file_path: dbUploadName,
-    mime_type:
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    size_bytes: 0,
-  });
+const { error: mediaError } = await supabase.from("media").insert({
+  incident_id: insertedIncident.id,
+  file_name: dbUploadName,
+  file_path: filePath,
+  mime_type:
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  size_bytes: dbUploadFile.size,
+});
+
+if (mediaError) throw mediaError;
 }
   if (error) {
     showMessage("Opslaan dB analyse mislukt.", true);
