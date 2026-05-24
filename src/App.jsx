@@ -1907,14 +1907,23 @@ ${profile.resident_name}
                                   <div className="media-grid mt">
                                     {(mediaByIncident[incident.id] || []).map((item) => (
                                       <div key={item.id} className="media-card">
-                                 <button
+<button
   type="button"
   className="media-preview-btn"
   onClick={async () => {
     if (item.mime_type?.includes("spreadsheet")) {
-      if (item.url) {
-        window.open(item.url, "_blank");
+      const { data, error } = await supabase.storage
+        .from("evidence")
+        .createSignedUrl(item.file_path, 3600, {
+          download: item.file_name || "pce-meting.xlsx",
+        });
+
+      if (error || !data?.signedUrl) {
+        showMessage("Excel openen mislukt.", true);
+        return;
       }
+
+      window.location.href = data.signedUrl;
       return;
     }
 
