@@ -25,6 +25,7 @@ import {
   Wind,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis } from "recharts";
 import * as XLSX from "xlsx";
 const env = typeof import.meta !== "undefined" && import.meta?.env ? import.meta.env : {};
 const supabaseUrl = env.VITE_SUPABASE_URL || "";
