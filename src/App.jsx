@@ -286,7 +286,16 @@ const rawTime =
 const [datePart, timePart] = String(rawTime).split(",");
 const [day, month, year] = datePart.split("-");
 
+const parts = datePart.split("-");
+if (parts.length !== 3) return null;
+
+const day = parts[0]?.padStart(2, "0");
+const month = parts[1]?.padStart(2, "0");
+const year = parts[2];
+
 const time = new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
+
+if (isNaN(time.getTime())) return null;
 
       const db =
         row.Value ||
