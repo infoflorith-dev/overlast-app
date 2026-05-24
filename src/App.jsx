@@ -34,8 +34,7 @@ async function handleDbExcelUpload(event) {
       const month = d[1]?.padStart(2, "0");
       const year = d[2];
 
-     const date = new Date(`${year}-${month}-${day}T${timePart}`);
-
+   const date = new Date(`${year}-${month}-${day}T${timePart}`);
       const db =
         row.Value ||
         row.value ||
