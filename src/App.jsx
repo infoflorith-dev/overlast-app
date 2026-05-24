@@ -796,7 +796,7 @@ const enrichedMedia = mediaRows.map((item) => ({
     }
   };
 const saveDbAnalysisAsIncident = async () => {
-  if (!supabase || !dbAnalysis) return;
+if (!supabase || !dbAnalysis || !parsed) return;
 
   const severity =
     dbAnalysis.averageExceedances > 0 ||
@@ -834,7 +834,35 @@ Piek overschrijdingen: ${dbAnalysis.peakExceedances}
       db: dbAnalysis.totalAverage,
       weather: "",
       source: "PCE dB analyse",
-     chart_data: dbAnalysis.chartData,
+     chart_data: parsed
+  .filter((_, index) =>
+    index % Math.max(1, Math.ceil(parsed.length / 500)) === 0
+  )
+  .map((item) => {
+    const date = new Date(item.datetime);
+    const hour = date.getHours();
+
+    let norm = 50;
+    let peak = 70;
+
+    if (hour >= 23 || hour < 7) {
+      norm = 40;
+      peak = 60;
+    } else if (hour >= 19) {
+      norm = 45;
+      peak = 65;
+    }
+
+    return {
+      time: date.toLocaleTimeString("nl-NL", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      db: item.db,
+      norm,
+      peak,
+    };
+  }),,
 stats: {
   avg: Number(dbAnalysis.totalAverage),
   max: Number(dbAnalysis.max),
