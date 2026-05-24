@@ -1898,7 +1898,7 @@ ${profile.resident_name}
                         <Input className="search-input" placeholder="Zoek op titel, bron, locatie of beschrijving" value={search} onChange={(e) => setSearch(e.target.value)} />
                       </div>
                       <select className="input" value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
-                        <option>Alles</option><option>Geluid</option><option>Licht</option><option>Geur</option><option>Terras</option><option>Overig</option>
+                       <option>Alles</option><option>Geluid</option><option>Licht</option><option>Geur</option><option>Terras</option><option>dB analyse</option><option>Overig</option>
                       </select>
                       <select className="input" value={filterSource} onChange={(e) => setFilterSource(e.target.value)}>
                         {sourceOptions.map((source) => <option key={source}>{source}</option>)}
