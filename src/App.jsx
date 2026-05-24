@@ -1951,7 +1951,9 @@ ${profile.resident_name}
       <Card>
         <CardContent>
           <p className="muted">Norm</p>
-          <p className="stat">{dbInfo.norm}</p>
+         <p className="stat">
+  {getDbNorm(incident.datetime)}
+</p>
         </CardContent>
       </Card>
 
