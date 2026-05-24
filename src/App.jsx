@@ -832,6 +832,7 @@ Piek overschrijdingen: ${dbAnalysis.peakExceedances}
       location: profile.standard_location || "Slaapkamer / tuinzijde",
       title,
       description,
+      chart_data: dbAnalysis.chartData,
           db: dbAnalysis.totalAverage,
       weather: "",
       source: "PCE dB analyse",
