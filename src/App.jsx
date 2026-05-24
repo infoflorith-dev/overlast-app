@@ -1972,13 +1972,6 @@ ${profile.resident_name}
 </p>
         </CardContent>
       </Card>
-const chartAvgExceedance = incident.chart_data?.length
-  ? (
-      incident.chart_data.reduce((sum, point) => {
-        return sum + Math.max(0, Number(point.db) - Number(point.norm));
-      }, 0) / incident.chart_data.length
-    ).toFixed(1)
-  : (Number(incident.db) - Number(chartNorm)).toFixed(1);
       <Card>
         <CardContent>
          <p className="muted">Gem. overschrijding</p>
