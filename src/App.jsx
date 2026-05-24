@@ -1160,7 +1160,19 @@ const printDbAnalysisReport = () => {
     alert("dB analyse niet gevonden");
     return;
   }
+const cards = document.querySelectorAll(".incident-card");
 
+cards.forEach((card) => {
+  card.style.display = "none";
+});
+
+const selectedCard = document.querySelector(
+  `[data-incident-id="${selectedDbPrintId}"]`
+);
+
+if (selectedCard) {
+  selectedCard.style.display = "block";
+}
   window.print();
 };
   const exportReport = () => {
