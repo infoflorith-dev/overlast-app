@@ -430,7 +430,10 @@ const { norm, peak } = getNormPeak(date);
 
   const filteredIncidents = useMemo(() => {
     return incidentsSorted.filter((incident) => {
-      const matchesCategory = filterCategory === "Alles" || incident.category === filterCategory;
+     const matchesCategory =
+  filterCategory === "Alles" ||
+  incident.category === filterCategory ||
+  (filterCategory === "dB analyse" && incident.source === "PCE dB analyse");
       const matchesSource = filterSource === "Alles" || (incident.source || "") === filterSource;
       const q = search.trim().toLowerCase();
       const matchesSearch =
