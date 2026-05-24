@@ -2303,6 +2303,7 @@ style={{
   </div>
 )}
       {dbAnalysis && (
+  <>
         <div className="stats-page-grid">
           <Card>
             <CardContent>
