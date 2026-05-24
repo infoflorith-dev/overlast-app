@@ -233,7 +233,12 @@ setDbUploadFile(file);
   console.log("START DB UPLOAD");
   const data = await file.arrayBuffer();
   console.log("ARRAYBUFFER KLAAR");
-  const workbook = XLSX.read(data);
+const workbook = XLSX.read(data, {
+  dense: true,
+  cellStyles: false,
+  cellHTML: false,
+  cellFormula: false,
+});
 
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
