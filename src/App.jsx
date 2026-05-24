@@ -323,8 +323,7 @@ const time = new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
 const startTime = sortedDates[0];
 const endTime = sortedDates[sortedDates.length - 1];
 
-if (endTime < startTime) {
-  endTime.setDate(endTime.getDate() + 1);
+const durationMs = endTime - startTime;
 }
 const durationHours = Math.floor(durationMs / 1000 / 60 / 60);
 const durationMinutes = Math.floor((durationMs / 1000 / 60) % 60);
