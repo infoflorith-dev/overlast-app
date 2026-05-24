@@ -1976,7 +1976,11 @@ ${profile.resident_name}
         <CardContent>
          <p className="muted">Gem. overschrijding</p>
           <p className="stat">
-           {`+${(Number(incident.db) - Number(chartNorm)).toFixed(1)} dB`}
+          {`+${(
+  incident.chart_data?.reduce((sum, point) =>
+    sum + Math.max(0, Number(point.db) - Number(point.norm)), 0
+  ) / (incident.chart_data?.length || 1)
+).toFixed(1)} dB`}
           </p>
         </CardContent>
       </Card>
