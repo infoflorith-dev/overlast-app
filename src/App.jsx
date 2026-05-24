@@ -321,7 +321,7 @@ const time = new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
   .sort((a, b) => a - b);
 
 const startTime = sortedDates[0];
-const endTime = sortedDates[sortedDates.length - 1];
+const endTime = new Date(sortedDates[sortedDates.length - 1]);
 
 const fixedEndTime = new Date(endTime);
 
