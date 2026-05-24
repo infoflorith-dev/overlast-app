@@ -1147,6 +1147,20 @@ if (mediaError) throw mediaError;
     downloadTextFile(`overlast-incidenten-${new Date().toISOString().slice(0, 10)}.csv`, csv, "text/csv;charset=utf-8");
   };
 const printDbAnalysisReport = () => {
+  if (!selectedDbPrintId) {
+    alert("Kies eerst een dB analyse");
+    return;
+  }
+
+  const selectedIncident = incidents.find(
+    (i) => i.id === selectedDbPrintId
+  );
+
+  if (!selectedIncident) {
+    alert("dB analyse niet gevonden");
+    return;
+  }
+
   window.print();
 };
   const exportReport = () => {
