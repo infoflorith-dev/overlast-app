@@ -1785,6 +1785,20 @@ ${profile.resident_name}
       <Button onClick={printReport} variant="outline">
         <Printer className="icon-inline" /> Print / PDF rapport
       </Button>
+      <select
+  className="input"
+  value={selectedDbPrintId}
+  onChange={(e) => setSelectedDbPrintId(e.target.value)}
+>
+  <option value="">Kies dB analyse</option>
+  {incidents
+    .filter(i => i.source === "PCE dB analyse")
+    .map(i => (
+      <option key={i.id} value={i.id}>
+        {i.title}
+      </option>
+    ))}
+</select>
       <Button onClick={printDbAnalysisReport} variant="outline">
   <Printer className="icon-inline" /> Print dB analyse
 </Button>
