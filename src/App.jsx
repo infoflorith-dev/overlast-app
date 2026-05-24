@@ -1996,6 +1996,9 @@ ${profile.resident_name}
   <p><strong>Beschrijving:</strong> {incident.description}</p>
 )}
                                   <div>
+                                    {incident.chart_data?.length > 0 && (
+  <DbChart data={incident.chart_data} />
+)}
                                 <p><strong>Gekoppelde bestanden:</strong>{(mediaByIncident[incident.id] || []).length ? "" : " -"}</p>
                                 {!!(mediaByIncident[incident.id] || []).length && (
                                   <div className="media-grid mt">
