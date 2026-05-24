@@ -274,35 +274,41 @@ setDbUploadFile(file);
   console.log(rows[0]);
 
   const parsed = rows
-    .map((row) => {
-const rawTime =
-  row.DateTime ||
-  row.datetime ||
-  row.Time ||
-  row.time ||
-  row.Datum ||
-  row.Date;
+  .map((row) => {
+    const rawTime =
+      row.DateTime ||
+      row.datetime ||
+      row.Time ||
+      row.time ||
+      row.Datum ||
+      row.Date;
 
-const [datePart, timePart] = String(rawTime).split(",");
-const [day, month, year] = datePart.split("-");
+    const parts = String(rawTime).split(" ");
+    const datePart = parts[0];
+    const timePart = parts[1] || "00:00:00";
 
-const time = new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
+    const d = datePart.split("-");
 
-      const db =
-        row.Value ||
-        row.value ||
-        row.dB ||
-        row.DB ||
-        row.db;
+    const day = d[0]?.padStart(2, "0");
+    const month = d[1]?.padStart(2, "0");
+    const year = d[2];
 
-      const dbValue = Number(String(db).replace(",", "."));
+    const time = new Date(`${year}-${month}-${day}T${timePart}`);
 
-      return {
-        datetime: time,
-        db: dbValue,
-      };
-    })
-    .filter((r) => r.datetime && !Number.isNaN(r.db));
+    const db =
+      row.Value ||
+      row.value ||
+      row.DB ||
+      row.db;
+
+    const dbValue = Number(String(db).replace(",", "."));
+
+    return {
+      datetime: time,
+      db: dbValue,
+    };
+  })
+  .filter((r) => r.datetime && !Number.isNaN(r.db));
 
   setDbExcelData(parsed);
 
