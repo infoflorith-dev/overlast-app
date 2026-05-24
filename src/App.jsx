@@ -861,8 +861,8 @@ Piek overschrijdingen: ${dbAnalysis.peakExceedances}
       db: item.db,
       norm,
       peak,
-    };
-  }),,
+ };
+}),
 stats: {
   avg: Number(dbAnalysis.totalAverage),
   max: Number(dbAnalysis.max),
