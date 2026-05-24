@@ -369,10 +369,18 @@ duration: `${durationHours}u ${durationMinutes}m`,
   .filter((_, index) => index % Math.max(1, Math.ceil(parsed.length / 500)) === 0)
   .map((item) => {
   const date = new Date(item.datetime);
-  const hour = date.getHours();
+  const minutes = date.getHours() * 60 + date.getMinutes();
 
-  let norm = 50;
-  let peak = 70;
+let norm = 50;
+let peak = 70;
+
+if (minutes >= 23 * 60 || minutes < 7 * 60) {
+  norm = 40;
+  peak = 60;
+} else if (minutes >= 19 * 60) {
+  norm = 45;
+  peak = 65;
+}
 
   if (hour >= 23 || hour < 7) {
     norm = 40;
