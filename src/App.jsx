@@ -1933,7 +1933,11 @@ ${profile.resident_name}
                                   <Badge>{incident.category}</Badge>
                                   <Badge variant="outline">{incident.severity}</Badge>
                                   {isNightIncident(incident.datetime) && <Badge variant="secondary"><Moon className="icon-inline" /> Nacht</Badge>}
-                                  {dbInfo.exceeded && <Badge variant="secondary">+{dbInfo.exceedance} dB boven norm</Badge>}
+                                 {dbInfo.exceeded && (
+  <Badge variant="secondary">
+    +{(Number(incident.db) - chartNorm).toFixed(1)} dB boven norm
+  </Badge>
+)}
                                 </div>
                                 <p className="muted mt-sm">{formatDisplayDateTime(incident.datetime)} • {incident.location}</p>
                               </div>
