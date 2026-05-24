@@ -2385,6 +2385,7 @@ style={{
   </CardContent>
 </Card>
             </div>
+    <DbChart data={dbAnalysis.chartData} />
  </>
 )}
     </CardContent>
