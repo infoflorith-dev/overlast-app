@@ -230,7 +230,9 @@ async function handleDbExcelUpload(event) {
 
   setDbUploadName(file.name);
 setDbUploadFile(file);
+  console.log("START DB UPLOAD");
   const data = await file.arrayBuffer();
+  console.log("ARRAYBUFFER KLAAR");
   const workbook = XLSX.read(data);
 
   const sheetName = workbook.SheetNames[0];
