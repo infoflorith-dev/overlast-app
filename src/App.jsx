@@ -275,8 +275,9 @@ const rows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
 
   const parsed = rows
   .map((row) => {
-    const rawTime =
    const rawTime = Object.values(row).find(v =>
+  String(v).match(/\d{1,2}-\d{1,2}-\d{4}/)
+);
   String(v).match(/\d{1,2}-\d{1,2}-\d{4}/)
 );
 
