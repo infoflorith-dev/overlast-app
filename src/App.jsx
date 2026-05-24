@@ -151,7 +151,26 @@ function getDbNorm(value) {
   if (hour >= 19) return 45;
   return 50;
 }
+function DbChart({ data }) {
+  if (!data?.length) return null;
 
+  return (
+    <Card className="mt">
+      <CardHeader>
+        <CardTitle>dB tijdlijn</CardTitle>
+        <CardDescription>
+          Grafische weergave van de meting
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <div style={{ width: "100%", height: 300 }}>
+          TEST GRAFIEK
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 function getDbValue(value) {
   if (value === null || value === undefined || value === "") return null;
   const num = Number(String(value).replace(",", "."));
