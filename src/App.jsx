@@ -2365,7 +2365,7 @@ style={{
   </CardContent>
 </Card>
             </div>
-  
+  {/* grafiek verwijderd */}
     </CardContent>
   </Card>
 )}
