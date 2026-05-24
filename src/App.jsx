@@ -239,8 +239,6 @@ setDbUploadFile(file);
   const sheet = workbook.Sheets[sheetName];
 
   const rows = XLSX.utils.sheet_to_json(sheet, { range: 5 });
-console.log("ROWS:", rows.length);
-  console.log(rows[0]);
 
   const parsed = rows
     .map((row) => {
