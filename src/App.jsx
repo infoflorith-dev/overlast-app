@@ -324,7 +324,6 @@ const startTime = sortedDates[0];
 const endTime = sortedDates[sortedDates.length - 1];
 
 const durationMs = endTime - startTime;
-}
 const durationHours = Math.floor(durationMs / 1000 / 60 / 60);
 const durationMinutes = Math.floor((durationMs / 1000 / 60) % 60);
 const averageExceedances = parsed.filter((item) => {
