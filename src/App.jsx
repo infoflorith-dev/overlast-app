@@ -1,3 +1,4 @@
+```js id="fixed_1_205"
 async function handleDbExcelUpload(event) {
   const file = event.target.files?.[0];
   if (!file) return;
@@ -21,7 +22,7 @@ async function handleDbExcelUpload(event) {
         String(v).match(/\d{1,2}-\d{1,2}-\d{4}/)
       );
 
-    if (!rawTime) return { skip: true };
+      if (!rawTime) return null;
 
       const parts = String(rawTime).split(" ");
       const datePart = parts[0];
@@ -43,12 +44,14 @@ async function handleDbExcelUpload(event) {
 
       const dbValue = Number(String(db).replace(",", "."));
 
+      if (!date || Number.isNaN(dbValue)) return null;
+
       return {
         datetime: date,
         db: dbValue,
       };
     })
-   .filter((r) => !r.skip && r.datetime && !Number.isNaN(r.db));
+    .filter(Boolean);
 
   setDbExcelData(parsed);
 
@@ -79,7 +82,6 @@ async function handleDbExcelUpload(event) {
     const minutes = date.getHours() * 60 + date.getMinutes();
 
     let norm = 50;
-
     if (minutes >= 23 * 60 || minutes < 7 * 60) norm = 40;
     else if (minutes >= 19 * 60) norm = 45;
 
@@ -91,7 +93,6 @@ async function handleDbExcelUpload(event) {
     const minutes = date.getHours() * 60 + date.getMinutes();
 
     let peak = 70;
-
     if (minutes >= 23 * 60 || minutes < 7 * 60) peak = 60;
     else if (minutes >= 19 * 60) peak = 65;
 
@@ -141,68 +142,8 @@ async function handleDbExcelUpload(event) {
       }),
   });
 }
+```
 
-  return {
-    time: date.toLocaleTimeString("nl-NL", {
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
-    db: item.db,
-    norm,
-    peak,
-  };
-}),
-});
-}
-  const [incidentForm, setIncidentForm] = useState({
-    datetime: formatDateTimeLocal(),
-    category: "Geluid",
-    severity: "Middel",
-    location: defaultProfile.standard_location,
-    title: "",
-    description: "",
-    db: "",
-    weather: "",
-    source: "",
-    actions: "",
-  });
-
-  const mediaByIncident = useMemo(() => {
-    const map = {};
-    for (const item of allMedia) {
-      if (!map[item.incident_id]) map[item.incident_id] = [];
-      map[item.incident_id].push(item);
-    }
-    return map;
-  }, [allMedia]);
-
-  const sourceOptions = useMemo(() => {
-    const values = Array.from(new Set(incidents.map((i) => i.source).filter(Boolean)));
-    return ["Alles", ...values.sort((a, b) => a.localeCompare(b))];
-  }, [incidents]);
-
-  const incidentsSorted = useMemo(() => {
-    return [...incidents].sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
-  }, [incidents]);
-
-  const filteredIncidents = useMemo(() => {
-    return incidentsSorted.filter((incident) => {
-      const matchesCategory = filterCategory === "Alles" || incident.category === filterCategory;
-      const matchesSource = filterSource === "Alles" || (incident.source || "") === filterSource;
-      const q = search.trim().toLowerCase();
-      const matchesSearch =
-        !q ||
-        safeLower(incident.title).includes(q) ||
-        safeLower(incident.description).includes(q) ||
-        safeLower(incident.location).includes(q) ||
-        safeLower(incident.source).includes(q);
-      const matchesNight = !filterNightOnly || isNightIncident(incident.datetime);
-      const incidentDate = new Date(incident.datetime);
-      const matchesFrom = !dateFrom || incidentDate >= new Date(`${dateFrom}T00:00`);
-      const matchesTo = !dateTo || incidentDate <= new Date(`${dateTo}T23:59`);
-      return matchesCategory && matchesSource && matchesSearch && matchesNight && matchesFrom && matchesTo;
-    });
-  }, [incidentsSorted, filterCategory, filterSource, search, filterNightOnly, dateFrom, dateTo]);
 
   const dashboard = useMemo(() => {
     const total = incidents.length;
