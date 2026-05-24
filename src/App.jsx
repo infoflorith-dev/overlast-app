@@ -1963,7 +1963,7 @@ ${profile.resident_name}
         <CardContent>
           <p className="muted">Overschrijding</p>
           <p className="stat">
-            {dbInfo.exceeded ? `+${dbInfo.exceedance} dB` : "0 dB"}
+           {`+${(Number(incident.db) - Number(chartNorm)).toFixed(1)} dB`}
           </p>
         </CardContent>
       </Card>
