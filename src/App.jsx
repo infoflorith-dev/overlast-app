@@ -48,7 +48,7 @@ const date = new Date(
         db: dbValue,
       };
     })
-    .filter(Boolean);
+   .filter((r) => r && r.datetime && !Number.isNaN(r.db))
 
   setDbExcelData(parsed);
 
