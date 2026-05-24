@@ -21,7 +21,7 @@ async function handleDbExcelUpload(event) {
         String(v).match(/\d{1,2}-\d{1,2}-\d{4}/)
       );
 
-      if (!rawTime) return null;
+    if (!rawTime) return { skip: true };
 
       const parts = String(rawTime).split(" ");
       const datePart = parts[0];
@@ -48,7 +48,7 @@ async function handleDbExcelUpload(event) {
         db: dbValue,
       };
     })
-    .filter((r) => r && r.datetime && !Number.isNaN(r.db));
+   .filter((r) => !r.skip && r.datetime && !Number.isNaN(r.db));
 
   setDbExcelData(parsed);
 
