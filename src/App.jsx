@@ -836,9 +836,12 @@ Piek overschrijdingen: ${dbAnalysis.peakExceedances}
  const { data, error } = await supabase
     .from("incidents")
     .insert({
- datetime: new Date(
-  dbAnalysis.chartData?.[0]?.rawTime || dbAnalysis.chartData?.[0]?.date || Date.now()
-).toISOString(),
+datetime: (() => {
+  const [datePart, timePart] = dbAnalysis.startTime.split(", ");
+  const [day, month, year] = datePart.split("-");
+
+  return new Date(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}T${timePart}`).toISOString();
+})(),
       category: "Geluid",
       severity,
       location: profile.standard_location || "Slaapkamer / tuinzijde",
