@@ -273,19 +273,23 @@ const rows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
 
   console.log(rows[0]);
 
-  const parsed = rows
+const parsed = rows
   .map((row) => {
-   const rawTime = Object.values(row).find(v =>
-const rawTime = Object.values(row).find(v =>
-  String(v).match(/\d{1,2}-\d{1,2}-\d{4}/)
-);
-  String(v).match(/\d{1,2}-\d{1,2}-\d{4}/)
-);
+    const rawTime = Object.values(row).find((v) =>
+      String(v).match(/\d{1,2}-\d{1,2}-\d{4}/)
+    );
 
-    const parts = String(rawTime).split(" ");
-    const datePart = parts[0];
+    const parts = String(rawTime || "").split(" ");
+    const datePart = parts[0] || "";
     const timePart = parts[1] || "00:00:00";
 
+    const d = datePart.split("-");
+
+    const day = d[0]?.padStart(2, "0");
+    const month = d[1]?.padStart(2, "0");
+    const year = d[2];
+
+    const time = new Date(`${year}-${month}-${day}T${timePart}`);
     const d = datePart.split("-");
 
     const day = d[0]?.padStart(2, "0");
