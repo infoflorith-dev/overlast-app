@@ -2048,10 +2048,7 @@ ${profile.resident_name}
                           </div>
                         );
                       })}
-                      {incident.chart_data?.length > 0 && (
-  <DbChart data={incident.chart_data} />
-)}
-                    </div>
+                                        </div>
                   </CardContent>
                 </Card>
               )}
