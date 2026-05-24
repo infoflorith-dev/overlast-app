@@ -2365,51 +2365,7 @@ style={{
   </CardContent>
 </Card>
             </div>
-  {dbAnalysis.chartData && (
-  <Card className="mt">
-    <CardHeader>
-      <CardTitle>dB tijdlijn</CardTitle>
-      <CardDescription>
-        Verloop van de geluidsmeting tijdens de PCE registratie
-      </CardDescription>
-    </CardHeader>
-
-    <CardContent>
-      <div style={{ width: "100%", height: 320 }}>
-        <ResponsiveContainer>
-          <LineChart data={dbAnalysis.chartData}>
-            <XAxis dataKey="time" />
-            <YAxis />
-
-            <Line
-              type="monotone"
-              dataKey="db"
-              stroke="#2563eb"
-              dot={false}
-              strokeWidth={2}
-            />
-
-            <Line
-              type="monotone"
-              dataKey="norm"
-              stroke="#f59e0b"
-              dot={false}
-              strokeDasharray="5 5"
-            />
-
-            <Line
-              type="monotone"
-              dataKey="peak"
-              stroke="#ef4444"
-              dot={false}
-              strokeDasharray="3 3"
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-    </CardContent>
-  </Card>
-      )}
+  
     </CardContent>
   </Card>
 )}
