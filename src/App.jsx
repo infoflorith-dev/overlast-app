@@ -1145,7 +1145,9 @@ if (mediaError) throw mediaError;
     const csv = [headers, ...rows].map((row) => row.map((cell) => `"${String(cell || "").replace(/"/g, '""')}"`).join(";")).join("\n");
     downloadTextFile(`overlast-incidenten-${new Date().toISOString().slice(0, 10)}.csv`, csv, "text/csv;charset=utf-8");
   };
-
+const printDbAnalysisReport = () => {
+  window.print();
+};
   const exportReport = () => {
     const sorted = [...filteredIncidents].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
     const exceedances = sorted.filter((incident) => getDbExceedance(incident).exceeded);
