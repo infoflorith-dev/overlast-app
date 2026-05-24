@@ -365,36 +365,35 @@ const peakExceedances = parsed.filter((item) => {
    startTime: startTime.toLocaleString("nl-NL"),
 endTime: endTime.toLocaleString("nl-NL"),
 duration: `${durationHours}u ${durationMinutes}m`,
-   chartData: parsed
-  .filter((_, index) => index % Math.max(1, Math.ceil(parsed.length / 500)) === 0)
+  chartData: parsed
+  .filter((_, index) =>
+    index % Math.max(1, Math.ceil(parsed.length / 500)) === 0
+  )
   .map((item) => {
-  const date = new Date(item.datetime);
-  const hour = date.getHours();
-const getNormPeak = (date) => {
-  const hour = date.getHours();
+    const date = new Date(item.datetime);
+    const hour = date.getHours();
 
-  if (hour >= 23 || hour < 7) {
-    return { norm: 40, peak: 60 };
-  }
+    let norm = 50;
+    let peak = 70;
 
-  if (hour >= 19) {
-    return { norm: 45, peak: 65 };
-  }
+    if (hour >= 23 || hour < 7) {
+      norm = 40;
+      peak = 60;
+    } else if (hour >= 19) {
+      norm = 45;
+      peak = 65;
+    }
 
-  return { norm: 50, peak: 70 };
-};
-
-const { norm, peak } = getNormPeak(date);
-  return {
-    time: date.toLocaleTimeString("nl-NL", {
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
-    db: item.db,
-    norm,
-    peak,
-  };
-}),
+    return {
+      time: date.toLocaleTimeString("nl-NL", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      db: item.db,
+      norm,
+      peak,
+    };
+  }),
 });
 }
   const [incidentForm, setIncidentForm] = useState({
