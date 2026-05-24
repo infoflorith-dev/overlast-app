@@ -2366,21 +2366,7 @@ style={{
   </CardContent>
 </Card>
             </div>
-  <Card className="mt">
-  <CardHeader>
-    <CardTitle>dB tijdlijn</CardTitle>
-    <CardDescription>
-      Grafische weergave van de meting
-    </CardDescription>
-  </CardHeader>
-
-  <CardContent>
-    <div style={{ height: 300 }}>
-      TEST GRAFIEK
-    </div>
-  </CardContent>
-</Card>
-)}
+  )}
     </CardContent>
   </Card>
 )}
