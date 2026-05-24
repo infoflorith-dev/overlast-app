@@ -870,19 +870,6 @@ stats: {
   count: dbAnalysis.count,
 },
       actions: "",
-  })
-.select()
-.single();
-const insertedIncident = data;
-
-if (insertedIncident && dbUploadFile) {
-  const filePath = `db-analyses/${insertedIncident.id}/${dbUploadFile.name}`;
-
-const { error: uploadError } = await supabase.storage
-  .from("evidence")
-  .upload(filePath, dbUploadFile, {
-    upsert: true,
-  });
 
 if (uploadError) throw uploadError;
 const { error: mediaError } = await supabase.from("media").insert({
