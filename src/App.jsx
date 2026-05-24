@@ -1968,7 +1968,7 @@ ${profile.resident_name}
 
       <Card>
         <CardContent>
-          <p className="muted">Overschrijding</p>
+         <p className="muted">Gem. overschrijding</p>
           <p className="stat">
            {`+${(Number(incident.db) - Number(chartNorm)).toFixed(1)} dB`}
           </p>
