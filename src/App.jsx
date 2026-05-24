@@ -835,6 +835,13 @@ Piek overschrijdingen: ${dbAnalysis.peakExceedances}
       db: dbAnalysis.totalAverage,
       weather: "",
       source: "PCE dB analyse",
+     chart_data: dbAnalysis.chartData,
+stats: {
+  avg: Number(dbAnalysis.totalAverage),
+  max: Number(dbAnalysis.max),
+  min: Number(dbAnalysis.min),
+  count: dbAnalysis.count,
+},
       actions: "",
   })
 .select()
