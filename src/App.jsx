@@ -310,8 +310,8 @@ const chartData = parsed
   const total =
     parsed.reduce((sum, item) => sum + item.db, 0) / parsed.length;
 
-  const max = Math.max(...parsed.map((x) => x.db));
-  const min = Math.min(...parsed.map((x) => x.db));
+ const max = parsed.reduce((m, x) => Math.max(m, x.db), -Infinity);
+const min = parsed.reduce((m, x) => Math.min(m, x.db), Infinity);
   const sortedDates = parsed
   .map((x) => new Date(x.datetime))
   .sort((a, b) => a - b);
