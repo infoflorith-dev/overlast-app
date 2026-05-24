@@ -1907,7 +1907,20 @@ ${profile.resident_name}
                                   <div className="media-grid mt">
                                     {(mediaByIncident[incident.id] || []).map((item) => (
                                       <div key={item.id} className="media-card">
-                                        <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
+                                 <button
+  type="button"
+  className="media-preview-btn"
+  onClick={async () => {
+    if (item.mime_type?.includes("spreadsheet")) {
+      if (item.url) {
+        window.open(item.url, "_blank");
+      }
+      return;
+    }
+
+    openMediaPreview(item);
+  }}
+>
      <div className="media-thumb">
   <div style={{ fontWeight: 700 }}>
     {item.mime_type?.includes("spreadsheet")
