@@ -789,7 +789,7 @@ const { error: uploadError } = await supabase.storage
 if (uploadError) throw uploadError;
   await supabase.from("media").insert({
     incident_id: insertedIncident.id,
-    file_name: dbUploadName,
+   file_path: filePath,
     file_path: dbUploadName,
     mime_type:
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
