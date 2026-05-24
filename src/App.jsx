@@ -25,12 +25,27 @@ import {
   Wind,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis } from "recharts";
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+} from "recharts";
 import * as XLSX from "xlsx";
-const env = typeof import.meta !== "undefined" && import.meta?.env ? import.meta.env : {};
+
+const env =
+  typeof import.meta !== "undefined" && import.meta?.env
+    ? import.meta.env
+    : {};
+
 const supabaseUrl = env.VITE_SUPABASE_URL || "";
 const supabaseAnonKey = env.VITE_SUPABASE_ANON_KEY || "";
-const supabase = supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null;
+
+const supabase =
+  supabaseUrl && supabaseAnonKey
+    ? createClient(supabaseUrl, supabaseAnonKey)
+    : null;
 
 const defaultProfile = {
   resident_name: "Theo",
@@ -47,19 +62,32 @@ function cn(...parts) {
 function Card({ className = "", children }) {
   return <div className={cn("card", className)}>{children}</div>;
 }
+
 function CardHeader({ className = "", children }) {
   return <div className={cn("card-header", className)}>{children}</div>;
 }
+
 function CardTitle({ className = "", children }) {
   return <h2 className={cn("card-title", className)}>{children}</h2>;
 }
+
 function CardDescription({ className = "", children }) {
-  return <p className={cn("card-description", className)}>{children}</p>;
+  return (
+    <p className={cn("card-description", className)}>{children}</p>
+  );
 }
+
 function CardContent({ className = "", children }) {
   return <div className={cn("card-content", className)}>{children}</div>;
 }
-function Button({ className = "", variant = "default", size = "md", children, ...props }) {
+
+function Button({
+  className = "",
+  variant = "default",
+  size = "md",
+  children,
+  ...props
+}) {
   return (
     <button
       className={cn(
@@ -75,12 +103,17 @@ function Button({ className = "", variant = "default", size = "md", children, ..
     </button>
   );
 }
+
 function Input(props) {
   return <input className={cn("input", props.className)} {...props} />;
 }
+
 function Textarea(props) {
-  return <textarea className={cn("textarea", props.className)} {...props} />;
+  return (
+    <textarea className={cn("textarea", props.className)} {...props} />
+  );
 }
+
 function Checkbox({ checked, onCheckedChange }) {
   return (
     <input
@@ -91,28 +124,49 @@ function Checkbox({ checked, onCheckedChange }) {
     />
   );
 }
+
 function Badge({ className = "", variant = "default", children }) {
-  return <span className={cn("badge", variant !== "default" && `badge-${variant}`, className)}>{children}</span>;
+  return (
+    <span
+      className={cn(
+        "badge",
+        variant !== "default" && `badge-${variant}`,
+        className
+      )}
+    >
+      {children}
+    </span>
+  );
 }
+
 function Label({ children }) {
   return <label className="label">{children}</label>;
 }
 
 function formatDateTimeLocal(date = new Date()) {
   const pad = (n) => String(n).padStart(2, "0");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+
+  return `${date.getFullYear()}-${pad(
+    date.getMonth() + 1
+  )}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(
+    date.getMinutes()
+  )}`;
 }
 
 function toLocalInputValue(value) {
   if (!value) return formatDateTimeLocal();
+
   const date = new Date(value);
   const offset = date.getTimezoneOffset();
+
   const local = new Date(date.getTime() - offset * 60 * 1000);
+
   return local.toISOString().slice(0, 16);
 }
 
 function formatDisplayDateTime(value) {
   if (!value) return "";
+
   return new Intl.DateTimeFormat("nl-NL", {
     day: "2-digit",
     month: "2-digit",
@@ -122,33 +176,50 @@ function formatDisplayDateTime(value) {
   }).format(new Date(value));
 }
 
-function downloadTextFile(filename, content, type = "text/plain;charset=utf-8") {
+function downloadTextFile(
+  filename,
+  content,
+  type = "text/plain;charset=utf-8"
+) {
   const blob = new Blob([content], { type });
+
   const url = URL.createObjectURL(blob);
+
   const a = document.createElement("a");
+
   a.href = url;
   a.download = filename;
   a.click();
+
   URL.revokeObjectURL(url);
 }
 
 function isNightIncident(value) {
   if (!value) return false;
+
   const hour = new Date(value).getHours();
+
   return hour >= 23 || hour < 7;
 }
 
 function getDbNorm(value) {
   if (!value) return 50;
+
   const hour = new Date(value).getHours();
+
   if (hour >= 23 || hour < 7) return 40;
   if (hour >= 19) return 45;
+
   return 50;
 }
 
 function getDbValue(value) {
-  if (value === null || value === undefined || value === "") return null;
+  if (value === null || value === undefined || value === "") {
+    return null;
+  }
+
   const num = Number(String(value).replace(",", "."));
+
   return Number.isNaN(num) ? null : num;
 }
 
@@ -181,822 +252,279 @@ function safeLower(value) {
 
 async function signedUrlsForMedia(items) {
   if (!supabase || !items.length) return {};
+
   const results = await Promise.all(
     items.map(async (item) => {
-      const { data } = await supabase.storage.from("evidence").createSignedUrl(item.file_path, 3600);
+      const { data } = await supabase.storage
+        .from("evidence")
+        .createSignedUrl(item.file_path, 3600);
+
       return [item.id, data?.signedUrl || null];
     })
   );
+
   return Object.fromEntries(results);
 }
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("home");
+
   const [profile, setProfile] = useState(defaultProfile);
+
   const [incidents, setIncidents] = useState([]);
   const [notes, setNotes] = useState([]);
   const [tasks, setTasks] = useState([]);
+
   const [allMedia, setAllMedia] = useState([]);
+
   const [mediaUrls, setMediaUrls] = useState({});
   const [thumbnailUrls, setThumbnailUrls] = useState({});
+
   const [search, setSearch] = useState("");
   const [filterCategory, setFilterCategory] = useState("Alles");
   const [filterSource, setFilterSource] = useState("Alles");
   const [filterNightOnly, setFilterNightOnly] = useState(false);
+
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
+
   const [formMessage, setFormMessage] = useState("");
   const [isError, setIsError] = useState(false);
-  const [editingIncidentId, setEditingIncidentId] = useState(null);
-  const [activePreviewMedia, setActivePreviewMedia] = useState(null);
+
+  const [editingIncidentId, setEditingIncidentId] =
+    useState(null);
+
+  const [activePreviewMedia, setActivePreviewMedia] =
+    useState(null);
+
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [selectedMediaIds, setSelectedMediaIds] = useState([]);
+
+  const [selectedMediaIds, setSelectedMediaIds] =
+    useState([]);
+
   const [noteInput, setNoteInput] = useState("");
   const [taskInput, setTaskInput] = useState("");
-  const [quickCaptureCategory, setQuickCaptureCategory] = useState(null);
-const [dbExcelData, setDbExcelData] = useState([]);
-const [dbAnalysis, setDbAnalysis] = useState(null);
-const [dbUploadName, setDbUploadName] = useState("");
+
+  const [quickCaptureCategory, setQuickCaptureCategory] =
+    useState(null);
+
+  const [dbExcelData, setDbExcelData] = useState([]);
+  const [dbAnalysis, setDbAnalysis] = useState(null);
+  const [dbUploadName, setDbUploadName] = useState("");
   const [dbUploadFile, setDbUploadFile] = useState(null);
+
   const mediaInputRef = useRef(null);
   const incidentMediaInputRef = useRef(null);
   const previewVideoRef = useRef(null);
   const quickCaptureRef = useRef(null);
-async function handleDbExcelUpload(event) {
-  const file = event.target.files?.[0];
-  if (!file) return;
 
-  setDbUploadName(file.name);
-setDbUploadFile(file);
-  const data = await file.arrayBuffer();
-  const workbook = XLSX.read(data);
+  async function handleDbExcelUpload(event) {
+    const file = event.target.files?.[0];
 
-  const sheetName = workbook.SheetNames[0];
-  const sheet = workbook.Sheets[sheetName];
+    if (!file) return;
 
-  const rows = XLSX.utils.sheet_to_json(sheet, { range: 5 });
-
-  console.log(rows[0]);
-
-  const parsed = rows
-    .map((row) => {
-const rawTime =
-  row.DateTime ||
-  row.datetime ||
-  row.Time ||
-  row.time ||
-  row.Datum ||
-  row.Date;
-
-const [datePart, timePart] = String(rawTime).split(",");
-const [day, month, year] = datePart.split("-");
-
-const time = new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
-
-      const db =
-        row.Value ||
-        row.value ||
-        row.dB ||
-        row.DB ||
-        row.db;
-
-      const dbValue = Number(String(db).replace(",", "."));
-
-      return {
-        datetime: time,
-        db: dbValue,
-      };
-    })
-    .filter((r) => r.datetime && !Number.isNaN(r.db));
-const maxChartPoints = 500;
-const step = Math.max(1, Math.floor(parsed.length / maxChartPoints));
-
-const chartData = parsed
-  .filter((_, index) => index % step === 0)
-  .map((item) => {
-    const date = new Date(item.datetime);
-    const hour = date.getHours();
-
-    let norm = 50;
-    let peak = 70;
-
-    if (hour >= 23 || hour < 7) {
-      norm = 40;
-      peak = 60;
-    } else if (hour >= 19) {
-      norm = 45;
-      peak = 65;
-    }
-
-    return {
-      time: date.toLocaleTimeString("nl-NL", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      db: item.db,
-      norm,
-      peak,
-    };
-  });
-  setDbExcelData(parsed);
-
-  if (!parsed.length) {
-    setDbAnalysis(null);
-    return;
-  }
-
-  const total =
-    parsed.reduce((sum, item) => sum + item.db, 0) / parsed.length;
-
- const max = Math.max(...parsed.map((x) => x.db));
-const min = Math.min(...parsed.map((x) => x.db));
-  const sortedDates = parsed
-  .map((x) => new Date(x.datetime))
-  .sort((a, b) => a - b);
-
-const startTime = sortedDates[0];
-const endTime = sortedDates[sortedDates.length - 1];
-
-const durationMs = endTime - startTime;
-const durationHours = Math.floor(durationMs / 1000 / 60 / 60);
-const durationMinutes = Math.floor((durationMs / 1000 / 60) % 60);
-const averageExceedances = parsed.filter((item) => {
-  const date = new Date(item.datetime);
-  const hour = date.getHours();
-
-  let norm = 50;
-
-  if (hour >= 23 || hour < 7) {
-    norm = 40;
-  } else if (hour >= 19) {
-    norm = 45;
-  }
-
-  return item.db > norm;
-}).length;
-
-const peakExceedances = parsed.filter((item) => {
-  const date = new Date(item.datetime);
-  const hour = date.getHours();
-
-  let peakNorm = 70;
-
-  if (hour >= 23 || hour < 7) {
-    peakNorm = 60;
-  } else if (hour >= 19) {
-    peakNorm = 65;
-  }
-const maxChartPoints = 500;
-const step = Math.max(1, Math.floor(parsed.length / maxChartPoints));
-
-const chartData = parsed
-  .filter((_, index) => index % step === 0)
-  .map((item) => {
-    const date = new Date(item.datetime);
-    const hour = date.getHours();
-
-    let norm = 50;
-    let peakNorm = 70;
-
-    if (hour >= 23 || hour < 7) {
-      norm = 40;
-      peakNorm = 60;
-    } else if (hour >= 19) {
-      norm = 45;
-      peakNorm = 65;
-    }
-
-    return {
-      time: date.toLocaleTimeString("nl-NL", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      db: item.db,
-      norm,
-      peakNorm,
-    };
-  });
-  return item.db > peakNorm;
-}).length;
- setDbAnalysis({
-  totalAverage: total.toFixed(1),
-  max: max.toFixed(1),
-  min: min.toFixed(1),
-  count: parsed.length,
-  averageExceedances,
-  peakExceedances,
-   startTime: startTime.toLocaleString("nl-NL"),
-endTime: endTime.toLocaleString("nl-NL"),
-duration: `${durationHours}u ${durationMinutes}m`,
-});
-}
-  const [incidentForm, setIncidentForm] = useState({
-    datetime: formatDateTimeLocal(),
-    category: "Geluid",
-    severity: "Middel",
-    location: defaultProfile.standard_location,
-    title: "",
-    description: "",
-    db: "",
-    weather: "",
-    source: "",
-    actions: "",
-  });
-
-  const mediaByIncident = useMemo(() => {
-    const map = {};
-    for (const item of allMedia) {
-      if (!map[item.incident_id]) map[item.incident_id] = [];
-      map[item.incident_id].push(item);
-    }
-    return map;
-  }, [allMedia]);
-
-  const sourceOptions = useMemo(() => {
-    const values = Array.from(new Set(incidents.map((i) => i.source).filter(Boolean)));
-    return ["Alles", ...values.sort((a, b) => a.localeCompare(b))];
-  }, [incidents]);
-
-  const incidentsSorted = useMemo(() => {
-    return [...incidents].sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
-  }, [incidents]);
-
-  const filteredIncidents = useMemo(() => {
-    return incidentsSorted.filter((incident) => {
-      const matchesCategory = filterCategory === "Alles" || incident.category === filterCategory;
-      const matchesSource = filterSource === "Alles" || (incident.source || "") === filterSource;
-      const q = search.trim().toLowerCase();
-      const matchesSearch =
-        !q ||
-        safeLower(incident.title).includes(q) ||
-        safeLower(incident.description).includes(q) ||
-        safeLower(incident.location).includes(q) ||
-        safeLower(incident.source).includes(q);
-      const matchesNight = !filterNightOnly || isNightIncident(incident.datetime);
-      const incidentDate = new Date(incident.datetime);
-      const matchesFrom = !dateFrom || incidentDate >= new Date(`${dateFrom}T00:00`);
-      const matchesTo = !dateTo || incidentDate <= new Date(`${dateTo}T23:59`);
-      return matchesCategory && matchesSource && matchesSearch && matchesNight && matchesFrom && matchesTo;
-    });
-  }, [incidentsSorted, filterCategory, filterSource, search, filterNightOnly, dateFrom, dateTo]);
-
-  const dashboard = useMemo(() => {
-    const total = incidents.length;
-    const high = incidents.filter((i) => i.severity === "Hoog").length;
-    const sound = incidents.filter((i) => i.category === "Geluid").length;
-    const light = incidents.filter((i) => i.category === "Licht").length;
-    const smell = incidents.filter((i) => i.category === "Geur").length;
-    const night = incidents.filter((i) => isNightIncident(i.datetime)).length;
-    const avgDbValues = incidents.map((i) => Number(i.db)).filter((n) => !Number.isNaN(n) && n > 0);
-    const avgDb = avgDbValues.length ? (avgDbValues.reduce((a, b) => a + b, 0) / avgDbValues.length).toFixed(1) : "-";
-    return { total, high, sound, light, smell, night, avgDb };
-  }, [incidents]);
-  const dbSummary = useMemo(() => {
-    const maxChartPoints = 500;
-const step = Math.max(1, Math.floor(incidents.length / maxChartPoints));
-
-const chartData = incidents
-  .filter((i, index) => index % step === 0 && i.db)
-  .map((item) => {
-    const date = new Date(item.datetime);
-    const hour = date.getHours();
-
-    let norm = 50;
-    let peakNorm = 70;
-
-    if (hour >= 23 || hour < 7) {
-      norm = 40;
-      peakNorm = 60;
-    } else if (hour >= 19) {
-      norm = 45;
-      peakNorm = 65;
-    }
-
-    return {
-      time: date.toLocaleTimeString("nl-NL", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      db: Number(item.db),
-      norm,
-      peakNorm,
-    };
-  });
-    const incidentsWithExceedance = incidents
-      .map((incident) => {
-        const dbInfo = getDbExceedance(incident);
-        const hour = incident?.datetime ? new Date(incident.datetime).getHours() : null;
-
-        let period = "Dag";
-        if (hour !== null) {
-          if (hour >= 23 || hour < 7) period = "Nacht";
-          else if (hour >= 19) period = "Avond";
-        }
-
-        return {
-          ...incident,
-          ...dbInfo,
-          period,
-        };
-      })
-      .filter((incident) => incident.exceeded);
-
-    const total = incidentsWithExceedance.length;
-
-    const highest = total
-      ? Math.max(...incidentsWithExceedance.map((i) => i.exceedance))
-      : 0;
-
-    const night = incidentsWithExceedance.filter((i) => i.period === "Nacht").length;
-    const evening = incidentsWithExceedance.filter((i) => i.period === "Avond").length;
-    const day = incidentsWithExceedance.filter((i) => i.period === "Dag").length;
-
-    const periodChart = [
-      { label: "Dag", value: day },
-      { label: "Avond", value: evening },
-      { label: "Nacht", value: night },
-    ];
-
-    const topExceedances = [...incidentsWithExceedance]
-      .sort((a, b) => b.exceedance - a.exceedance)
-      .slice(0, 5)
-      .map((incident) => ({
-        label: incident.title || "Incident",
-        shortLabel:
-          (incident.title || "Incident").length > 24
-            ? `${(incident.title || "Incident").slice(0, 24)}...`
-            : incident.title || "Incident",
-        value: incident.exceedance,
-        datetime: incident.datetime,
-      }));
-
-    return {
-      total,
-      highest,
-      night,
-      evening,
-      day,
-      periodChart,
-      topExceedances,
-    };
-  }, [incidents]);
-  const analyse = useMemo(() => {
-    
-    if (!incidents.length) return null;
-
-    const avgDb = incidents
-      .map((i) => Number(i.db))
-      .filter((n) => !isNaN(n) && n > 0);
-
-    const avg = avgDb.length
-      ? (avgDb.reduce((a, b) => a + b, 0) / avgDb.length).toFixed(1)
-      : "-";
-
-    const night = incidents.filter((i) => {
-      const h = new Date(i.datetime).getHours();
-      return h >= 23 || h < 7;
-    }).length;
-
-    const categories = {};
-    incidents.forEach((i) => {
-      categories[i.category] = (categories[i.category] || 0) + 1;
-    });
-
-    const topCategory = Object.entries(categories)
-      .sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
-
-    return {
-      total: incidents.length,
-      night,
-      avg,
-      topCategory,
-    };
-  }, [incidents]);
-
-  const sourceSummary = useMemo(() => {
-    const counts = {};
-    incidents.forEach((incident) => {
-      const key = incident.source || "Onbekend";
-      counts[key] = (counts[key] || 0) + 1;
-    });
-    return Object.entries(counts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 6);
-  }, [incidents]);
-
-  const categorySummary = useMemo(() => {
-    const counts = {};
-    incidents.forEach((incident) => {
-      counts[incident.category] = (counts[incident.category] || 0) + 1;
-    });
-    return Object.entries(counts).sort((a, b) => b[1] - a[1]);
-  }, [incidents]);
-
-  const recentTimeline = useMemo(() => filteredIncidents.slice(0, 10), [filteredIncidents]);
-
-  const showMessage = (message, error = false) => {
-    setFormMessage(message);
-    setIsError(error);
-  };
-
-  const resetIncidentForm = () => {
-    setEditingIncidentId(null);
-    setIncidentForm({
-      datetime: formatDateTimeLocal(),
-      category: "Geluid",
-      severity: "Middel",
-      location: profile.standard_location || "Slaapkamer / tuinzijde",
-      title: "",
-      description: "",
-      db: "",
-      weather: "",
-      source: "",
-      actions: "",
-    });
-    setSelectedMediaIds([]);
-    setFormMessage("");
-    setIsError(false);
-  };
-
-  const clearFilters = () => {
-    setSearch("");
-    setFilterCategory("Alles");
-    setFilterSource("Alles");
-    setFilterNightOnly(false);
-    setDateFrom("");
-    setDateTo("");
-  };
-
-  const refreshData = async () => {
-    if (!supabase) {
-      showMessage("Supabase variabelen ontbreken. Voeg je VITE_SUPABASE_URL en VITE_SUPABASE_ANON_KEY toe.", true);
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const [profileRes, incidentsRes, notesRes, tasksRes, mediaRes] = await Promise.all([
-        supabase.from("profiles").select("*").limit(1).maybeSingle(),
-        supabase.from("incidents").select("*").order("datetime", { ascending: false }),
-        supabase.from("notes").select("*").order("created_at", { ascending: false }),
-        supabase.from("tasks").select("*").order("created_at", { ascending: false }),
-        supabase.from("media").select("*").order("created_at", { ascending: false }),
-      ]);
-
-      if (profileRes.data) setProfile(profileRes.data);
-      else {
-        const { data: insertedProfile } = await supabase.from("profiles").insert(defaultProfile).select().single();
-        if (insertedProfile) setProfile(insertedProfile);
-      }
-
-     const mediaRows = mediaRes.data || [];
-const enrichedMedia = mediaRows.map((item) => ({
-  ...item,
-  url: null,
-  type: item.mime_type?.startsWith("video/") ? "video" : "image",
-}));
-
-      setIncidents(incidentsRes.data || []);
-      setNotes(notesRes.data || []);
-      setTasks(tasksRes.data || []);
-      setAllMedia(enrichedMedia);
-    } catch {
-      showMessage("Laden uit Supabase mislukt.", true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    refreshData();
-  }, []);
-
-  const handleMediaUpload = async (e, incidentId = null, selectForForm = false) => {
-    if (!supabase) return [];
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return [];
-
-    setUploading(true);
-    try {
-      const uploaded = [];
-      for (const file of files) {
-        const safeName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${file.name}`;
-        const path = incidentId ? `incidents/${incidentId}/${safeName}` : `unassigned/${safeName}`;
-
-        const { error: uploadError } = await supabase.storage.from("evidence").upload(path, file, {
-          cacheControl: "3600",
-          upsert: false,
-        });
-        if (uploadError) throw uploadError;
-
-        const rowToInsert = {
-          incident_id: incidentId,
-          file_name: file.name,
-          file_path: path,
-          mime_type: file.type || "application/octet-stream",
-          size_bytes: file.size,
-        };
-
-        const { data: inserted, error: insertError } = await supabase.from("media").insert(rowToInsert).select().single();
-        if (insertError) throw insertError;
-
-        uploaded.push({
-  ...inserted,
-  url: null,
-  type: file.type?.startsWith("video/") ? "video" : "image",
-});
-      }
-
-      setAllMedia((prev) => [...uploaded, ...prev]);
-      if (selectForForm) {
-        setSelectedMediaIds((prev) => [...new Set([...prev, ...uploaded.map((item) => item.id)])]);
-      }
-      showMessage("Bestand(en) geüpload.");
-      return uploaded;
-    } catch {
-      showMessage("Uploaden van bestand mislukt.", true);
-      return [];
-    } finally {
-      setUploading(false);
-      e.target.value = "";
-    }
-  };
-
-  const attachUnassignedMediaToIncident = async (incidentId) => {
-    const items = allMedia.filter((item) => selectedMediaIds.includes(item.id));
-    for (const item of items) {
-      if (item.incident_id === incidentId) continue;
-      await supabase.from("media").update({ incident_id: incidentId }).eq("id", item.id);
-    }
-  };
-
-  const saveProfile = async () => {
-    if (!supabase || !profile.id) return;
-    const { error } = await supabase
-      .from("profiles")
-      .update({
-        resident_name: profile.resident_name,
-        location: profile.location,
-        standard_location: profile.standard_location,
-        authority1: profile.authority1,
-        authority2: profile.authority2,
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", profile.id);
-
-    if (error) showMessage("Profiel opslaan mislukt.", true);
-    else showMessage("Instellingen opgeslagen.");
-  };
-
-  const addIncident = async () => {
-    if (!supabase) return;
-    if (!incidentForm.title.trim()) return showMessage("Vul eerst een titel in.", true);
-    if (!incidentForm.description.trim()) return showMessage("Vul eerst een beschrijving in.", true);
-
-    setSaving(true);
-    try {
-      if (editingIncidentId) {
-        const { error } = await supabase
-          .from("incidents")
-          .update({
-            ...incidentForm,
-            datetime: new Date(incidentForm.datetime).toISOString(),
-            updated_at: new Date().toISOString(),
-          })
-          .eq("id", editingIncidentId);
-        if (error) throw error;
-        await attachUnassignedMediaToIncident(editingIncidentId);
-        showMessage("Incident bijgewerkt.");
-      } else {
-        const { data, error } = await supabase
-          .from("incidents")
-          .insert({
-            ...incidentForm,
-            datetime: new Date(incidentForm.datetime).toISOString(),
-          })
-          .select()
-          .single();
-        if (error) throw error;
-        await attachUnassignedMediaToIncident(data.id);
-        showMessage("Incident opgeslagen.");
-      }
-
-      await refreshData();
-      resetIncidentForm();
-      setActiveTab("incidenten");
-    } catch {
-      showMessage("Incident opslaan mislukt.", true);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const addQuickIncident = async (category) => {
-    if (!supabase) return;
-    const titles = {
-      Geluid: "Geluidsoverlast waargenomen",
-      Licht: "Lichthinder waargenomen",
-      Geur: "Geuroverlast waargenomen",
-    };
-
-    const { error } = await supabase.from("incidents").insert({
-      datetime: new Date().toISOString(),
-      category,
-      severity: "Middel",
-      location: profile.standard_location || "Slaapkamer / tuinzijde",
-      title: titles[category],
-      description: "Korte snelle registratie. Werk details later uit.",
-      db: "",
-      weather: "",
-      source: "",
-      actions: "",
-    });
-
-    if (error) showMessage("Snel incident opslaan mislukt.", true);
-    else {
-      showMessage("Snel incident opgeslagen.");
-      refreshData();
-    }
-  };
-const saveDbAnalysisAsIncident = async () => {
-  if (!supabase || !dbAnalysis) return;
-
-  const severity =
-    dbAnalysis.averageExceedances > 0 ||
-    dbAnalysis.peakExceedances > 0
-      ? "Hoog"
-      : "Middel";
-
-  const title = `dB analyse ${dbAnalysis.startTime}`;
-
-  const description = `
-PCE dB analyse
-
-Start meting: ${dbAnalysis.startTime}
-Einde meting: ${dbAnalysis.endTime}
-Duur: ${dbAnalysis.duration}
-
-Gemiddelde dB: ${dbAnalysis.totalAverage}
-Maximum dB: ${dbAnalysis.max}
-Minimum dB: ${dbAnalysis.min}
-
-Metingen: ${dbAnalysis.count}
-Norm overschrijdingen: ${dbAnalysis.averageExceedances}
-Piek overschrijdingen: ${dbAnalysis.peakExceedances}
-`;
-
- const { data, error } = await supabase
-    .from("incidents")
-    .insert({
-   datetime: new Date(dbAnalysis.startTime).toISOString(),
-      category: "Geluid",
-      severity,
-      location: profile.standard_location || "Slaapkamer / tuinzijde",
-      title,
-      description,
-      db: dbAnalysis.totalAverage,
-      weather: "",
-      source: "PCE dB analyse",
-      actions: "",
-  })
-.select()
-.single();
-const insertedIncident = data;
-
-if (insertedIncident && dbUploadFile) {
-  const filePath = `db-analyses/${insertedIncident.id}/${dbUploadFile.name}`;
-
-const { error: uploadError } = await supabase.storage
-  .from("evidence")
-  .upload(filePath, dbUploadFile, {
-    upsert: true,
-  });
-
-if (uploadError) throw uploadError;
-  await supabase.from("media").insert({
-    incident_id: insertedIncident.id,
-    file_name: dbUploadName,
-    file_path: filePath,
-    mime_type:
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    size_bytes: 0,
-  });
-}
-  if (error) {
-    showMessage("Opslaan dB analyse mislukt.", true);
-  } else {
-    showMessage("dB analyse opgeslagen als incident.");
-    refreshData();
-  }
-};
-  const startQuickCapture = (category) => {
-    setQuickCaptureCategory(category);
-    quickCaptureRef.current?.click();
-  };
-
-  const handleQuickCapture = async (e) => {
-    if (!supabase || !quickCaptureCategory) return;
-    const category = quickCaptureCategory;
-    const uploaded = await handleMediaUpload(e, null, false);
-
-    if (!uploaded.length) {
-      setQuickCaptureCategory(null);
-      return;
-    }
-
-    const now = new Date();
-    const nowIso = now.toISOString();
-
-    const defaultTitles = {
-      Geluid: "Snelle opname geluidsoverlast",
-      Licht: "Snelle opname lichthinder",
-      Geur: "Snelle opname geuroverlast",
-    };
-
-    const defaultDescriptions = {
-      Geluid: "Incident direct vastgelegd via 1 klik opname. Vul details later aan.",
-      Licht: "Incident direct vastgelegd via 1 klik opname. Vul details later aan.",
-      Geur: "Incident direct vastgelegd via 1 klik opname. Vul details later aan.",
-    };
+    setDbUploadName(file.name);
+    setDbUploadFile(file);
 
     try {
-      const { data, error } = await supabase
-        .from("incidents")
-        .insert({
-          datetime: nowIso,
-          category,
-          severity: isNightIncident(nowIso) ? "Hoog" : "Middel",
-          location: profile.standard_location || "Slaapkamer / tuinzijde",
-          title: defaultTitles[category],
-          description: defaultDescriptions[category],
-          db: "",
-          weather: "",
-          source: "Nog aan te vullen",
-          actions: "Directe opname via snelle knop.",
-        })
-        .select()
-        .single();
+      const data = await file.arrayBuffer();
 
-      if (error) throw error;
+      const workbook = XLSX.read(data);
 
-      await Promise.all(uploaded.map((item) => supabase.from("media").update({ incident_id: data.id }).eq("id", item.id)));
-      await refreshData();
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
 
-      setEditingIncidentId(data.id);
-      setIncidentForm({
-        datetime: formatDateTimeLocal(now),
-        category,
-        severity: isNightIncident(nowIso) ? "Hoog" : "Middel",
-        location: profile.standard_location || "Slaapkamer / tuinzijde",
-        title: defaultTitles[category],
-        description: defaultDescriptions[category],
-        db: "",
-        weather: "",
-        source: "Nog aan te vullen",
-        actions: "Directe opname via snelle knop.",
+      const rows = XLSX.utils.sheet_to_json(sheet, {
+        range: 5,
       });
-      setSelectedMediaIds(uploaded.map((item) => item.id));
-      setActiveTab("registratie");
-      showMessage(`Snelle ${category.toLowerCase()}-opname opgeslagen. Vul nu eventueel bron, dB en beschrijving aan.`);
-    } catch {
-      showMessage("Snelle opname opslaan mislukt.", true);
-    } finally {
-      setQuickCaptureCategory(null);
-    }
-  };
 
-  const startEditIncident = (incident) => {
-    setEditingIncidentId(incident.id);
-    setIncidentForm({
-      datetime: toLocalInputValue(incident.datetime),
-      category: incident.category || "Geluid",
-      severity: incident.severity || "Middel",
-      location: incident.location || profile.standard_location || "Slaapkamer / tuinzijde",
-      title: incident.title || "",
-      description: incident.description || "",
-      db: incident.db || "",
-      weather: incident.weather || "",
-      source: incident.source || "",
-      actions: incident.actions || "",
-    });
-    setSelectedMediaIds((mediaByIncident[incident.id] || []).map((item) => item.id));
-    setFormMessage("");
-    setIsError(false);
-    setActiveTab("registratie");
-  };
+      const parsed = rows
+        .map((row) => {
+          const rawTime =
+            row.DateTime ||
+            row.datetime ||
+            row.Time ||
+            row.time ||
+            row.Datum ||
+            row.Date;
 
-  const addNote = async () => {
-    if (!supabase || !noteInput.trim()) return;
-    const { error } = await supabase.from("notes").insert({ text: noteInput.trim() });
-    if (error) showMessage("Notitie opslaan mislukt.", true);
-    else {
-      setNoteInput("");
-      refreshData();
+          const [datePart, timePart] = String(
+            rawTime || ""
+          ).split(",");
+
+          const [day, month, year] = String(
+            datePart || ""
+          ).split("-");
+
+          if (!day || !month || !year) return null;
+
+          const time = new Date(
+            `${year}-${month}-${day}T${
+              timePart || "00:00:00"
+            }`
+          );
+
+          const rawDb =
+            row.Value ||
+            row.value ||
+            row.dB ||
+            row.DB ||
+            row.db;
+
+          const dbValue = Number(
+            String(rawDb).replace(",", ".")
+          );
+
+          if (
+            Number.isNaN(dbValue) ||
+            Number.isNaN(time.getTime())
+          ) {
+            return null;
+          }
+
+          return {
+            datetime: time,
+            db: dbValue,
+          };
+        })
+        .filter(Boolean);
+
+      setDbExcelData(parsed);
+
+      if (!parsed.length) {
+        setDbAnalysis(null);
+        return;
+      }
+
+      const maxChartPoints = 500;
+
+      const step = Math.max(
+        1,
+        Math.ceil(parsed.length / maxChartPoints)
+      );
+
+      const chartData = parsed
+        .filter((_, index) => index % step === 0)
+        .map((item) => {
+          const date = new Date(item.datetime);
+          const hour = date.getHours();
+
+          let norm = 50;
+          let peak = 70;
+
+          if (hour >= 23 || hour < 7) {
+            norm = 40;
+            peak = 60;
+          } else if (hour >= 19) {
+            norm = 45;
+            peak = 65;
+          }
+
+          return {
+            time: date.toLocaleTimeString("nl-NL", {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+            db: item.db,
+            norm,
+            peak,
+          };
+        });
+
+      const total =
+        parsed.reduce((sum, item) => sum + item.db, 0) /
+        parsed.length;
+
+      const max = parsed.reduce(
+        (m, x) => Math.max(m, x.db),
+        -Infinity
+      );
+
+      const min = parsed.reduce(
+        (m, x) => Math.min(m, x.db),
+        Infinity
+      );
+
+      const sortedDates = parsed
+        .map((x) => new Date(x.datetime))
+        .sort((a, b) => a - b);
+
+      const startTime = sortedDates[0];
+      const endTime =
+        sortedDates[sortedDates.length - 1];
+
+      const durationMs = endTime - startTime;
+
+      const durationHours = Math.floor(
+        durationMs / 1000 / 60 / 60
+      );
+
+      const durationMinutes = Math.floor(
+        (durationMs / 1000 / 60) % 60
+      );
+
+      const averageExceedances = parsed.filter(
+        (item) => {
+          const hour = new Date(
+            item.datetime
+          ).getHours();
+
+          let norm = 50;
+
+          if (hour >= 23 || hour < 7) {
+            norm = 40;
+          } else if (hour >= 19) {
+            norm = 45;
+          }
+
+          return item.db > norm;
+        }
+      ).length;
+
+      const peakExceedances = parsed.filter(
+        (item) => {
+          const hour = new Date(
+            item.datetime
+          ).getHours();
+
+          let peakNorm = 70;
+
+          if (hour >= 23 || hour < 7) {
+            peakNorm = 60;
+          } else if (hour >= 19) {
+            peakNorm = 65;
+          }
+
+          return item.db > peakNorm;
+        }
+      ).length;
+
+      setDbAnalysis({
+        totalAverage: total.toFixed(1),
+        max: max.toFixed(1),
+        min: min.toFixed(1),
+        count: parsed.length,
+        averageExceedances,
+        peakExceedances,
+        startTime:
+          startTime.toLocaleString("nl-NL"),
+        endTime: endTime.toLocaleString("nl-NL"),
+        duration: `${durationHours}u ${durationMinutes}m`,
+        chartData,
+      });
+    } catch (error) {
+      console.error(error);
+
+      setDbAnalysis(null);
+
+      showMessage(
+        "Excel analyse mislukt.",
+        true
+      );
     }
-  };
+  }
 
   const addTask = async () => {
     if (!supabase || !taskInput.trim()) return;
