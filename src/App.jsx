@@ -1976,10 +1976,12 @@ ${profile.resident_name}
         <CardContent>
          <p className="muted">Gem. overschrijding</p>
           <p className="stat">
-          {`+${(
-  incident.chart_data?.reduce((sum, point) =>
-    sum + Math.max(0, Number(point.db) - Number(point.norm)), 0
-  ) / (incident.chart_data?.length || 1)
+      {`+${(
+  incident.chart_data?.filter((point) => Number(point.db) > Number(point.norm))
+    .reduce((sum, point) =>
+      sum + (Number(point.db) - Number(point.norm)), 0
+    ) /
+  (incident.chart_data?.filter((point) => Number(point.db) > Number(point.norm)).length || 1)
 ).toFixed(1)} dB`}
           </p>
         </CardContent>
