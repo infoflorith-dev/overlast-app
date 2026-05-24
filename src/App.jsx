@@ -1968,7 +1968,7 @@ ${profile.resident_name}
                   const chartNorm =
   incident.chart_data?.[0]?.norm || dbInfo.norm;
                         return (
-                          <div key={incident.id} className="incident-card">
+                          <div key={incident.id} data-incident-id={incident.id} className="incident-card">
                             <div className="between">
                               <div>
                                 <div className="badge-row">
