@@ -812,7 +812,7 @@ const enrichedMedia = mediaRows.map((item) => ({
       weather: "",
       source: "",
       actions: "",
-          });
+    });
 
     if (error) showMessage("Snel incident opslaan mislukt.", true);
     else {
@@ -860,7 +860,6 @@ Piek overschrijdingen: ${dbAnalysis.peakExceedances}
       weather: "",
       source: "PCE dB analyse",
       actions: "",
-      chartData,
   })
 .select()
 .single();
@@ -1714,9 +1713,7 @@ ${profile.resident_name}
                       </Button>
                     ))}
                   </div>
-</CardContent>
-</Card>
-)}
+
                 <div className="content-grid">
   <Card>
     <CardHeader>
@@ -2332,10 +2329,10 @@ style={{
                       <div className="incident-card">
                         <p className="bold">Korte conclusie</p>
                         <p className="mt">
-                        {(analyse?.night ?? 0) > 0
-  ? `Er is sprake van terugkerende overlast, met ${analyse?.night ?? 0} nachtcincidenten en ${analyse?.topCategory || "-"} als meest voorkomende bron.`
-  : `Er is sprake van terugkerende overlast, waarbij ${analyse?.topCategory || "-"} momenteel de meest voorkomende bron is.`
-}
+                          {(analyse?.night ?? 0) > 0
+                            ? `Er is sprake van terugkerende overlast, met ${analyse?.night ?? 0} nachtincidenten en ${(analyse?.topCategory || "-").toLowerCase()} als meest voorkomende categorie.`
+                            : `Er is sprake van terugkerende overlast, waarbij ${(analyse?.topCategory || "-").toLowerCase()} momenteel de meest voorkomende categorie is.`}
+                        </p>
                       </div>
                     </CardContent>
                   </Card>
@@ -2397,6 +2394,7 @@ style={{
                   </div>
                 </div>
               )}
+{activeTab === "db-analyse" && (
   <Card>
     <CardHeader>
       <CardTitle>dB Analyse</CardTitle>
@@ -2411,142 +2409,111 @@ style={{
         accept=".xlsx,.xls"
         onChange={handleDbExcelUpload}
       />
-{dbUploadName && (
-  <p className="muted">
-    Bestand: {dbUploadName}
-  </p>
-)}
 
+      {dbUploadName && (
+        <p className="muted">
+          Bestand: {dbUploadName}
+        </p>
+      )}
+{dbAnalysis && (
   <div className="badge-row">
     <Button onClick={saveDbAnalysisAsIncident}>
       Opslaan als incident
     </Button>
   </div>
 )}
+      {dbAnalysis && (
+        <div className="stats-page-grid">
+          <Card>
+            <CardContent>
+              <p className="muted">Gemiddelde dB</p>
+              <p className="stat">{dbAnalysis.totalAverage}</p>
+            </CardContent>
+          </Card>
 
-{dbAnalysis && (
-  <div className="stats-page-grid">
+          <Card>
+            <CardContent>
+              <p className="muted">Maximum</p>
+              <p className="stat">{dbAnalysis.max}</p>
+            </CardContent>
+          </Card>
 
-    <Card>
-      <CardContent>
-        <p className="muted">Gemiddelde dB</p>
-        <p className="stat">{dbAnalysis.totalAverage}</p>
-      </CardContent>
-    </Card>
+          <Card>
+            <CardContent>
+              <p className="muted">Minimum</p>
+              <p className="stat">{dbAnalysis.min}</p>
+            </CardContent>
+          </Card>
+<Card>
+  <CardContent>
+    <p className="muted">Metingen</p>
+    <p className="stat">{dbAnalysis.count}</p>
+  </CardContent>
+</Card>
 
-    <Card>
-      <CardContent>
-        <p className="muted">Maximum</p>
-        <p className="stat">{dbAnalysis.max}</p>
-      </CardContent>
-    </Card>
+<Card>
+  <CardContent>
+    <p className="muted">Norm overschrijdingen</p>
+    <p className="stat">{dbAnalysis.averageExceedances}</p>
+  </CardContent>
+</Card>
 
-    <Card>
-      <CardContent>
-        <p className="muted">Minimum</p>
-        <p className="stat">{dbAnalysis.min}</p>
-      </CardContent>
-    </Card>
+<Card>
+  <CardContent>
+    <p className="muted">Piek overschrijdingen</p>
+    <p className="stat">{dbAnalysis.peakExceedances}</p>
+  </CardContent>
+</Card>
+          <Card>
+  <CardContent>
+    <p className="muted">Start meting</p>
+    <p className="stat">{dbAnalysis.startTime}</p>
+  </CardContent>
+</Card>
 
-    <Card>
-      <CardContent>
-        <p className="muted">Metingen</p>
-        <p className="stat">{dbAnalysis.chartData?.length || 0}</p>
+<Card>
+  <CardContent>
+    <p className="muted">Einde meting</p>
+    <p className="stat">{dbAnalysis.endTime}</p>
+  </CardContent>
+</Card>
 
-        {dbAnalysis.chartData?.length > 0 && (
-          <div style={{ marginTop: 20 }}>
-            <ResponsiveContainer width="100%" height={220}>
-              <LineChart data={dbAnalysis.chartData}>
-                <XAxis dataKey="time" hide />
-                <YAxis />
-
-                <Line type="monotone" dataKey="db" stroke="#3b82f6" dot={false} />
-                <Line type="monotone" dataKey="norm" stroke="#f59e0b" dot={false} strokeDasharray="5 5" />
-                <Line type="monotone" dataKey="peak" stroke="#ef4444" dot={false} strokeDasharray="3 3" />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        )}
-      </CardContent>
-    </Card>
-
-    <Card>
-      <CardContent>
-        <p className="muted">Norm overschrijdingen</p>
-        <p className="stat">{dbAnalysis.averageExceedances}</p>
-      </CardContent>
-    </Card>
-
-    <Card>
-      <CardContent>
-        <p className="muted">Piek overschrijdingen</p>
-        <p className="stat">{dbAnalysis.peakExceedances}</p>
-      </CardContent>
-    </Card>
-
-    <Card>
-      <CardContent>
-        <p className="muted">Start meting</p>
-        <p className="stat">{dbAnalysis.startTime}</p>
-      </CardContent>
-    </Card>
-
-    <Card>
-      <CardContent>
-        <p className="muted">Einde meting</p>
-        <p className="stat">{dbAnalysis.endTime}</p>
-      </CardContent>
-    </Card>
-
-    <Card>
-      <CardContent>
-        <p className="muted">Duur meting</p>
-        <p className="stat">{dbAnalysis.duration}</p>
-      </CardContent>
-    </Card>
-
-  </div>
-)}
-
-{activeTab === "instellingen" && (
-  <Card>
-    <CardHeader>
-      <CardTitle>Instellingen</CardTitle>
-      <CardDescription>Pas standaardvelden aan en sla ze op in Supabase</CardDescription>
-    </CardHeader>
-
-    <CardContent className="stack">
-      <div className="form-grid-2">
-        <div>
-          <Label>Naam</Label>
-          <Input value={profile.resident_name || ""} onChange={(e) => setProfile({ ...profile, resident_name: e.target.value })} />
-        </div>
-
-        <div>
-          <Label>Locatie / adresomschrijving</Label>
-          <Input value={profile.location || ""} onChange={(e) => setProfile({ ...profile, location: e.target.value })} />
-        </div>
-
-        <div>
-          <Label>Standaard meetlocatie</Label>
-          <Input value={profile.standard_location || ""} onChange={(e) => setProfile({ ...profile, standard_location: e.target.value })} />
-        </div>
-
-        <div>
-          <Label>Instantie 1</Label>
-          <Input value={profile.authority1 || ""} onChange={(e) => setProfile({ ...profile, authority1: e.target.value })} />
-        </div>
-
-        <div>
-          <Label>Instantie 2</Label>
-          <Input value={profile.authority2 || ""} onChange={(e) => setProfile({ ...profile, authority2: e.target.value })} />
-        </div>
-      </div>
-
-      <div className="badge-row">
-        <Button variant="outline" onClick={saveProfile}>Instellingen opslaan</Button>
-        <Button variant="outline" onClick={refreshData}>Ververs uit cloud</Button>
-      </div>
+<Card>
+  <CardContent>
+    <p className="muted">Duur meting</p>
+    <p className="stat">{dbAnalysis.duration}</p>
+  </CardContent>
+</Card>
+            </div>
+      )}
     </CardContent>
   </Card>
 )}
+                         {activeTab === "instellingen" && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Instellingen</CardTitle>
+                    <CardDescription>Pas standaardvelden aan en sla ze op in Supabase</CardDescription>
+                  </CardHeader>
+                  <CardContent className="stack">
+                    <div className="form-grid-2">
+                      <div><Label>Naam</Label><Input value={profile.resident_name || ""} onChange={(e) => setProfile({ ...profile, resident_name: e.target.value })} /></div>
+                      <div><Label>Locatie / adresomschrijving</Label><Input value={profile.location || ""} onChange={(e) => setProfile({ ...profile, location: e.target.value })} /></div>
+                      <div><Label>Standaard meetlocatie</Label><Input value={profile.standard_location || ""} onChange={(e) => setProfile({ ...profile, standard_location: e.target.value })} /></div>
+                      <div><Label>Instantie 1</Label><Input value={profile.authority1 || ""} onChange={(e) => setProfile({ ...profile, authority1: e.target.value })} /></div>
+                      <div><Label>Instantie 2</Label><Input value={profile.authority2 || ""} onChange={(e) => setProfile({ ...profile, authority2: e.target.value })} /></div>
+                    </div>
+                    <div className="badge-row">
+                      <Button variant="outline" onClick={saveProfile}>Instellingen opslaan</Button>
+                      <Button variant="outline" onClick={refreshData}>Ververs uit cloud</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
