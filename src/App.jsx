@@ -25,7 +25,6 @@ import {
   Wind,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis } from "recharts";
 import * as XLSX from "xlsx";
 const env = typeof import.meta !== "undefined" && import.meta?.env ? import.meta.env : {};
 const supabaseUrl = env.VITE_SUPABASE_URL || "";
@@ -230,15 +229,15 @@ async function handleDbExcelUpload(event) {
 
   setDbUploadName(file.name);
 setDbUploadFile(file);
-  console.log("START DB UPLOAD");
   const data = await file.arrayBuffer();
-  console.log("ARRAYBUFFER KLAAR");
-const workbook = XLSX.read(data);
+  const workbook = XLSX.read(data);
 
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
 
   const rows = XLSX.utils.sheet_to_json(sheet, { range: 5 });
+
+  console.log(rows[0]);
 
   const parsed = rows
     .map((row) => {
@@ -270,36 +269,7 @@ const time = new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
       };
     })
     .filter((r) => r.datetime && !Number.isNaN(r.db));
-const maxChartPoints = 500;
-const step = Math.max(1, Math.floor(parsed.length / maxChartPoints));
 
-const chartData = parsed
-  .filter((_, index) => index % step === 0)
-  .map((item) => {
-    const date = new Date(item.datetime);
-    const hour = date.getHours();
-
-    let norm = 50;
-    let peak = 70;
-
-    if (hour >= 23 || hour < 7) {
-      norm = 40;
-      peak = 60;
-    } else if (hour >= 19) {
-      norm = 45;
-      peak = 65;
-    }
-
-    return {
-      time: date.toLocaleTimeString("nl-NL", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      db: item.db,
-      norm,
-      peak,
-    };
-  });
   setDbExcelData(parsed);
 
   if (!parsed.length) {
@@ -310,8 +280,8 @@ const chartData = parsed
   const total =
     parsed.reduce((sum, item) => sum + item.db, 0) / parsed.length;
 
- const max = parsed.reduce((m, x) => Math.max(m, x.db), -Infinity);
-const min = parsed.reduce((m, x) => Math.min(m, x.db), Infinity);
+  const max = Math.max(...parsed.map((x) => x.db));
+  const min = Math.min(...parsed.map((x) => x.db));
   const sortedDates = parsed
   .map((x) => new Date(x.datetime))
   .sort((a, b) => a - b);
@@ -348,36 +318,7 @@ const peakExceedances = parsed.filter((item) => {
   } else if (hour >= 19) {
     peakNorm = 65;
   }
-const maxChartPoints = 500;
-const step = Math.max(1, Math.floor(parsed.length / maxChartPoints));
 
-const chartData = parsed
-  .filter((_, index) => index % step === 0)
-  .map((item) => {
-    const date = new Date(item.datetime);
-    const hour = date.getHours();
-
-    let norm = 50;
-    let peakNorm = 70;
-
-    if (hour >= 23 || hour < 7) {
-      norm = 40;
-      peakNorm = 60;
-    } else if (hour >= 19) {
-      norm = 45;
-      peakNorm = 65;
-    }
-
-    return {
-      time: date.toLocaleTimeString("nl-NL", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      db: item.db,
-      norm,
-      peakNorm,
-    };
-  });
   return item.db > peakNorm;
 }).length;
  setDbAnalysis({
@@ -454,36 +395,6 @@ duration: `${durationHours}u ${durationMinutes}m`,
     return { total, high, sound, light, smell, night, avgDb };
   }, [incidents]);
   const dbSummary = useMemo(() => {
-    const maxChartPoints = 500;
-const step = Math.max(1, Math.floor(incidents.length / maxChartPoints));
-
-const chartData = incidents
-  .filter((i, index) => index % step === 0 && i.db)
-  .map((item) => {
-    const date = new Date(item.datetime);
-    const hour = date.getHours();
-
-    let norm = 50;
-    let peakNorm = 70;
-
-    if (hour >= 23 || hour < 7) {
-      norm = 40;
-      peakNorm = 60;
-    } else if (hour >= 19) {
-      norm = 45;
-      peakNorm = 65;
-    }
-
-    return {
-      time: date.toLocaleTimeString("nl-NL", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      db: Number(item.db),
-      norm,
-      peakNorm,
-    };
-  });
     const incidentsWithExceedance = incidents
       .map((incident) => {
         const dbInfo = getDbExceedance(incident);
@@ -879,7 +790,7 @@ if (uploadError) throw uploadError;
   await supabase.from("media").insert({
     incident_id: insertedIncident.id,
     file_name: dbUploadName,
-    file_path: filePath,
+    file_path: dbUploadName,
     mime_type:
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     size_bytes: 0,
@@ -1722,43 +1633,6 @@ ${profile.resident_name}
       <CardDescription>Laatste 10 op incidentdatum</CardDescription>
     </CardHeader>
     <CardContent className="stack">
-      <div style={{ marginTop: 20 }}>
-  <ResponsiveContainer width="100%" height={260}>
-  <LineChart data={Array.isArray(dbAnalysis?.chartData) ? dbAnalysis.chartData : []}>
-      <XAxis dataKey="time" hide />
-      <YAxis />
-
-      {/* dB lijn */}
-      <Line
-        type="monotone"
-        dataKey="db"
-        stroke="#3b82f6"
-        dot={false}
-        strokeWidth={2}
-      />
-
-      {/* Norm lijn */}
-      <Line
-        type="monotone"
-        dataKey="norm"
-        stroke="#f59e0b"
-        dot={false}
-        strokeDasharray="5 5"
-        strokeWidth={2}
-      />
-
-      {/* Piek lijn */}
-      <Line
-        type="monotone"
-        dataKey="peak"
-        stroke="#ef4444"
-        dot={false}
-        strokeDasharray="3 3"
-        strokeWidth={2}
-      />
-    </LineChart>
-  </ResponsiveContainer>
-</div>
       {recentTimeline.map((incident) => (
         <div key={incident.id} className="incident-card">
           <div className="badge-row">
@@ -1883,29 +1757,7 @@ ${profile.resident_name}
                           <div className="media-grid">
                             {allMedia.map((item) => (
                               <div key={item.id} className={cn("media-card", selectedMediaIds.includes(item.id) && "media-selected")}>
-                               <button
-  type="button"
-  className="media-preview-btn"
-  onClick={async () => {
-    if (item.mime_type?.includes("spreadsheet")) {
-      const { data, error } = await supabase.storage
-        .from("evidence")
-        .createSignedUrl(item.file_path, 3600, {
-          download: item.file_name || "pce-meting.xlsx",
-        });
-
-      if (error || !data?.signedUrl) {
-        showMessage("Excel downloaden mislukt.", true);
-        return;
-      }
-
-      window.location.href = data.signedUrl;
-      return;
-    }
-
-    openMediaPreview(item);
-  }}
->
+                                <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
                                 {thumbnailUrls[item.id] ? (
   item.type === "video" ? (
     <video
@@ -2042,32 +1894,6 @@ ${profile.resident_name}
           </p>
         </CardContent>
       </Card>
-      <Card>
-  <CardContent>
-    <p className="muted">Metingen</p>
-    <p className="stat">
-      {incident.description?.match(/Metingen: (\d+)/)?.[1] || "-"}
-    </p>
-  </CardContent>
-</Card>
-
-<Card>
-  <CardContent>
-    <p className="muted">Norm overschrijdingen</p>
-    <p className="stat">
-      {incident.description?.match(/Norm overschrijdingen: (\d+)/)?.[1] || "-"}
-    </p>
-  </CardContent>
-</Card>
-
-<Card>
-  <CardContent>
-    <p className="muted">Piek overschrijdingen</p>
-    <p className="stat">
-      {incident.description?.match(/Piek overschrijdingen: (\d+)/)?.[1] || "-"}
-    </p>
-  </CardContent>
-</Card>
     </div>
 
     <p><strong>Vastlegging:</strong> Gecertificeerde PCE dB meter</p>
@@ -2081,27 +1907,7 @@ ${profile.resident_name}
                                   <div className="media-grid mt">
                                     {(mediaByIncident[incident.id] || []).map((item) => (
                                       <div key={item.id} className="media-card">
-                                       <button
-  type="button"
-  className="media-preview-btn"
- onClick={async () => {
-   if (item.mime_type?.includes("spreadsheet")) {
-  const { data, error } = await supabase.storage
-    .from("evidence")
-    .createSignedUrl(item.file_path, 3600);
-
-  if (error || !data?.signedUrl) {
-    showMessage("Excel openen mislukt.", true);
-    return;
-  }
-
-  window.location.href = data.signedUrl;
-  return;
-}
-
-    openMediaPreview(item);
-  }}
->
+                                        <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
      <div className="media-thumb">
   <div style={{ fontWeight: 700 }}>
     {item.mime_type?.includes("spreadsheet")
@@ -2111,7 +1917,7 @@ ${profile.resident_name}
   : "🖼 Foto"}
   </div>
   <div style={{ fontSize: "11px", opacity: 0.7 }}>
-   {item.mime_type?.includes("spreadsheet") ? "Download Excel-bestand" : "Klik om te openen"}
+    Klik om te openen
   </div>
 </div>
                                           <div className="preview-chip"><Expand className="icon-sm" /></div>
@@ -2145,17 +1951,7 @@ ${profile.resident_name}
                     <div className="media-grid">
                       {allMedia.map((item) => (
                         <div key={item.id} className="media-card">
-                          <button
-  type="button"
-  className="media-preview-btn"
-  onClick={() => {
-    if (item.mime_type?.includes("spreadsheet")) {
-      window.open(item.url, "_blank");
-    } else {
-      openMediaPreview(item);
-    }
-  }}
->
+                          <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
           <div className="media-thumb-large">
   <div style={{ fontWeight: 700 }}>
     {item.type === "video" ? "🎥 Video" : "🖼 Foto"}
