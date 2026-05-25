@@ -1194,7 +1194,7 @@ reportWindow.document.write(`
     <head>
       <title>dB analyse incidentrapport</title>
     </head>
-  <body style="font-family: Arial; padding: 40px; background: white; color: #111;">
+ <body style="font-family: Arial, sans-serif; background:#f5f7fb; padding:24px; color:#111;">
   <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:30px;">
     <div>
       <h1 style="margin:0;">dB analyse incidentrapport</h1>
