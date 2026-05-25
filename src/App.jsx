@@ -1199,34 +1199,7 @@ reportWindow.document.write(`
     <p><strong>Bron:</strong> ${selectedIncident.source}</p>
     <p><strong>Gemiddelde dB:</strong> ${selectedIncident.db}</p>
   </div>
-  <div style="
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap:16px;
-  margin-bottom:24px;
-">
-  <div style="border:1px solid #ddd; border-radius:16px; padding:20px;">
-    <div style="color:#666; margin-bottom:10px;">Gemiddelde dB</div>
-    <div style="font-size:36px; font-weight:bold;">
-      ${selectedIncident.db || "-"}
-    </div>
-  </div>
-
-  <div style="border:1px solid #ddd; border-radius:16px; padding:20px;">
-    <div style="color:#666; margin-bottom:10px;">Norm (avond)</div>
-    <div style="font-size:36px; font-weight:bold;">
-      45
-    </div>
-  </div>
-
-  <div style="border:1px solid #ddd; border-radius:16px; padding:20px;">
-    <div style="color:#666; margin-bottom:10px;">Metingen</div>
-    <div style="font-size:36px; font-weight:bold;">
-      ${selectedIncident.chart_data?.length || 0}
-    </div>
-  </div>
-</div>
-  <div style="
+   <div style="
   display:grid;
   grid-template-columns: repeat(3, 1fr);
   gap:16px;
