@@ -815,12 +815,19 @@ const saveDbAnalysisAsIncident = async () => {
     dbAnalysis.peakExceedances > 0
       ? "Hoog"
       : "Middel";
-
+const norm =
+  new Date(dbAnalysis.startTime).getHours() >= 7 &&
+  new Date(dbAnalysis.startTime).getHours() < 19
+    ? 50
+    : new Date(dbAnalysis.startTime).getHours() >= 19 &&
+      new Date(dbAnalysis.startTime).getHours() < 23
+    ? 45
+    : 40;
   const title = `dB analyse ${dbAnalysis.startTime}`;
 
   const description = `
 PCE dB analyse
-Norm: ${dbAnalysis.norm}
+Norm: ${norm}
 Start meting: ${dbAnalysis.startTime}
 Einde meting: ${dbAnalysis.endTime}
 Duur: ${dbAnalysis.duration}
