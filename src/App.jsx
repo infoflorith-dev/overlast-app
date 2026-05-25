@@ -1248,7 +1248,7 @@ reportWindow.document.write(`
   <div style="border:1px solid #ddd; border-radius:16px; padding:20px;">
     <div style="color:#666; margin-bottom:12px;">Gem. overschrijding</div>
     <div style="font-size:42px; font-weight:bold;">
-      +${avgExceedance.toFixed(1)} dB
+     +${(Number(selectedIncident.db) - 45).toFixed(1)} dB
     </div>
   </div>
 </div>
