@@ -1223,7 +1223,7 @@ reportWindow.document.write(`
     <p><strong>Incident ID:</strong> ${selectedIncident.id}</p>
     <p><strong>Locatie:</strong> ${selectedIncident.location}</p>
     <p><strong>Bron:</strong> ${selectedIncident.source}</p>
-   <p><strong>Gemiddelde dB:</strong> ${avgDb.toFixed(1)}</p>
+  <p><strong>Gemiddelde dB:</strong> ${selectedIncident.db}</p>
   </div>
    <div style="
   display:grid;
@@ -1234,7 +1234,7 @@ reportWindow.document.write(`
   <div style="border:1px solid #ddd; border-radius:16px; padding:20px;">
     <div style="color:#666; margin-bottom:12px;">Gemiddelde dB</div>
     <div style="font-size:42px; font-weight:bold;">
-    ${avgDb.toFixed(1)}
+    ${selectedIncident.db}
     </div>
   </div>
 
