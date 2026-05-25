@@ -1171,11 +1171,35 @@ reportWindow.document.write(`
     <head>
       <title>dB analyse incidentrapport</title>
     </head>
-    <body>
-      <h1>dB analyse incidentrapport</h1>
-      <p>${selectedIncident.title}</p>
-      <p>${selectedIncident.location}</p>
-    </body>
+  <body style="font-family: Arial; padding: 40px; background: white; color: #111;">
+  <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:30px;">
+    <div>
+      <h1 style="margin:0;">dB analyse incidentrapport</h1>
+      <p style="margin-top:8px; color:#666;">PCE dB analyse</p>
+    </div>
+
+    <div style="text-align:right;">
+      <div>Datum rapport: ${new Date().toLocaleDateString("nl-NL")}</div>
+      <div>Pagina: 1 van 1</div>
+    </div>
+  </div>
+
+  <hr style="margin-bottom:30px;" />
+
+  <div style="
+    border:1px solid #ddd;
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:24px;
+  ">
+    <h2 style="margin-top:0;">Incident informatie</h2>
+
+    <p><strong>Incident ID:</strong> ${selectedIncident.id}</p>
+    <p><strong>Locatie:</strong> ${selectedIncident.location}</p>
+    <p><strong>Bron:</strong> ${selectedIncident.source}</p>
+    <p><strong>Gemiddelde dB:</strong> ${selectedIncident.db}</p>
+  </div>
+</body>
   </html>
 `);
 
