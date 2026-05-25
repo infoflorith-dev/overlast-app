@@ -1226,9 +1226,10 @@ reportWindow.document.write(`
   </div>
 <div style="
   display:grid;
-  grid-template-columns: repeat(3, 1fr);
- gap:12px;
-  margin-bottom:20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:14px;
+  margin-bottom:24px;
+  align-items:stretch;
 ">
   <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
   <div style="color:#6b7280; font-size:14px; margin-bottom:8px;">Gemiddelde dB</div>
