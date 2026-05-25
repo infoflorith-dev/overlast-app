@@ -820,7 +820,7 @@ const saveDbAnalysisAsIncident = async () => {
 
   const description = `
 PCE dB analyse
-
+Norm: ${dbAnalysis.norm}
 Start meting: ${dbAnalysis.startTime}
 Einde meting: ${dbAnalysis.endTime}
 Duur: ${dbAnalysis.duration}
@@ -1240,7 +1240,7 @@ reportWindow.document.write(`
 
     <div style="display:grid; gap:10px; font-size:15px;">
       <div><strong>Gemiddelde dB:</strong> ${selectedIncident.db}</div>
-      <div><strong>Norm:</strong> 45</div>
+    <div><strong>Norm:</strong> ${selectedIncident.description?.match(/Norm: ([^\n]+)/)?.[1] || "-"}</div>
       <div><strong>Gem. overschrijding:</strong> ${selectedIncident.description?.match(/Gem\. overschrijding: ([^\n]+)/)?.[1] || `+${(Number(selectedIncident.db) - 45).toFixed(1)} dB`}</div>
       <div><strong>Metingen:</strong> ${selectedIncident.description?.match(/Metingen: (\d+)/)?.[1] || "-"}</div>
       <div><strong>Norm overschrijdingen:</strong> ${selectedIncident.description?.match(/Norm overschrijdingen: (\d+)/)?.[1] || "-"}</div>
@@ -1264,7 +1264,7 @@ reportWindow.document.write(`
 
   <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
     <div style="color:#6b7280; font-size:14px; margin-bottom:8px;">Norm</div>
-   <div style="font-size:28px; font-weight:700; letter-spacing:-0.5px;">45</div>
+  <div style="font-size:28px; font-weight:700; letter-spacing:-0.5px;">${selectedIncident.description?.match(/Norm: ([^\n]+)/)?.[1] || "-"}</div>
   </div>
 
   <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
