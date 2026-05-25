@@ -1173,6 +1173,15 @@ const selectedCard = document.querySelector(
 if (selectedCard) {
   selectedCard.style.display = "block";
 }
+  document.body.classList.add("printing-db");
+
+setTimeout(() => {
+  document.body.classList.remove("printing-db");
+
+  cards.forEach((card) => {
+    card.style.display = "block";
+  });
+}, 1000);
   window.print();
 };
   const exportReport = () => {
