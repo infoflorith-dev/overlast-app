@@ -1233,32 +1233,32 @@ reportWindow.document.write(`
 ">
   <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
   <div style="color:#6b7280; font-size:14px; margin-bottom:8px;">Gemiddelde dB</div>
-    <div style="font-size:28px; font-weight:bold;">${selectedIncident.db}</div>
+    <div style="font-size:28px; font-weight:700; letter-spacing:-0.5px;">${selectedIncident.db}</div>
   </div>
 
   <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
     <div style="color:#6b7280; font-size:14px; margin-bottom:8px;">Norm</div>
-    <div style="font-size:28px; font-weight:bold;">45</div>
+   <div style="font-size:28px; font-weight:700; letter-spacing:-0.5px;">45</div>
   </div>
 
   <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
   <div style="color:#6b7280; font-size:14px; margin-bottom:8px;">Gem. overschrijding</div>
-   <div style="font-size:28px; font-weight:bold;">${selectedIncident.description?.match(/Gem\. overschrijding: ([^\n]+)/)?.[1] || `+${(Number(selectedIncident.db) - 45).toFixed(1)} dB`}</div>
+   <div style="font-size:28px; font-weight:700; letter-spacing:-0.5px;">${selectedIncident.description?.match(/Gem\. overschrijding: ([^\n]+)/)?.[1] || `+${(Number(selectedIncident.db) - 45).toFixed(1)} dB`}</div>
   </div>
 
   <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
   <div style="color:#6b7280; font-size:14px; margin-bottom:8px;">Metingen</div>
-    <div style="font-size:28px; font-weight:bold;">${selectedIncident.description?.match(/Metingen: (\d+)/)?.[1] || "-"}</div>
+   <div style="font-size:28px; font-weight:700; letter-spacing:-0.5px;">${selectedIncident.description?.match(/Metingen: (\d+)/)?.[1] || "-"}</div>
   </div>
 
   <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
     <div style="color:#6b7280; font-size:14px; margin-bottom:8px;">Norm overschrijdingen</div>
- <div style="font-size:28px; font-weight:bold;">${selectedIncident.description?.match(/Norm overschrijdingen: (\d+)/)?.[1] || "-"}</div>
+<div style="font-size:28px; font-weight:700; letter-spacing:-0.5px;">${selectedIncident.description?.match(/Norm overschrijdingen: (\d+)/)?.[1] || "-"}</div>
   </div>
 
   <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
    <div style="color:#6b7280; font-size:14px; margin-bottom:8px;">Piek overschrijdingen</div>
-  <div style="font-size:28px; font-weight:bold;">${selectedIncident.description?.match(/Piek overschrijdingen: (\d+)/)?.[1] || "-"}</div>
+  <div style="font-size:28px; font-weight:700; letter-spacing:-0.5px;">${selectedIncident.description?.match(/Piek overschrijdingen: (\d+)/)?.[1] || "-"}</div>
   </div>
 </div>
 
