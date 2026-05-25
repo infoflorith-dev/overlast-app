@@ -1238,7 +1238,7 @@ body{
   border:1px solid #ddd;
   border-radius:12px;
   padding:16px;
-  background:#fafafa;
+background:#f1f3f6;
 }
 
 .info-title{
