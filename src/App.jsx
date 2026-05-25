@@ -828,7 +828,7 @@ Duur: ${dbAnalysis.duration}
 Gemiddelde dB: ${dbAnalysis.totalAverage}
 Maximum dB: ${dbAnalysis.max}
 Minimum dB: ${dbAnalysis.min}
-
+Gem. overschrijding: +${dbAnalysis.averageExceedanceValue} dB
 Metingen: ${dbAnalysis.count}
 Norm overschrijdingen: ${dbAnalysis.averageExceedances}
 Piek overschrijdingen: ${dbAnalysis.peakExceedances}
