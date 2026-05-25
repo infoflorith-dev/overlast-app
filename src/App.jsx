@@ -364,7 +364,6 @@ const peakExceedances = parsed.filter((item) => {
   totalAverage: total.toFixed(1),
   max: max.toFixed(1),
   min: min.toFixed(1),
-   norm: getNormPeak(new Date(parsed[0]?.datetime || Date.now())),
   count: parsed.length,
   averageExceedances,
   peakExceedances,
@@ -816,19 +815,12 @@ const saveDbAnalysisAsIncident = async () => {
     dbAnalysis.peakExceedances > 0
       ? "Hoog"
       : "Middel";
-const norm =
-  new Date(dbAnalysis.startTime).getHours() >= 7 &&
-  new Date(dbAnalysis.startTime).getHours() < 19
-    ? 50
-    : new Date(dbAnalysis.startTime).getHours() >= 19 &&
-      new Date(dbAnalysis.startTime).getHours() < 23
-    ? 45
-    : 40;
+
   const title = `dB analyse ${dbAnalysis.startTime}`;
 
   const description = `
 PCE dB analyse
-Norm: ${norm}
+
 Start meting: ${dbAnalysis.startTime}
 Einde meting: ${dbAnalysis.endTime}
 Duur: ${dbAnalysis.duration}
@@ -836,7 +828,7 @@ Duur: ${dbAnalysis.duration}
 Gemiddelde dB: ${dbAnalysis.totalAverage}
 Maximum dB: ${dbAnalysis.max}
 Minimum dB: ${dbAnalysis.min}
-Gem. overschrijding: +${dbAnalysis.averageExceedanceValue} dB
+
 Metingen: ${dbAnalysis.count}
 Norm overschrijdingen: ${dbAnalysis.averageExceedances}
 Piek overschrijdingen: ${dbAnalysis.peakExceedances}
@@ -1160,147 +1152,16 @@ const printDbAnalysisReport = () => {
     return;
   }
 
-const selectedIncident = incidents.find((i) => i.id === selectedDbPrintId);
+  const selectedIncident = incidents.find(
+    (i) => i.id === selectedDbPrintId
+  );
 
-if (!selectedIncident) {
-  alert("dB analyse niet gevonden");
-  return;
-}
+  if (!selectedIncident) {
+    alert("dB analyse niet gevonden");
+    return;
+  }
 
-const measurements = selectedIncident.chart_data || [];
-
-const dbValues = measurements
-  .map((m) => Number(m.db))
-  .filter((v) => !isNaN(v));
-
-const avgDb = dbValues.length
-  ? dbValues.reduce((a, b) => a + b, 0) / dbValues.length
-  : Number(selectedIncident.db || 0);
-
-const maxDb = dbValues.length ? Math.max(...dbValues) : 0;
-const minDb = dbValues.length ? Math.min(...dbValues) : 0;
-
-const normValue = 45;
-
-const normExceedances = dbValues.filter(
-  (v) => v > normValue
-).length;
-
-const peakExceedances = dbValues.filter(
-  (v) => v > normValue + 10
-).length;
-
- const reportWindow = window.open("", "_blank");
-
-if (!reportWindow) {
-  alert("Pop-up geblokkeerd. Sta pop-ups toe voor deze site.");
-  return;
-}
-
-reportWindow.document.write(`
-  <html>
-    <head>
-      <title>dB analyse incidentrapport</title>
-    </head>
- <body style="font-family: Arial, sans-serif; background:#f5f7fb; padding:24px; color:#111;">
-  <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:30px;">
-    <div>
-      <h1 style="margin:0;">dB analyse incidentrapport</h1>
-      <p style="margin-top:8px; color:#666;">PCE dB analyse</p>
-    </div>
-
-    <div style="text-align:right;">
-      <div>Datum rapport: ${new Date().toLocaleDateString("nl-NL")}</div>
-      <div>Pagina: 1 van 1</div>
-    </div>
-  </div>
-
-  <hr style="margin-bottom:30px;" />
-
-<div style="
-  background:white;
-  border:1px solid #e5e7eb;
-  border-radius:20px;
-  padding:32px;
-  margin-bottom:28px;
-  box-shadow:0 1px 3px rgba(0,0,0,0.04);
-">
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start;">
-  <div>
-    <h2 style="margin-top:0; margin-bottom:20px;">Incident informatie</h2>
-
-    <div style="display:grid; gap:14px; font-size:15px;">
-      <div><strong>Incident ID:</strong> ${selectedIncident.id}</div>
-      <div><strong>Locatie:</strong> ${selectedIncident.location}</div>
-      <div><strong>Bron:</strong> ${selectedIncident.source}</div>
-      <div><strong>Gemiddelde dB:</strong> ${selectedIncident.db}</div>
-    </div>
-  </div>
-
-  <div style="
-    background:#f3f4f6;
-    border-radius:18px;
-    padding:20px;
-  ">
-    <div style="font-size:24px; font-weight:700; margin-bottom:16px;">
-      Samenvatting
-    </div>
-
-    <div style="display:grid; gap:10px; font-size:15px;">
-      <div><strong>Gemiddelde dB:</strong> ${selectedIncident.db}</div>
-    <div><strong>Norm:</strong> ${selectedIncident.description?.match(/Norm: ([^\n]+)/)?.[1] || "-"}</div>
-      <div><strong>Gem. overschrijding:</strong> ${selectedIncident.description?.match(/Gem\. overschrijding: ([^\n]+)/)?.[1] || `+${(Number(selectedIncident.db) - 45).toFixed(1)} dB`}</div>
-      <div><strong>Metingen:</strong> ${selectedIncident.description?.match(/Metingen: (\d+)/)?.[1] || "-"}</div>
-      <div><strong>Norm overschrijdingen:</strong> ${selectedIncident.description?.match(/Norm overschrijdingen: (\d+)/)?.[1] || "-"}</div>
-      <div><strong>Piek overschrijdingen:</strong> ${selectedIncident.description?.match(/Piek overschrijdingen: (\d+)/)?.[1] || "-"}</div>
-    </div>
-  </div>
-</div>
-
-</div>
-<div style="
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap:14px;
-  margin-bottom:24px;
-  align-items:stretch;
-">
-  <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
-  <div style="color:#6b7280; font-size:14px; margin-bottom:8px;">Gemiddelde dB</div>
-    <div style="font-size:28px; font-weight:700; letter-spacing:-0.5px;">${selectedIncident.db}</div>
-  </div>
-
-  <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
-    <div style="color:#6b7280; font-size:14px; margin-bottom:8px;">Norm</div>
-  <div style="font-size:28px; font-weight:700; letter-spacing:-0.5px;">${selectedIncident.description?.match(/Norm: ([^\n]+)/)?.[1] || "-"}</div>
-  </div>
-
-  <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
-  <div style="color:#6b7280; font-size:14px; margin-bottom:8px;">Gem. overschrijding</div>
-   <div style="font-size:28px; font-weight:700; letter-spacing:-0.5px;">${selectedIncident.description?.match(/Gem\. overschrijding: ([^\n]+)/)?.[1] || `+${(Number(selectedIncident.db) - 45).toFixed(1)} dB`}</div>
-  </div>
-
-  <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
-  <div style="color:#6b7280; font-size:14px; margin-bottom:8px;">Metingen</div>
-   <div style="font-size:28px; font-weight:700; letter-spacing:-0.5px;">${selectedIncident.description?.match(/Metingen: (\d+)/)?.[1] || "-"}</div>
-  </div>
-
-  <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
-    <div style="color:#6b7280; font-size:14px; margin-bottom:8px;">Norm overschrijdingen</div>
-<div style="font-size:28px; font-weight:700; letter-spacing:-0.5px;">${selectedIncident.description?.match(/Norm overschrijdingen: (\d+)/)?.[1] || "-"}</div>
-  </div>
-
-  <div style="border:1px solid #e5e7eb; border-radius:18px; padding:14px;">
-   <div style="color:#6b7280; font-size:14px; margin-bottom:8px;">Piek overschrijdingen</div>
-  <div style="font-size:28px; font-weight:700; letter-spacing:-0.5px;">${selectedIncident.description?.match(/Piek overschrijdingen: (\d+)/)?.[1] || "-"}</div>
-  </div>
-</div>
-
-</body>
-  </html>
-`);
-
-reportWindow.document.close();
+  window.print();
 };
   const exportReport = () => {
     const sorted = [...filteredIncidents].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
