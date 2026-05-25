@@ -1190,13 +1190,14 @@ const printDbAnalysisReport = () => {
 <style>
 body{
   font-family: Arial, sans-serif;
-  padding:40px;
+  padding:18px;
   color:#111;
   background:#fff;
+  font-size:13px;
 }
 
 .report{
-  max-width:1100px;
+  max-width:980px;
   margin:0 auto;
 }
 
@@ -1204,91 +1205,91 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
-  margin-bottom:30px;
+  margin-bottom:18px;
   border-bottom:1px solid #ddd;
-  padding-bottom:20px;
+  padding-bottom:12px;
 }
 
 .title{
-  font-size:42px;
+  font-size:24px;
   font-weight:700;
-  margin-bottom:10px;
+  margin-bottom:4px;
 }
 
 .subtitle{
   color:#666;
-  font-size:18px;
+  font-size:14px;
 }
 
 .meta{
   text-align:right;
-  font-size:14px;
-  line-height:1.8;
+  font-size:12px;
+  line-height:1.5;
 }
 
 .info-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:20px;
-  margin-bottom:30px;
+  gap:14px;
+  margin-bottom:16px;
 }
 
 .info-box{
   border:1px solid #ddd;
-  border-radius:14px;
-  padding:24px;
+  border-radius:12px;
+  padding:16px;
   background:#fafafa;
 }
 
 .info-title{
-  font-size:28px;
+  font-size:18px;
   font-weight:700;
-  margin-bottom:20px;
+  margin-bottom:12px;
 }
 
 .info-line{
-  margin-bottom:12px;
-  font-size:16px;
+  margin-bottom:8px;
+  font-size:13px;
+  line-height:1.4;
 }
 
 .stats-grid{
   display:grid;
   grid-template-columns:repeat(3, 1fr);
-  gap:20px;
-  margin-bottom:20px;
+  gap:14px;
+  margin-bottom:12px;
 }
 
 .stat-card{
   border:1px solid #ddd;
-  border-radius:14px;
-  padding:24px;
+  border-radius:12px;
+  padding:16px;
   background:white;
 }
 
 .stat-label{
   color:#666;
-  font-size:16px;
-  margin-bottom:16px;
+  font-size:13px;
+  margin-bottom:10px;
 }
 
 .stat-value{
-  font-size:42px;
+  font-size:26px;
   font-weight:700;
 }
 
 .chart-box{
   border:1px solid #ddd;
-  border-radius:14px;
-  padding:24px;
-  margin-top:30px;
+  border-radius:12px;
+  padding:16px;
+  margin-top:16px;
 }
 
 .chart-title{
-  font-size:28px;
+  font-size:18px;
   font-weight:700;
-  margin-bottom:10px;
+  margin-bottom:4px;
 }
-
 .chart-sub{
   color:#666;
   margin-bottom:20px;
