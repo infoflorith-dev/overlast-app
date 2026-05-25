@@ -1225,33 +1225,49 @@ reportWindow.document.write(`
     <p><strong>Bron:</strong> ${selectedIncident.source}</p>
   <p><strong>Gemiddelde dB:</strong> ${selectedIncident.db}</p>
   </div>
-   <div style="
+  Next: layout dichter naar voorbeeld.
+
+Vervang regel **1228 t/m 1254** — dus het hele huidige kaartenblok — door dit compactere blok met **6 kaarten**:
+
+```html
+<div style="
   display:grid;
   grid-template-columns: repeat(3, 1fr);
   gap:16px;
-  margin-bottom:24px;
+  margin-bottom:20px;
 ">
-  <div style="border:1px solid #ddd; border-radius:16px; padding:20px;">
-    <div style="color:#666; margin-bottom:12px;">Gemiddelde dB</div>
-    <div style="font-size:42px; font-weight:bold;">
-    ${selectedIncident.db}
-    </div>
+  <div style="border:1px solid #ddd; border-radius:14px; padding:16px;">
+    <div style="color:#666; margin-bottom:8px;">Gemiddelde dB</div>
+    <div style="font-size:32px; font-weight:bold;">${selectedIncident.db}</div>
   </div>
 
-  <div style="border:1px solid #ddd; border-radius:16px; padding:20px;">
-    <div style="color:#666; margin-bottom:12px;">Norm</div>
-    <div style="font-size:42px; font-weight:bold;">
-      45
-    </div>
+  <div style="border:1px solid #ddd; border-radius:14px; padding:16px;">
+    <div style="color:#666; margin-bottom:8px;">Norm</div>
+    <div style="font-size:32px; font-weight:bold;">45</div>
   </div>
 
-  <div style="border:1px solid #ddd; border-radius:16px; padding:20px;">
-    <div style="color:#666; margin-bottom:12px;">Gem. overschrijding</div>
-    <div style="font-size:42px; font-weight:bold;">
-     +${(Number(selectedIncident.db) - 45).toFixed(1)} dB
-    </div>
+  <div style="border:1px solid #ddd; border-radius:14px; padding:16px;">
+    <div style="color:#666; margin-bottom:8px;">Gem. overschrijding</div>
+    <div style="font-size:32px; font-weight:bold;">+${(Number(selectedIncident.db) - 45).toFixed(1)} dB</div>
+  </div>
+
+  <div style="border:1px solid #ddd; border-radius:14px; padding:16px;">
+    <div style="color:#666; margin-bottom:8px;">Metingen</div>
+    <div style="font-size:32px; font-weight:bold;">${selectedIncident.chart_data?.length || "-"}</div>
+  </div>
+
+  <div style="border:1px solid #ddd; border-radius:14px; padding:16px;">
+    <div style="color:#666; margin-bottom:8px;">Norm overschrijdingen</div>
+    <div style="font-size:32px; font-weight:bold;">${normExceedances}</div>
+  </div>
+
+  <div style="border:1px solid #ddd; border-radius:14px; padding:16px;">
+    <div style="color:#666; margin-bottom:8px;">Piek overschrijdingen</div>
+    <div style="font-size:32px; font-weight:bold;">${peakExceedances}</div>
   </div>
 </div>
+```
+
 </body>
   </html>
 `);
