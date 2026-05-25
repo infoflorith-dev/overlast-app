@@ -1153,7 +1153,33 @@ const printDbAnalysisReport = () => {
   }
 
   const selectedIncident = incidents.find((i) => i.id === selectedDbPrintId);
+const measurements = selectedIncident.chart_data || [];
 
+const dbValues = measurements
+  .map((m) => Number(m.db))
+  .filter((v) => !isNaN(v));
+
+const avgDb = dbValues.length
+  ? dbValues.reduce((a, b) => a + b, 0) / dbValues.length
+  : 0;
+
+const maxDb = dbValues.length ? Math.max(...dbValues) : 0;
+const minDb = dbValues.length ? Math.min(...dbValues) : 0;
+
+const normValue = 45;
+
+const normExceedances = dbValues.filter(
+  (v) => v > normValue
+).length;
+
+const peakExceedances = dbValues.filter(
+  (v) => v > normValue + 10
+).length;
+
+const avgExceedance =
+  normExceedances > 0
+    ? avgDb - normValue
+    : 0;
   if (!selectedIncident) {
     alert("dB analyse niet gevonden");
     return;
