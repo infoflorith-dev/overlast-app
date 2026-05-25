@@ -1393,9 +1393,32 @@ background:#f1f3f6;
   <div class="chart-title">dB tijdlijn</div>
   <div class="chart-sub">Grafische weergave van de meting</div>
 
- <div style="padding:40px;text-align:center;color:#666;">
-  Grafiek zichtbaar in incidentoverzicht
+${selectedIncident.chart_data?.length ? `
+<svg viewBox="0 0 800 240" width="100%" height="240" style="background:#fff;border:1px solid #ddd;border-radius:10px;">
+  <polyline fill="none" stroke="#2563eb" stroke-width="2"
+    points="${selectedIncident.chart_data.map((p, i) => {
+      const x = 30 + (i / Math.max(selectedIncident.chart_data.length - 1, 1)) * 740;
+      const y = 210 - ((Number(p.db) - 30) / 50) * 170;
+      return `${x},${Math.max(20, Math.min(210, y))}`;
+    }).join(" ")}" />
+  <polyline fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5 5"
+    points="${selectedIncident.chart_data.map((p, i) => {
+      const x = 30 + (i / Math.max(selectedIncident.chart_data.length - 1, 1)) * 740;
+      const y = 210 - ((Number(p.norm) - 30) / 50) * 170;
+      return `${x},${Math.max(20, Math.min(210, y))}`;
+    }).join(" ")}" />
+  <polyline fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3 3"
+    points="${selectedIncident.chart_data.map((p, i) => {
+      const x = 30 + (i / Math.max(selectedIncident.chart_data.length - 1, 1)) * 740;
+      const y = 210 - ((Number(p.peak) - 30) / 50) * 170;
+      return `${x},${Math.max(20, Math.min(210, y))}`;
+    }).join(" ")}" />
+</svg>
+` : `
+<div style="padding:40px;text-align:center;color:#666;">
+  Geen grafiek beschikbaar
 </div>
+`}
 </div>
 
 <div class="footer">
