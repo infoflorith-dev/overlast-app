@@ -1258,7 +1258,6 @@ reportWindow.document.write(`
     <div style="font-size:32px; font-weight:bold;">${peakExceedances}</div>
   </div>
 </div>
-```
 
 </body>
   </html>
