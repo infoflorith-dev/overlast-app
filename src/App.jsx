@@ -1417,8 +1417,9 @@ De metingen zijn uitgevoerd met een gecertificeerde PCE dB meter.
   win.document.close();
   win.focus();
 
-  setTimeout(() => {
+setTimeout(() => {
     win.print();
+    win.close();
   }, 400);
 };
   const exportReport = () => {
