@@ -1331,8 +1331,7 @@ background:#f1f3f6;
 <div class="info-grid">
 
 <div class="info-box">
-  <div class="info-line"><strong>Incident ID:</strong> ${selectedIncident.id}</div>
-  <div class="info-line"><strong>Start meting:</strong> ${selectedIncident.description?.match(/Start meting: ([^\n]+)/)?.[1] || "-"}</div>
+    <div class="info-line"><strong>Start meting:</strong> ${selectedIncident.description?.match(/Start meting: ([^\n]+)/)?.[1] || "-"}</div>
   <div class="info-line"><strong>Einde meting:</strong> ${selectedIncident.description?.match(/Einde meting: ([^\n]+)/)?.[1] || "-"}</div>
   <div class="info-line"><strong>Locatie:</strong> ${selectedIncident.location || "-"}</div>
   <div class="info-line"><strong>Bron:</strong> ${selectedIncident.source || "-"}</div>
