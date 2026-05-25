@@ -1394,25 +1394,54 @@ background:#f1f3f6;
   <div class="chart-sub">Grafische weergave van de meting</div>
 
 ${selectedIncident.chart_data?.length ? `
-<svg viewBox="0 0 800 240" width="100%" height="240" style="background:#fff;border:1px solid #ddd;border-radius:10px;">
+<svg viewBox="0 0 800 260" width="100%" height="260" style="background:#fff;border:1px solid #ddd;border-radius:10px;">
+  <line x1="55" y1="20" x2="55" y2="210" stroke="#999" stroke-width="1" />
+  <line x1="55" y1="210" x2="770" y2="210" stroke="#999" stroke-width="1" />
+
+  ${[40, 60, 80].map((v) => {
+    const y = 210 - ((v - 30) / 60) * 180;
+    return `
+      <line x1="55" y1="${y}" x2="770" y2="${y}" stroke="#eee" stroke-width="1" />
+      <text x="22" y="${y + 4}" font-size="12" fill="#555">${v}</text>
+    `;
+  }).join("")}
+
+  <text x="12" y="25" font-size="12" font-weight="700" fill="#333">dB</text>
+
+  ${[0, 0.25, 0.5, 0.75, 1].map((part) => {
+    const data = selectedIncident.chart_data;
+    const index = Math.min(data.length - 1, Math.round((data.length - 1) * part));
+    const x = 55 + part * 715;
+    return `
+      <line x1="${x}" y1="210" x2="${x}" y2="216" stroke="#999" />
+      <text x="${x}" y="234" font-size="11" fill="#555" text-anchor="middle">${data[index]?.time || ""}</text>
+    `;
+  }).join("")}
+
   <polyline fill="none" stroke="#2563eb" stroke-width="2"
     points="${selectedIncident.chart_data.map((p, i) => {
-      const x = 30 + (i / Math.max(selectedIncident.chart_data.length - 1, 1)) * 740;
-      const y = 210 - ((Number(p.db) - 30) / 50) * 170;
+      const x = 55 + (i / Math.max(selectedIncident.chart_data.length - 1, 1)) * 715;
+      const y = 210 - ((Number(p.db) - 30) / 60) * 180;
       return `${x},${Math.max(20, Math.min(210, y))}`;
     }).join(" ")}" />
+
   <polyline fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5 5"
     points="${selectedIncident.chart_data.map((p, i) => {
-      const x = 30 + (i / Math.max(selectedIncident.chart_data.length - 1, 1)) * 740;
-      const y = 210 - ((Number(p.norm) - 30) / 50) * 170;
+      const x = 55 + (i / Math.max(selectedIncident.chart_data.length - 1, 1)) * 715;
+      const y = 210 - ((Number(p.norm) - 30) / 60) * 180;
       return `${x},${Math.max(20, Math.min(210, y))}`;
     }).join(" ")}" />
+
   <polyline fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3 3"
     points="${selectedIncident.chart_data.map((p, i) => {
-      const x = 30 + (i / Math.max(selectedIncident.chart_data.length - 1, 1)) * 740;
-      const y = 210 - ((Number(p.peak) - 30) / 50) * 170;
+      const x = 55 + (i / Math.max(selectedIncident.chart_data.length - 1, 1)) * 715;
+      const y = 210 - ((Number(p.peak) - 30) / 60) * 180;
       return `${x},${Math.max(20, Math.min(210, y))}`;
     }).join(" ")}" />
+
+  <text x="580" y="24" font-size="11" fill="#2563eb">— Gemeten dB</text>
+  <text x="580" y="40" font-size="11" fill="#f59e0b">- - Norm</text>
+  <text x="580" y="56" font-size="11" fill="#ef4444">- - Pieknorm</text>
 </svg>
 ` : `
 <div style="padding:40px;text-align:center;color:#666;">
