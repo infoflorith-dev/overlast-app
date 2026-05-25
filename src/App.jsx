@@ -1159,7 +1159,27 @@ const printDbAnalysisReport = () => {
     return;
   }
 
-  alert("Volgende stap: echte A4 rapportpagina bouwen voor deze analyse.");
+ const reportWindow = window.open("", "_blank");
+
+if (!reportWindow) {
+  alert("Pop-up geblokkeerd. Sta pop-ups toe voor deze site.");
+  return;
+}
+
+reportWindow.document.write(`
+  <html>
+    <head>
+      <title>dB analyse incidentrapport</title>
+    </head>
+    <body>
+      <h1>dB analyse incidentrapport</h1>
+      <p>${selectedIncident.title}</p>
+      <p>${selectedIncident.location}</p>
+    </body>
+  </html>
+`);
+
+reportWindow.document.close();
 };
   const exportReport = () => {
     const sorted = [...filteredIncidents].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
