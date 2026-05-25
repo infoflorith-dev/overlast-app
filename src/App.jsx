@@ -1240,7 +1240,7 @@ reportWindow.document.write(`
 
   <div style="border:1px solid #ddd; border-radius:14px; padding:16px;">
     <div style="color:#666; margin-bottom:8px;">Gem. overschrijding</div>
-    <div style="font-size:32px; font-weight:bold;">+${(Number(selectedIncident.db) - 45).toFixed(1)} dB</div>
+    <div style="font-size:32px; font-weight:bold;">${selectedIncident.description?.match(/Gem\. overschrijding: ([^\\n]+)/)?.[1] || "-"}</div>
   </div>
 
   <div style="border:1px solid #ddd; border-radius:14px; padding:16px;">
