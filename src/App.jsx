@@ -1245,17 +1245,17 @@ reportWindow.document.write(`
 
   <div style="border:1px solid #ddd; border-radius:14px; padding:16px;">
     <div style="color:#666; margin-bottom:8px;">Metingen</div>
-    <div style="font-size:32px; font-weight:bold;">${selectedIncident.chart_data?.length || "-"}</div>
+    <div style="font-size:32px; font-weight:bold;">${selectedIncident.description?.match(/Metingen: (\d+)/)?.[1] || "-"}</div>
   </div>
 
   <div style="border:1px solid #ddd; border-radius:14px; padding:16px;">
     <div style="color:#666; margin-bottom:8px;">Norm overschrijdingen</div>
-    <div style="font-size:32px; font-weight:bold;">${normExceedances}</div>
+ <div style="font-size:32px; font-weight:bold;">${selectedIncident.description?.match(/Norm overschrijdingen: (\d+)/)?.[1] || "-"}</div>
   </div>
 
   <div style="border:1px solid #ddd; border-radius:14px; padding:16px;">
     <div style="color:#666; margin-bottom:8px;">Piek overschrijdingen</div>
-    <div style="font-size:32px; font-weight:bold;">${peakExceedances}</div>
+  <div style="font-size:32px; font-weight:bold;">${selectedIncident.description?.match(/Piek overschrijdingen: (\d+)/)?.[1] || "-"}</div>
   </div>
 </div>
 
