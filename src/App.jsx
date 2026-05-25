@@ -1393,20 +1393,8 @@ body{
   <div class="chart-title">dB tijdlijn</div>
   <div class="chart-sub">Grafische weergave van de meting</div>
 
-  <div style="margin-top:10px;">
-    <img 
-      src="${selectedIncident.chartImage || ''}" 
-      style="width:100%; max-height:260px; object-fit:contain;"
-    />
-  </div>
-
-  <div style="margin-top:12px;font-size:12px;">
-    <strong>Vastlegging:</strong> Gecertificeerde PCE dB meter
-  </div>
-
-  <div style="margin-top:14px;font-size:12px;">
-    <strong>Gekoppelde bestanden:</strong><br/>
-    ${selectedIncident.file_name || "Geen bestand gekoppeld"}
+  <div style="padding:40px;text-align:center;color:#666;">
+    Grafiek zichtbaar in incidentoverzicht
   </div>
 </div>
 
