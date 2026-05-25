@@ -1439,9 +1439,9 @@ ${selectedIncident.chart_data?.length ? `
       return `${x},${Math.max(20, Math.min(210, y))}`;
     }).join(" ")}" />
 
-  <text x="580" y="24" font-size="11" fill="#2563eb">— Gemeten dB</text>
-  <text x="580" y="40" font-size="11" fill="#f59e0b">- - Norm</text>
-  <text x="580" y="56" font-size="11" fill="#ef4444">- - Pieknorm</text>
+<text x="520" y="24" font-size="11" fill="#2563eb">Gemeten dB</text>
+<text x="520" y="40" font-size="11" fill="#f59e0b">Norm tijdvak: ${selectedIncident.chart_data?.[0]?.norm || "-"} dB(A)</text>
+<text x="520" y="56" font-size="11" fill="#ef4444">Pieknorm tijdvak: ${selectedIncident.chart_data?.[0]?.peak || "-"} dB(A)</text>
 </svg>
 ` : `
 <div style="padding:40px;text-align:center;color:#666;">
