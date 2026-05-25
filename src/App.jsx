@@ -1234,7 +1234,7 @@ reportWindow.document.write(`
   <div style="border:1px solid #ddd; border-radius:16px; padding:20px;">
     <div style="color:#666; margin-bottom:12px;">Gemiddelde dB</div>
     <div style="font-size:42px; font-weight:bold;">
-      ${selectedIncident.db}
+    ${avgDb.toFixed(1)}
     </div>
   </div>
 
