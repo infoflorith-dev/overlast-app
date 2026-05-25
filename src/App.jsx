@@ -1393,11 +1393,8 @@ background:#f1f3f6;
   <div class="chart-title">dB tijdlijn</div>
   <div class="chart-sub">Grafische weergave van de meting</div>
 
-  <div style="margin-top:10px;">
-  <img
-    src="${selectedIncident.chartImage || ''}"
-    style="width:100%; max-height:260px; object-fit:contain;"
-  />
+ <div style="padding:40px;text-align:center;color:#666;">
+  Grafiek zichtbaar in incidentoverzicht
 </div>
 </div>
 
