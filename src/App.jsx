@@ -1217,13 +1217,39 @@ reportWindow.document.write(`
   margin-bottom:28px;
   box-shadow:0 1px 3px rgba(0,0,0,0.04);
 ">
-    <h2 style="margin-top:0;">Incident informatie</h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start;">
+  <div>
+    <h2 style="margin-top:0; margin-bottom:20px;">Incident informatie</h2>
 
-    <p><strong>Incident ID:</strong> ${selectedIncident.id}</p>
-    <p><strong>Locatie:</strong> ${selectedIncident.location}</p>
-    <p><strong>Bron:</strong> ${selectedIncident.source}</p>
-  <p><strong>Gemiddelde dB:</strong> ${selectedIncident.db}</p>
+    <div style="display:grid; gap:14px; font-size:15px;">
+      <div><strong>Incident ID:</strong> ${selectedIncident.id}</div>
+      <div><strong>Locatie:</strong> ${selectedIncident.location}</div>
+      <div><strong>Bron:</strong> ${selectedIncident.source}</div>
+      <div><strong>Gemiddelde dB:</strong> ${selectedIncident.db}</div>
+    </div>
   </div>
+
+  <div style="
+    background:#f3f4f6;
+    border-radius:18px;
+    padding:20px;
+  ">
+    <div style="font-size:24px; font-weight:700; margin-bottom:16px;">
+      Samenvatting
+    </div>
+
+    <div style="display:grid; gap:10px; font-size:15px;">
+      <div><strong>Gemiddelde dB:</strong> ${selectedIncident.db}</div>
+      <div><strong>Norm:</strong> 45</div>
+      <div><strong>Gem. overschrijding:</strong> ${selectedIncident.description?.match(/Gem\. overschrijding: ([^\n]+)/)?.[1] || `+${(Number(selectedIncident.db) - 45).toFixed(1)} dB`}</div>
+      <div><strong>Metingen:</strong> ${selectedIncident.description?.match(/Metingen: (\d+)/)?.[1] || "-"}</div>
+      <div><strong>Norm overschrijdingen:</strong> ${selectedIncident.description?.match(/Norm overschrijdingen: (\d+)/)?.[1] || "-"}</div>
+      <div><strong>Piek overschrijdingen:</strong> ${selectedIncident.description?.match(/Piek overschrijdingen: (\d+)/)?.[1] || "-"}</div>
+    </div>
+  </div>
+</div>
+
+</div>
 <div style="
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
