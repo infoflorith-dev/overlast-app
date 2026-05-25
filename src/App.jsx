@@ -1176,13 +1176,16 @@ if (selectedCard) {
   document.body.classList.add("printing-db");
 
 setTimeout(() => {
-  document.body.classList.remove("printing-db");
-
-  cards.forEach((card) => {
-    card.style.display = "block";
-  });
-}, 1000);
   window.print();
+
+  setTimeout(() => {
+    document.body.classList.remove("printing-db");
+
+    cards.forEach((card) => {
+      card.style.display = "block";
+    });
+  }, 1000);
+}, 100);
 };
   const exportReport = () => {
     const sorted = [...filteredIncidents].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
