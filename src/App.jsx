@@ -364,6 +364,7 @@ const peakExceedances = parsed.filter((item) => {
   totalAverage: total.toFixed(1),
   max: max.toFixed(1),
   min: min.toFixed(1),
+   norm: getNormPeak(new Date(parsed[0]?.datetime || Date.now())),
   count: parsed.length,
   averageExceedances,
   peakExceedances,
