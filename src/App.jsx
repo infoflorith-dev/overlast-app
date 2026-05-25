@@ -1209,12 +1209,14 @@ reportWindow.document.write(`
 
   <hr style="margin-bottom:30px;" />
 
-  <div style="
-    border:1px solid #ddd;
-    border-radius:16px;
-    padding:24px;
-    margin-bottom:24px;
-  ">
+<div style="
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:20px;
+  padding:32px;
+  margin-bottom:28px;
+  box-shadow:0 1px 3px rgba(0,0,0,0.04);
+">
     <h2 style="margin-top:0;">Incident informatie</h2>
 
     <p><strong>Incident ID:</strong> ${selectedIncident.id}</p>
