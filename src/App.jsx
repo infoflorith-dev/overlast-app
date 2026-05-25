@@ -1225,11 +1225,6 @@ reportWindow.document.write(`
     <p><strong>Bron:</strong> ${selectedIncident.source}</p>
   <p><strong>Gemiddelde dB:</strong> ${selectedIncident.db}</p>
   </div>
-  Next: layout dichter naar voorbeeld.
-
-Vervang regel **1228 t/m 1254** — dus het hele huidige kaartenblok — door dit compactere blok met **6 kaarten**:
-
-```html
 <div style="
   display:grid;
   grid-template-columns: repeat(3, 1fr);
