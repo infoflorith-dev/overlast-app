@@ -1227,7 +1227,7 @@ reportWindow.document.write(`
 <div style="
   display:grid;
   grid-template-columns: repeat(3, 1fr);
-  gap:16px;
+ gap:12px;
   margin-bottom:20px;
 ">
   <div style="border:1px solid #ddd; border-radius:14px; padding:16px;">
