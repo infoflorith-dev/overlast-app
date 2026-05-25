@@ -1161,7 +1161,264 @@ const printDbAnalysisReport = () => {
     return;
   }
 
-  window.print();
+  const chartNorm =
+    selectedIncident.chart_data?.[0]?.norm || 45;
+
+  const metingen =
+    selectedIncident.description?.match(/Metingen: (\d+)/)?.[1] || "-";
+
+  const normOverschrijdingen =
+    selectedIncident.description?.match(/Norm overschrijdingen: (\d+)/)?.[1] || "-";
+
+  const piekOverschrijdingen =
+    selectedIncident.description?.match(/Piek overschrijdingen: (\d+)/)?.[1] || "-";
+
+  const maxDb =
+    selectedIncident.description?.match(/Maximum dB: ([\d.,]+)/)?.[1] || "-";
+
+  const minDb =
+    selectedIncident.description?.match(/Minimum dB: ([\d.,]+)/)?.[1] || "-";
+
+  const duration =
+    selectedIncident.description?.match(/Duur: ([^\n]+)/)?.[1] || "-";
+
+  const html = `
+<html>
+<head>
+<title>dB analyse rapport</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  padding:40px;
+  color:#111;
+  background:#fff;
+}
+
+.report{
+  max-width:1100px;
+  margin:0 auto;
+}
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:30px;
+  border-bottom:1px solid #ddd;
+  padding-bottom:20px;
+}
+
+.title{
+  font-size:42px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.subtitle{
+  color:#666;
+  font-size:18px;
+}
+
+.meta{
+  text-align:right;
+  font-size:14px;
+  line-height:1.8;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-bottom:30px;
+}
+
+.info-box{
+  border:1px solid #ddd;
+  border-radius:14px;
+  padding:24px;
+  background:#fafafa;
+}
+
+.info-title{
+  font-size:28px;
+  font-weight:700;
+  margin-bottom:20px;
+}
+
+.info-line{
+  margin-bottom:12px;
+  font-size:16px;
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:20px;
+  margin-bottom:20px;
+}
+
+.stat-card{
+  border:1px solid #ddd;
+  border-radius:14px;
+  padding:24px;
+  background:white;
+}
+
+.stat-label{
+  color:#666;
+  font-size:16px;
+  margin-bottom:16px;
+}
+
+.stat-value{
+  font-size:42px;
+  font-weight:700;
+}
+
+.chart-box{
+  border:1px solid #ddd;
+  border-radius:14px;
+  padding:24px;
+  margin-top:30px;
+}
+
+.chart-title{
+  font-size:28px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.chart-sub{
+  color:#666;
+  margin-bottom:20px;
+}
+
+.footer{
+  margin-top:30px;
+  background:#f5f5f5;
+  padding:20px;
+  border-radius:10px;
+  color:#555;
+  font-size:14px;
+}
+
+@media print{
+  body{
+    padding:20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="report">
+
+<div class="header">
+  <div>
+    <div class="title">dB analyse incidentrapport</div>
+    <div class="subtitle">PCE dB analyse</div>
+  </div>
+
+  <div class="meta">
+    Datum rapport: ${new Date().toLocaleDateString("nl-NL")}<br/>
+    Pagina: 1 van 1
+  </div>
+</div>
+
+<div class="info-grid">
+
+<div class="info-box">
+  <div class="info-line"><strong>Incident ID:</strong> ${selectedIncident.id}</div>
+  <div class="info-line"><strong>Start meting:</strong> ${selectedIncident.description?.match(/Start meting: ([^\n]+)/)?.[1] || "-"}</div>
+  <div class="info-line"><strong>Einde meting:</strong> ${selectedIncident.description?.match(/Einde meting: ([^\n]+)/)?.[1] || "-"}</div>
+  <div class="info-line"><strong>Locatie:</strong> ${selectedIncident.location || "-"}</div>
+  <div class="info-line"><strong>Bron:</strong> ${selectedIncident.source || "-"}</div>
+  <div class="info-line"><strong>Opmerking:</strong> ${selectedIncident.actions || "-"}</div>
+</div>
+
+<div class="info-box">
+  <div class="info-title">Samenvatting</div>
+
+  <div class="info-line">Duur: ${duration}</div>
+  <div class="info-line">Gemiddelde dB: ${selectedIncident.db}</div>
+  <div class="info-line">Maximum dB: ${maxDb}</div>
+  <div class="info-line">Minimum dB: ${minDb}</div>
+  <div class="info-line">Metingen: ${metingen}</div>
+  <div class="info-line">Norm overschrijdingen: ${normOverschrijdingen}</div>
+  <div class="info-line">Piek overschrijdingen: ${piekOverschrijdingen}</div>
+</div>
+
+</div>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+  <div class="stat-label">Gemiddelde dB</div>
+  <div class="stat-value">${selectedIncident.db}</div>
+</div>
+
+<div class="stat-card">
+  <div class="stat-label">Norm</div>
+  <div class="stat-value">${chartNorm}</div>
+</div>
+
+<div class="stat-card">
+  <div class="stat-label">Gem. overschrijding</div>
+  <div class="stat-value">
+    +${Math.max(0, Number(selectedIncident.db) - Number(chartNorm)).toFixed(1)} dB
+  </div>
+</div>
+
+<div class="stat-card">
+  <div class="stat-label">Metingen</div>
+  <div class="stat-value">${metingen}</div>
+</div>
+
+<div class="stat-card">
+  <div class="stat-label">Norm overschrijdingen</div>
+  <div class="stat-value">${normOverschrijdingen}</div>
+</div>
+
+<div class="stat-card">
+  <div class="stat-label">Piek overschrijdingen</div>
+  <div class="stat-value">${piekOverschrijdingen}</div>
+</div>
+
+</div>
+
+<div class="chart-box">
+  <div class="chart-title">dB tijdlijn</div>
+  <div class="chart-sub">Grafische weergave van de meting</div>
+
+  <div style="padding:40px;text-align:center;color:#666;">
+    Grafiek zichtbaar in incidentoverzicht
+  </div>
+</div>
+
+<div class="footer">
+Deze rapportage is automatisch gegenereerd op basis van dB metingen.<br/>
+De metingen zijn uitgevoerd met een gecertificeerde PCE dB meter.
+</div>
+
+</div>
+
+</body>
+</html>
+`;
+
+  const win = window.open("", "_blank");
+
+  if (!win) return;
+
+  win.document.write(html);
+  win.document.close();
+  win.focus();
+
+  setTimeout(() => {
+    win.print();
+  }, 400);
 };
   const exportReport = () => {
     const sorted = [...filteredIncidents].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
