@@ -1409,17 +1409,12 @@ De metingen zijn uitgevoerd met een gecertificeerde PCE dB meter.
 </html>
 `;
 
-  const win = window.open("", "_blank");
+ const win = window.open("", "_blank");
 
-  if (!win) return;
+if (!win) return;
 
-  win.document.write(html);
-  win.document.close();
-  win.focus();
-
-setTimeout(() => {
-    win.print();
-  }, 400);
+win.document.write(html);
+win.document.close();
 };
   const exportReport = () => {
     const sorted = [...filteredIncidents].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
