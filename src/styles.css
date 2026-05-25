@@ -115,3 +115,21 @@ button, input, textarea, select { font: inherit; }
     grid-template-columns: 1fr;
   }
 }
+@media print {
+  body.printing-db * {
+    visibility: hidden;
+  }
+
+  body.printing-db .incident-card,
+  body.printing-db .incident-card * {
+    visibility: visible;
+  }
+
+  body.printing-db .incident-card {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: white;
+  }
+}
