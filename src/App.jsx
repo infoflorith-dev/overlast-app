@@ -1223,7 +1223,7 @@ reportWindow.document.write(`
     <p><strong>Incident ID:</strong> ${selectedIncident.id}</p>
     <p><strong>Locatie:</strong> ${selectedIncident.location}</p>
     <p><strong>Bron:</strong> ${selectedIncident.source}</p>
-    <p><strong>Gemiddelde dB:</strong> ${selectedIncident.db}</p>
+   <p><strong>Gemiddelde dB:</strong> ${avgDb.toFixed(1)}</p>
   </div>
    <div style="
   display:grid;
