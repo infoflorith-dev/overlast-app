@@ -1152,40 +1152,14 @@ const printDbAnalysisReport = () => {
     return;
   }
 
-  const selectedIncident = incidents.find(
-    (i) => i.id === selectedDbPrintId
-  );
+  const selectedIncident = incidents.find((i) => i.id === selectedDbPrintId);
 
   if (!selectedIncident) {
     alert("dB analyse niet gevonden");
     return;
   }
-const cards = document.querySelectorAll(".incident-card");
 
-cards.forEach((card) => {
-  card.style.display = "none";
-});
-
-const selectedCard = document.querySelector(
-  `[data-incident-id="${selectedDbPrintId}"]`
-);
-
-if (selectedCard) {
-  selectedCard.style.display = "block";
-}
-  document.body.classList.add("printing-db");
-
-setTimeout(() => {
-  window.print();
-
-  setTimeout(() => {
-    document.body.classList.remove("printing-db");
-
-    cards.forEach((card) => {
-      card.style.display = "block";
-    });
-  }, 1000);
-}, 100);
+  alert("Volgende stap: echte A4 rapportpagina bouwen voor deze analyse.");
 };
   const exportReport = () => {
     const sorted = [...filteredIncidents].sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
