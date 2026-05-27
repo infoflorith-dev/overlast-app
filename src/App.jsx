@@ -316,7 +316,7 @@ const time = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`);
         db: dbValue,
       };
     })
-    .filter((r) => r.datetime && !Number.isNaN(r.db));
+    .filter((r) => r.datetime instanceof Date && !Number.isNaN(r.datetime.getTime()) && !Number.isNaN(r.db));
 
   setDbExcelData(parsed);
 
