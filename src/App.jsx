@@ -284,10 +284,23 @@ const rawTime =
   row.Datum ||
   row.Date;
 
-const [datePart, timePart] = String(rawTime).split(",");
-const [day, month, year] = datePart.split("-");
+const rawDateTime = String(rawTime || "").trim();
 
-const time = new Date(`${year}-${month}-${day}T${timePart || "00:00:00"}`);
+const [datePartRaw, timePartRaw = "00:00:00"] = rawDateTime.split(",");
+const [dayRaw, monthRaw, yearRaw] = datePartRaw.trim().split("-");
+
+const [hourRaw = "00", minuteRaw = "00", secondRaw = "00"] =
+  timePartRaw.trim().split(":");
+
+const day = String(dayRaw).padStart(2, "0");
+const month = String(monthRaw).padStart(2, "0");
+const year = String(yearRaw);
+
+const hour = String(hourRaw).padStart(2, "0");
+const minute = String(minuteRaw).padStart(2, "0");
+const second = String(secondRaw).padStart(2, "0");
+
+const time = new Date(`${year}-${month}-${day}T${hour}:${minute}:${second}`);
 
       const db =
         row.Value ||
