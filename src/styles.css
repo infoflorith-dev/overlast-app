@@ -800,7 +800,9 @@ inset 0 12px 24px rgba(255,255,255,.03);
   ) !important;
 
 background-size: 200% 200%;
-animation: activeGradientShift 6s ease-in-out infinite alternate;
+animation:
+  activeGradientShift 6s ease-in-out infinite alternate,
+  activeSheenMove 3.8s linear infinite;
     border: 1px solid rgba(255,255,255,.55) !important;
     box-shadow:
       0 0 0 2px rgba(216,180,254,.35),
@@ -848,4 +850,23 @@ box-shadow: inset 3px 0 0 rgba(216,180,254,.95);
 @keyframes activeGradientShift {
   0% { background-position: 0% 50%; }
   100% { background-position: 100% 50%; }
+}
+@keyframes activeSheenMove {
+  0% {
+    box-shadow:
+      0 0 0 2px rgba(216,180,254,.35),
+      0 0 28px rgba(216,180,254,.80),
+      0 0 70px rgba(168,85,247,.70),
+      inset -18px 0 22px rgba(255,255,255,.10),
+      inset 0 0 22px rgba(255,255,255,.28);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 2px rgba(216,180,254,.35),
+      0 0 28px rgba(216,180,254,.80),
+      0 0 70px rgba(168,85,247,.70),
+      inset 18px 0 22px rgba(255,255,255,.16),
+      inset 0 0 22px rgba(255,255,255,.28);
+  }
 }
