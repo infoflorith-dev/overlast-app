@@ -87,17 +87,64 @@ select {
 .textarea { min-height: 140px; resize: vertical; }
 .checkbox { width: 18px; height: 18px; }
 .btn {
-  border: 1px solid transparent; border-radius: 16px; padding: 10px 14px;
-  background: #0f172a; color: #fff; cursor: pointer; display: inline-flex;
-  align-items: center; justify-content: center; gap: 8px; text-decoration: none;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  padding: 12px 16px;
+  background: linear-gradient(180deg, rgba(30,41,59,.95), rgba(15,23,42,.95));
+  color: #f8fafc;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: all .18s ease;
+  box-shadow:
+    0 4px 18px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.03);
 }
-.btn:hover { opacity: .95; }
-.btn-secondary { background: #e2e8f0; color: #0f172a; }
-.btn-outline { background: white; color: #0f172a; border-color: #cbd5e1; }
-.btn-ghost { background: transparent; color: #475569; }
-.btn-sm { padding: 8px 10px; border-radius: 12px; }
-.btn-icon { width: 40px; height: 40px; padding: 0; }
-.btn:disabled { opacity: .7; cursor: not-allowed; }
+
+.btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(139,92,246,.45);
+  box-shadow:
+    0 8px 30px rgba(139,92,246,.18),
+    0 4px 18px rgba(0,0,0,.28);
+}
+
+.btn-secondary {
+  background:
+    linear-gradient(180deg, rgba(91,33,182,.95), rgba(76,29,149,.95));
+  color: #fff;
+  border-color: rgba(139,92,246,.35);
+}
+
+.btn-outline {
+  background: rgba(15,23,42,.72);
+  color: #e2e8f0;
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #94a3b8;
+}
+
+.btn-sm {
+  padding: 8px 12px;
+  border-radius: 12px;
+}
+
+.btn-icon {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+}
+
+.btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
 .badge {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 6px 10px; border-radius: 999px; background: #0f172a; color: #fff; font-size: .75rem;
