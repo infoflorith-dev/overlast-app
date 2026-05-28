@@ -289,6 +289,7 @@ overflow: hidden;
     inset 0 1px 0 rgba(255,255,255,.03);
 }
 .media-card {
+  position: relative;
   border: 1px solid rgba(255,255,255,.08);
   border-radius: 18px;
   overflow: hidden;
