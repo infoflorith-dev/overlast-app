@@ -1,20 +1,84 @@
 
 :root {
   font-family: Inter, system-ui, Arial, sans-serif;
-  color: #0f172a;
-  background: #f1f5f9;
+  color: #f8fafc;
+  background:
+    radial-gradient(circle at top left, rgba(124,58,237,.25), transparent 30%),
+    radial-gradient(circle at top right, rgba(59,130,246,.18), transparent 25%),
+    #050816;
 }
-* { box-sizing: border-box; }
-body { margin: 0; background: #f1f5f9; color: #0f172a; }
-button, input, textarea, select { font: inherit; }
-.app-shell { min-height: 100vh; padding: 16px; background: #f1f5f9; }
-.container { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
-.card { background: #fff; border-radius: 24px; box-shadow: 0 1px 3px rgba(0,0,0,.08); border: 1px solid #e2e8f0; }
-.card-header { padding: 20px 24px 0; }
-.card-content { padding: 20px 24px 24px; }
-.card-title { margin: 0; font-size: 1.25rem; font-weight: 700; }
-.big-title { font-size: 1.75rem; }
-.card-description { margin: 6px 0 0; color: #64748b; font-size: .95rem; }
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(124,58,237,.18), transparent 30%),
+    #050816;
+  color: #f8fafc;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(124,58,237,.14), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(59,130,246,.10), transparent 25%),
+    #050816;
+}
+
+.container {
+  max-width: 1500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card {
+  background: rgba(15, 23, 42, 0.82);
+  border-radius: 28px;
+  box-shadow:
+    0 10px 40px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.06);
+  backdrop-filter: blur(18px);
+}
+
+.card-header {
+  padding: 24px 28px 0;
+}
+
+.card-content {
+  padding: 24px 28px 28px;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.big-title {
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.card-description {
+  margin: 8px 0 0;
+  color: #94a3b8;
+  font-size: .95rem;
+}
 .label { display: block; margin-bottom: 8px; font-weight: 600; font-size: .92rem; }
 .input, .textarea {
   width: 100%; border: 1px solid #cbd5e1; border-radius: 10px; background: white;
