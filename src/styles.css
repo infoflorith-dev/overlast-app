@@ -369,3 +369,26 @@ select:focus {
 .hero-grid .stats-grid .muted {
   color: #a8b3cf;
 }
+.hero-status-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.hero-status-pill {
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(30,41,59,.96), rgba(15,23,42,.96));
+  border: 1px solid rgba(255,255,255,.08);
+  color: #dbe4ff;
+  font-size: .9rem;
+  box-shadow:
+    0 4px 18px rgba(0,0,0,.22),
+    inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+.hero-status-pill.secondary {
+  background: linear-gradient(180deg, rgba(124,58,237,.96), rgba(91,33,182,.96));
+  color: white;
+}
