@@ -808,3 +808,8 @@ box-shadow: inset 3px 0 0 rgba(216,180,254,.95);
   filter:
     drop-shadow(0 0 5px rgba(168,85,247,.45));
 }
+@keyframes sidebarGlowMove {
+  0% { transform: translateX(-30%); opacity: .35; }
+  50% { opacity: .55; }
+  100% { transform: translateX(30%); opacity: .35; }
+}
