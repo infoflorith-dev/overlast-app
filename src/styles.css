@@ -465,3 +465,14 @@ select:focus {
   color: #e2e8f0;
   border: 1px solid rgba(255,255,255,.12);
 }
+/* Timeline polish */
+.incident-card {
+  padding-left: 28px;
+}
+
+.incident-card::before {
+  left: 10px;
+  top: 22px;
+  bottom: 22px;
+  width: 3px;
+}
