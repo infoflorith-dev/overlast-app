@@ -1950,12 +1950,23 @@ ${profile.resident_name}
             <CardHeader>
               <div className="between">
                 <div>
-                 <CardTitle className="big-title">Overlast door Cuisine by Tromp – Logboek</CardTitle>
-                  <CardDescription>Filters, nachtlabels, bronoverzicht, chronologische rapportage en printbare export.</CardDescription>
-                </div>
-                <div className="badge-row">
-                  <Badge><Cloud className="icon-inline" /> Cloud opslag</Badge>
-                  <Badge variant="secondary">Dossiermodus</Badge>
+                <CardTitle className="big-title">
+  Welkom terug, Theo
+</CardTitle>
+
+<CardDescription>
+  Overzicht van overlast, metingen, bewijsbestanden en dossierstatus.
+</CardDescription>
+
+<div className="hero-status-row">
+  <div className="hero-status-pill">
+    ☁️ Cloud opslag actief
+  </div>
+
+  <div className="hero-status-pill secondary">
+    Dossiermodus
+  </div>
+</div>
                 </div>
               </div>
             </CardHeader>
