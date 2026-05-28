@@ -318,3 +318,54 @@ select:focus {
     grid-template-columns: 1fr;
   }
 }
+/* Premium KPI kaarten bovenaan */
+.hero-grid .stats-grid .stat-box {
+  position: relative;
+  overflow: hidden;
+  min-height: 130px;
+  padding: 22px;
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at top right, rgba(139,92,246,.28), transparent 34%),
+    linear-gradient(180deg, rgba(30,41,59,.96), rgba(10,15,30,.96));
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.hero-grid .stats-grid .stat-box::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 12px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7c3aed, #22d3ee);
+  opacity: .75;
+  box-shadow: 0 0 18px rgba(124,58,237,.55);
+}
+
+.hero-grid .stats-grid .stat-box:nth-child(1)::after {
+  background: linear-gradient(90deg, #7c3aed, #a855f7);
+}
+
+.hero-grid .stats-grid .stat-box:nth-child(2)::after {
+  background: linear-gradient(90deg, #2563eb, #38bdf8);
+}
+
+.hero-grid .stats-grid .stat-box:nth-child(3)::after {
+  background: linear-gradient(90deg, #ef4444, #f97316);
+}
+
+.hero-grid .stats-grid .stat-box:nth-child(4)::after {
+  background: linear-gradient(90deg, #06b6d4, #22d3ee);
+}
+
+.hero-grid .stats-grid .stat {
+  font-size: 2.6rem;
+  line-height: 1;
+  margin-top: 14px;
+}
+
+.hero-grid .stats-grid .muted {
+  color: #a8b3cf;
+}
