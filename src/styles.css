@@ -790,3 +790,15 @@ overflow: hidden;
     pointer-events: none;
   }
 }
+/* Icon glow */
+.nav-item-active .icon-sm {
+  filter:
+    drop-shadow(0 0 6px rgba(216,180,254,.85))
+    drop-shadow(0 0 14px rgba(168,85,247,.55));
+}
+
+.quick-btn .icon-inline,
+.btn .icon-inline {
+  filter:
+    drop-shadow(0 0 5px rgba(168,85,247,.45));
+}
