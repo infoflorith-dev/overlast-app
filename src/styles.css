@@ -495,3 +495,92 @@ overflow: hidden;
   bottom: 22px;
   width: 3px;
 }
+/* Mobile responsive premium layout */
+@media (max-width: 768px) {
+  .app-shell {
+    padding: 12px;
+  }
+
+  .container {
+    max-width: 100%;
+    gap: 16px;
+  }
+
+  .hero-grid,
+  .main-grid,
+  .content-grid,
+  .quick-grid,
+  .stats-grid,
+  .stats-page-grid,
+  .form-grid-3,
+  .form-grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .main-grid {
+    gap: 16px;
+  }
+
+  .side-nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .nav-item {
+    padding: 13px 14px;
+    border-radius: 16px;
+    font-size: .92rem;
+  }
+
+  .big-title {
+    font-size: 1.75rem;
+  }
+
+  .card {
+    border-radius: 22px;
+  }
+
+  .card-header {
+    padding: 20px 20px 0;
+  }
+
+  .card-content {
+    padding: 20px;
+  }
+
+  .hero-grid .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .hero-grid .stats-grid .stat-box {
+    min-height: 105px;
+    padding: 18px;
+  }
+
+  .hero-grid .stats-grid .stat {
+    font-size: 2.2rem;
+  }
+
+  .quick-btn {
+    min-height: 72px;
+  }
+
+  .incident-card {
+    padding: 18px 18px 18px 30px;
+  }
+
+  .badge-row {
+    gap: 6px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .input,
+  .textarea,
+  select {
+    font-size: 16px;
+  }
+}
