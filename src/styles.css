@@ -665,3 +665,49 @@ overflow: hidden;
     font-size: 16px;
   }
 }
+/* Desktop neon glow sidebar */
+@media (min-width: 769px) {
+  .main-grid > .card:first-child {
+    overflow: visible;
+  }
+
+  .side-nav {
+    overflow: visible;
+  }
+
+  .nav-item {
+    overflow: visible;
+  }
+
+  .nav-item-active {
+    position: relative;
+    z-index: 5;
+    transform: translateX(4px) scale(1.02);
+    background:
+      radial-gradient(circle at top, rgba(255,255,255,.22), transparent 38%),
+      linear-gradient(180deg, #c084fc 0%, #8b5cf6 45%, #5b21b6 100%) !important;
+    border: 1px solid rgba(255,255,255,.48) !important;
+    box-shadow:
+      0 0 0 2px rgba(216,180,254,.35),
+      0 0 24px rgba(216,180,254,.80),
+      0 0 60px rgba(168,85,247,.70),
+      0 0 110px rgba(124,58,237,.55),
+      inset 0 0 22px rgba(255,255,255,.24) !important;
+  }
+
+  .nav-item-active::after {
+    content: "";
+    position: absolute;
+    inset: -18px;
+    z-index: -1;
+    border-radius: 34px;
+    background:
+      radial-gradient(circle,
+        rgba(216,180,254,.75),
+        rgba(168,85,247,.42) 38%,
+        transparent 72%);
+    filter: blur(22px);
+    opacity: 1;
+    pointer-events: none;
+  }
+}
