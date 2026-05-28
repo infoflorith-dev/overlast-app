@@ -723,6 +723,9 @@ overflow: hidden;
 }
 /* Desktop sidebar neon zoals mobiele versie */
 @media (min-width: 769px) {
+  .hero-grid {
+  grid-template-columns: 1fr;
+}
   .main-grid > .card:first-child {
     overflow: visible;
     position: relative;
