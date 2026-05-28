@@ -734,3 +734,22 @@ overflow: visible;
       inset 0 1px 0 rgba(255,255,255,.22);
   }
 }
+@media (max-width: 768px) {
+  .mobile-bottom-nav .nav-item-active {
+    position: relative;
+    isolation: isolate;
+    overflow: visible !important;
+  }
+
+  .mobile-bottom-nav .nav-item-active::after {
+    content: "";
+    position: absolute;
+    inset: -10px;
+    z-index: -1;
+    border-radius: 24px;
+    background: radial-gradient(circle, rgba(168,85,247,.95), rgba(124,58,237,.35) 42%, transparent 72%);
+    filter: blur(10px);
+    opacity: 1;
+    pointer-events: none;
+  }
+}
