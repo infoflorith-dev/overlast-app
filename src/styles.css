@@ -722,39 +722,37 @@ overflow: hidden;
   .main-grid > .card:first-child {
     overflow: visible;
     position: relative;
-isolation: isolate;
+    isolation: isolate;
     background:
       radial-gradient(circle at top left, rgba(168,85,247,.18), transparent 35%),
       rgba(15,23,42,.82);
     border: 1px solid rgba(216,180,254,.16);
     box-shadow:
-     0 0 55px rgba(124,58,237,.22),
-0 0 120px rgba(124,58,237,.10),
+      0 0 55px rgba(124,58,237,.22),
+      0 0 120px rgba(124,58,237,.10),
       0 12px 40px rgba(0,0,0,.35),
-     inset 0 1px 0 rgba(255,255,255,.10),
-inset 0 12px 24px rgba(255,255,255,.03);
-.main-grid > .card:first-child::before {
-  content: "";
-  position: absolute;
-  inset: -80px;
-  z-index: 0;
-  pointer-events: none;
-  filter: blur(42px);
+      inset 0 1px 0 rgba(255,255,255,.10),
+      inset 0 12px 24px rgba(255,255,255,.03);
+  }
 
-  background:
-    radial-gradient(
-      circle at 20% 30%,
-      rgba(168,85,247,.32),
-      transparent 38%
-    );
+  .main-grid > .card:first-child::before {
+    content: "";
+    position: absolute;
+    inset: -80px;
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(42px);
+    background:
+      radial-gradient(circle at 20% 30%,
+        rgba(168,85,247,.32),
+        transparent 38%);
+    animation: sidebarGlowMove 14s ease-in-out infinite alternate;
+  }
 
-  animation: sidebarGlowMove 14s ease-in-out infinite alternate;
-}
-
-.main-grid > .card:first-child > * {
-  position: relative;
-  z-index: 1;
-}
+  .main-grid > .card:first-child > * {
+    position: relative;
+    z-index: 1;
+  }
 
   .side-nav {
     overflow: visible;
@@ -788,20 +786,16 @@ inset 0 12px 24px rgba(255,255,255,.03);
     z-index: 5;
     transform: translateX(6px) scale(1.03);
     background:
-    background:
-  radial-gradient(circle at top, rgba(255,255,255,.26), transparent 38%),
-  linear-gradient(
-    135deg,
-    #c084fc 0%,
-    #8b5cf6 35%,
-    #5b21b6 70%,
-    #7c3aed 100%
-  ) !important;
-
-background-size: 200% 200%;
-animation:
-  activeGradientShift 6s ease-in-out infinite alternate,
-  activeSheenMove 3.8s linear infinite;
+      radial-gradient(circle at top, rgba(255,255,255,.26), transparent 38%),
+      linear-gradient(
+        135deg,
+        #c084fc 0%,
+        #8b5cf6 35%,
+        #5b21b6 70%,
+        #7c3aed 100%
+      ) !important;
+    background-size: 260% 260%;
+    animation: activeGradientShift 4s linear infinite;
     border: 1px solid rgba(255,255,255,.55) !important;
     box-shadow:
       0 0 0 2px rgba(216,180,254,.35),
@@ -824,9 +818,7 @@ animation:
     filter: blur(18px);
     opacity: 1;
     pointer-events: none;
-    pointer-events: none;
-box-shadow: inset 3px 0 0 rgba(216,180,254,.95);
-}
+    box-shadow: inset 3px 0 0 rgba(216,180,254,.95);
   }
 }
 /* Icon glow */
