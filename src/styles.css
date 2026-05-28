@@ -224,6 +224,10 @@ overflow: hidden;
 .nav-item:hover::before {
   transform: translateX(100%);
 }
+.nav-item-active::before {
+  transform: translateX(-120%);
+  animation: activeSheenMove 2.8s ease-in-out infinite;
+}
 .nav-item:hover {
   transform: translateX(2px);
   border-color: rgba(139,92,246,.25);
@@ -845,20 +849,21 @@ overflow: hidden;
 }
 @keyframes activeSheenMove {
   0% {
-    box-shadow:
-      0 0 0 2px rgba(216,180,254,.35),
-      0 0 28px rgba(216,180,254,.80),
-      0 0 70px rgba(168,85,247,.70),
-      inset -18px 0 22px rgba(255,255,255,.10),
-      inset 0 0 22px rgba(255,255,255,.28);
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+
+  25% {
+    opacity: .75;
+  }
+
+  55% {
+    transform: translateX(120%);
+    opacity: .75;
   }
 
   100% {
-    box-shadow:
-      0 0 0 2px rgba(216,180,254,.35),
-      0 0 28px rgba(216,180,254,.80),
-      0 0 70px rgba(168,85,247,.70),
-      inset 18px 0 22px rgba(255,255,255,.16),
-      inset 0 0 22px rgba(255,255,255,.28);
+    transform: translateX(120%);
+    opacity: 0;
   }
 }
