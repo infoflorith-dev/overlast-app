@@ -665,3 +665,75 @@ overflow: hidden;
     font-size: 16px;
   }
 }
+/* Desktop sidebar neon zoals mobiele versie */
+@media (min-width: 769px) {
+  .main-grid > .card:first-child {
+    overflow: visible;
+    background:
+      radial-gradient(circle at top left, rgba(168,85,247,.18), transparent 35%),
+      rgba(15,23,42,.82);
+    border: 1px solid rgba(216,180,254,.16);
+    box-shadow:
+      0 0 35px rgba(124,58,237,.16),
+      0 12px 40px rgba(0,0,0,.35),
+      inset 0 1px 0 rgba(255,255,255,.06);
+  }
+
+  .side-nav {
+    overflow: visible;
+    gap: 12px;
+  }
+
+  .nav-item {
+    overflow: visible;
+    min-height: 58px;
+    padding: 15px 18px;
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at top right, rgba(124,58,237,.12), transparent 38%),
+      linear-gradient(180deg, rgba(20,28,48,.92), rgba(10,15,30,.92));
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow:
+      0 8px 22px rgba(0,0,0,.24),
+      inset 0 1px 0 rgba(255,255,255,.04);
+  }
+
+  .nav-item:hover {
+    transform: translateX(4px);
+    border-color: rgba(168,85,247,.38);
+    box-shadow:
+      0 0 22px rgba(124,58,237,.28),
+      0 10px 28px rgba(0,0,0,.32);
+  }
+
+  .nav-item-active {
+    position: relative;
+    z-index: 5;
+    transform: translateX(6px) scale(1.03);
+    background:
+      radial-gradient(circle at top, rgba(255,255,255,.26), transparent 38%),
+      linear-gradient(180deg, #c084fc 0%, #8b5cf6 45%, #5b21b6 100%) !important;
+    border: 1px solid rgba(255,255,255,.55) !important;
+    box-shadow:
+      0 0 0 2px rgba(216,180,254,.35),
+      0 0 28px rgba(216,180,254,.80),
+      0 0 70px rgba(168,85,247,.70),
+      inset 0 0 22px rgba(255,255,255,.28) !important;
+  }
+
+  .nav-item-active::after {
+    content: "";
+    position: absolute;
+    inset: -14px;
+    z-index: -1;
+    border-radius: 30px;
+    background:
+      radial-gradient(circle,
+        rgba(216,180,254,.85),
+        rgba(168,85,247,.50) 42%,
+        transparent 72%);
+    filter: blur(18px);
+    opacity: 1;
+    pointer-events: none;
+  }
+}
