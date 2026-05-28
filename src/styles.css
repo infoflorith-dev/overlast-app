@@ -221,8 +221,31 @@ select:focus {
 .media-thumb-large { width: 100%; height: 208px; object-fit: cover; display: block; }
 .media-body { padding: 12px; }
 .preview-chip { position: absolute; right: 8px; top: 8px; background: rgba(0,0,0,.6); color: white; border-radius: 999px; padding: 8px; }
-.note-row, .task-row, .incident-card {
-  border: 1px solid #e2e8f0; border-radius: 18px; padding: 16px; background: white;
+..note-row,
+.task-row,
+.incident-card {
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 22px;
+  padding: 18px;
+  background:
+    linear-gradient(180deg,
+      rgba(15,23,42,.92),
+      rgba(10,15,30,.92)
+    );
+  box-shadow:
+    0 8px 24px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.03);
+  transition: all .18s ease;
+}
+
+.note-row:hover,
+.task-row:hover,
+.incident-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(139,92,246,.22);
+  box-shadow:
+    0 14px 40px rgba(139,92,246,.10),
+    0 8px 24px rgba(0,0,0,.28);
 }
 .upload-drop {
   border: 2px dashed #cbd5e1; border-radius: 20px; background: #f8fafc; padding: 32px;
