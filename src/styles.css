@@ -705,6 +705,7 @@ overflow: hidden;
 }
 @media (max-width: 768px) {
   .mobile-bottom-nav {
+    overflow: visible;
     background:
       radial-gradient(circle at bottom left, rgba(124,58,237,.35), transparent 35%),
       radial-gradient(circle at bottom right, rgba(59,130,246,.22), transparent 35%),
@@ -719,6 +720,9 @@ overflow: hidden;
   }
 
   .mobile-bottom-nav .nav-item-active {
+    position: relative;
+z-index: 2;
+overflow: visible;
     background:
       radial-gradient(circle at top, rgba(255,255,255,.18), transparent 35%),
       linear-gradient(180deg, #9b5cff, #6d28d9);
