@@ -789,8 +789,18 @@ inset 0 12px 24px rgba(255,255,255,.03);
     z-index: 5;
     transform: translateX(6px) scale(1.03);
     background:
-      radial-gradient(circle at top, rgba(255,255,255,.26), transparent 38%),
-      linear-gradient(180deg, #c084fc 0%, #8b5cf6 45%, #5b21b6 100%) !important;
+    background:
+  radial-gradient(circle at top, rgba(255,255,255,.26), transparent 38%),
+  linear-gradient(
+    135deg,
+    #c084fc 0%,
+    #8b5cf6 35%,
+    #5b21b6 70%,
+    #7c3aed 100%
+  ) !important;
+
+background-size: 200% 200%;
+animation: activeGradientShift 6s ease-in-out infinite alternate;
     border: 1px solid rgba(255,255,255,.55) !important;
     box-shadow:
       0 0 0 2px rgba(216,180,254,.35),
