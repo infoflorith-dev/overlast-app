@@ -625,158 +625,95 @@ overflow: hidden;
     font-size: 16px;
   }
 }
-/* Mobile app-style navigation */
-@media (max-width: 768px) {
-  .main-grid > .card:first-child {
-    position: sticky;
-    bottom: 10px;
-    z-index: 40;
-    order: 99;
-    border-radius: 28px;
-    background: rgba(15,23,42,.88);
-    backdrop-filter: blur(18px);
-    box-shadow:
-      0 -10px 40px rgba(0,0,0,.38),
-      0 0 30px rgba(124,58,237,.14);
-  }
+Ja. Dit is nu te rommelig door dubbele blokken.
 
-  .main-grid > .card:first-child .card-content {
-    padding: 12px;
-  }
+**Vervang regel 628 t/m 783 volledig** met dit ene schone blok:
 
-  .side-nav {
-    grid-template-columns: repeat(5, 1fr);
-  }
-
-  .nav-item {
-    flex-direction: column;
-    gap: 5px;
-    padding: 10px 6px;
-    font-size: .72rem;
-    min-height: 62px;
-  }
-
-  .nav-item .icon-sm {
-    width: 20px;
-    height: 20px;
-  }
-
-  .nav-item span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 64px;
-  }
-
-  .main-grid {
-    padding-bottom: 96px;
-  }
-}
+```css
+/* Mobile bottom navigation - clean neon */
 @media (max-width: 768px) {
   .app-shell {
-    padding-bottom: calc(190px + env(safe-area-inset-bottom));
+    padding-bottom: calc(210px + env(safe-area-inset-bottom));
   }
 
   .mobile-bottom-nav {
+    position: fixed;
+    left: 12px;
+    right: 12px;
     bottom: calc(10px + env(safe-area-inset-bottom));
+    z-index: 9999;
+    padding: 12px;
+    border-radius: 30px;
+    overflow: visible !important;
     background: rgba(8, 12, 28, .72);
-    backdrop-filter: blur(30px) saturate(160%);
-    -webkit-backdrop-filter: blur(30px) saturate(160%);
-    border: 1px solid rgba(167,139,250,.18);
+    backdrop-filter: blur(34px) saturate(170%);
+    -webkit-backdrop-filter: blur(34px) saturate(170%);
+    border: 1px solid rgba(216,180,254,.28);
     box-shadow:
-      0 18px 55px rgba(0,0,0,.55),
-      0 0 45px rgba(124,58,237,.18),
-      inset 0 1px 0 rgba(255,255,255,.08);
+      0 0 0 1px rgba(216,180,254,.18),
+      0 0 45px rgba(168,85,247,.55),
+      0 0 110px rgba(124,58,237,.42),
+      0 -20px 80px rgba(59,130,246,.20),
+      inset 0 1px 0 rgba(255,255,255,.18);
   }
 
-  .mobile-bottom-nav .nav-item {
-    transition: transform .12s ease, box-shadow .18s ease;
-  }
-
-  .mobile-bottom-nav .nav-item:active {
-    transform: scale(.96);
-  }
-
-  .mobile-bottom-nav .nav-item-active {
-    box-shadow:
-      0 0 28px rgba(124,58,237,.45),
-      inset 0 1px 0 rgba(255,255,255,.16);
-  }
-}
-@media (max-width: 768px) {
-  .mobile-bottom-nav {
-    overflow: visible;
-    background:
-      radial-gradient(circle at bottom left, rgba(124,58,237,.35), transparent 35%),
-      radial-gradient(circle at bottom right, rgba(59,130,246,.22), transparent 35%),
-      rgba(8, 12, 28, .62);
-    border: 1px solid rgba(167,139,250,.35);
-    box-shadow:
-      0 0 0 1px rgba(167,139,250,.12),
-      0 0 28px rgba(124,58,237,.35),
-      0 0 70px rgba(124,58,237,.28),
-      0 -18px 60px rgba(59,130,246,.12),
-      inset 0 1px 0 rgba(255,255,255,.14);
-  }
-
-  .mobile-bottom-nav .nav-item-active {
-    position: relative;
-z-index: 2;
-overflow: visible;
-    background:
-      radial-gradient(circle at top, rgba(255,255,255,.18), transparent 35%),
-      linear-gradient(180deg, #9b5cff, #6d28d9);
-    border-color: rgba(216,180,254,.65);
-    box-shadow:
-      0 0 0 1px rgba(216,180,254,.25),
-      0 0 24px rgba(168,85,247,.75),
-      0 0 55px rgba(124,58,237,.55),
-      inset 0 1px 0 rgba(255,255,255,.22);
-  }
-}
-@media (max-width: 768px) {
-  .mobile-bottom-nav,
   .mobile-bottom-nav .side-nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
     overflow: visible !important;
   }
 
-  .mobile-bottom-nav {
-    box-shadow:
-      0 0 0 1px rgba(216,180,254,.35),
-      0 0 45px rgba(168,85,247,.65),
-      0 0 110px rgba(124,58,237,.50),
-      0 -20px 90px rgba(59,130,246,.22),
-      inset 0 1px 0 rgba(255,255,255,.20) !important;
-  }
-
   .mobile-bottom-nav .nav-item {
+    min-height: 72px;
+    padding: 10px 6px;
+    border-radius: 20px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    font-size: .76rem;
+    text-align: center;
     overflow: visible !important;
   }
 
   .mobile-bottom-nav .nav-item-active {
     position: relative;
-    z-index: 10;
-    overflow: visible !important;
+    z-index: 5;
     transform: translateY(-3px) scale(1.04);
     background: linear-gradient(180deg, #c084fc 0%, #8b5cf6 45%, #5b21b6 100%) !important;
     border: 1px solid rgba(255,255,255,.55) !important;
     box-shadow:
       0 0 0 2px rgba(216,180,254,.45),
-      0 0 28px rgba(216,180,254,1),
-      0 0 65px rgba(168,85,247,.95),
-      0 0 120px rgba(124,58,237,.75),
+      0 0 30px rgba(216,180,254,.95),
+      0 0 70px rgba(168,85,247,.85),
+      0 0 130px rgba(124,58,237,.70),
       inset 0 0 24px rgba(255,255,255,.32) !important;
   }
 
   .mobile-bottom-nav .nav-item-active::after {
     content: "";
     position: absolute;
-    inset: -18px;
+    inset: -22px;
     z-index: -1;
-    border-radius: 30px;
-    background: rgba(168,85,247,.85);
-    filter: blur(22px);
+    border-radius: 34px;
+    background: radial-gradient(circle, rgba(216,180,254,.95), rgba(168,85,247,.55) 38%, transparent 72%);
+    filter: blur(24px);
     opacity: 1;
     pointer-events: none;
   }
+
+  .mobile-bottom-nav .icon-sm {
+    width: 24px;
+    height: 24px;
+  }
+
+  .mobile-bottom-nav .nav-item span {
+    max-width: 74px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
+```
+
+Daarna deployen en iPhone screenshot sturen.
