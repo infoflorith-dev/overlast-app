@@ -2407,7 +2407,21 @@ ${profile.resident_name}
       return;
     }
 
-    openMediaPreview(item);
+    if (item.type === "video") {
+  const { data, error } = await supabase.storage
+    .from("evidence")
+    .createSignedUrl(item.file_path, 3600);
+
+  if (error || !data?.signedUrl) {
+    showMessage("Video openen mislukt.", true);
+    return;
+  }
+
+  window.location.href = data.signedUrl;
+  return;
+}
+
+openMediaPreview(item);
   }}
 >
      <div className="media-thumb">
