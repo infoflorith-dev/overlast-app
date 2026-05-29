@@ -2411,7 +2411,6 @@ ${profile.resident_name}
 
 }
 
-openMediaPreview(item);
   }}
 >
      <div className="media-thumb">
