@@ -2409,8 +2409,6 @@ ${profile.resident_name}
 
    openMediaPreview(item);
 
-  window.location.href = data.signedUrl;
-  return;
 }
 
 openMediaPreview(item);
