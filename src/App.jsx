@@ -2403,15 +2403,8 @@ ${profile.resident_name}
         return;
       }
 
-      window.location.href = data.signedUrl;
-      return;
-    }
-
-   openMediaPreview(item);
-
-}
-
-  }}
+     openMediaPreview(item);
+ }}
 >
      <div className="media-thumb">
   <div style={{ fontWeight: 700 }}>
