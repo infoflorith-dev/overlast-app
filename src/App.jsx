@@ -2407,15 +2407,7 @@ ${profile.resident_name}
       return;
     }
 
-    if (item.type === "video") {
-  const { data, error } = await supabase.storage
-    .from("evidence")
-    .createSignedUrl(item.file_path, 3600);
-
-  if (error || !data?.signedUrl) {
-    showMessage("Video openen mislukt.", true);
-    return;
-  }
+   openMediaPreview(item);
 
   window.location.href = data.signedUrl;
   return;
