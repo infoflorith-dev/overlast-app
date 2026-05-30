@@ -2361,6 +2361,16 @@ const categoryClass =
       categoryClass === "terras" ? "#a855f7" :
       categoryClass === "db-analyse" ? "#3b82f6" :
       "#f97316"
+,
+backgroundColor:
+  categoryClass === "geluid" ? "rgba(239,68,68,.15)" :
+  categoryClass === "licht" ? "rgba(245,158,11,.15)" :
+  categoryClass === "geur" ? "rgba(34,197,94,.15)" :
+  categoryClass === "terras" ? "rgba(168,85,247,.15)" :
+  categoryClass === "db-analyse" ? "rgba(59,130,246,.15)" :
+  "rgba(249,115,22,.15)",
+
+fontWeight: 700
   }}
 >
   {categoryLabel}
