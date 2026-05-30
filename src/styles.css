@@ -186,7 +186,8 @@ select:focus {
 .form-grid-2 { grid-template-columns: repeat(2, 1fr); }
 .search-row { grid-template-columns: 1fr 220px; }
 .stats-page-grid {
-  grid-template-columns: repeat(4, 1fr);
+ grid-template-columns: repeat(4, minmax(0, 1fr));
+gap: 6px;
   gap: 8px;
 }
 
