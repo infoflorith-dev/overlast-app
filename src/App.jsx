@@ -2149,15 +2149,7 @@ ${profile.resident_name}
               {activeTab === "home" && (
                 <div className="stack">
                  
-                  <div className="quick-grid">
-                    {[{ label: "Snel geluid registreren", category: "Geluid" }, { label: "Snel licht registreren", category: "Licht" }, { label: "Snel geur registreren", category: "Geur" }].map((item) => (
-                      <Button key={item.category} onClick={() => addQuickIncident(item.category)} className="quick-btn">
-                        <div><div className="bold">{item.label}</div><div className="tiny">Slaat direct op in cloud</div></div>
-                      </Button>
-                    ))}
-                  </div>
-
-                <div className="content-grid">
+                                <div className="content-grid">
   <Card>
     <CardHeader>
       <CardTitle>Recente tijdlijn</CardTitle>
