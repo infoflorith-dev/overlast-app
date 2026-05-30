@@ -941,20 +941,19 @@ padding: 10px 12px → 6px 8px
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
 
-  min-height: 80px;
-  padding: 10px 12px;
+  min-height: 70px;
+  padding: 6px 8px;
   border-radius: 18px;
 }
 
-.stats-grid .stat {
+..stats-grid .stat {
   text-align: center;
-  font-size: 2.2rem;
+  font-size: 1.9rem;
   font-weight: 900;
   line-height: 1;
   margin: 2px 0 0;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 .stats-grid .muted {
   text-align: center;
