@@ -2148,39 +2148,7 @@ ${profile.resident_name}
             <div className="stack">
               {activeTab === "home" && (
                 <div className="stack">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>1 klik opname</CardTitle>
-                      <CardDescription>
-                        Op je telefoon opent dit direct de camera-opnamekeuze. Na stoppen wordt incident + bestand automatisch opgeslagen. Daarna hoef je alleen nog details aan te vullen.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="quick-grid">
-                        <Button onClick={() => startQuickCapture("Geluid")} className="quick-btn">
-                          <Mic className="icon-inline" />
-                          <div><div className="bold">Geluid</div><div className="tiny">Direct opnemen en als geluidincident opslaan</div></div>
-                        </Button>
-                        <Button onClick={() => startQuickCapture("Licht")} className="quick-btn" variant="secondary">
-                          <Sun className="icon-inline" />
-                          <div><div className="bold">Licht</div><div className="tiny">Direct opnemen en als lichthinder opslaan</div></div>
-                        </Button>
-                        <Button onClick={() => startQuickCapture("Geur")} className="quick-btn" variant="outline">
-                          <Wind className="icon-inline" />
-                          <div><div className="bold">Geur</div><div className="tiny">Direct vastleggen en later aanvullen</div></div>
-                        </Button>
-                      </div>
-                      <input
-                        ref={quickCaptureRef}
-                        type="file"
-                        accept="video/*,image/*"
-                        capture="environment"
-                        className="hidden"
-                        onChange={handleQuickCapture}
-                      />
-                    </CardContent>
-                  </Card>
-
+                 
                   <div className="quick-grid">
                     {[{ label: "Snel geluid registreren", category: "Geluid" }, { label: "Snel licht registreren", category: "Licht" }, { label: "Snel geur registreren", category: "Geur" }].map((item) => (
                       <Button key={item.category} onClick={() => addQuickIncident(item.category)} className="quick-btn">
