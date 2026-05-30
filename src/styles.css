@@ -59,7 +59,7 @@ select {
 }
 
 .card-content {
-  padding: 24px 28px 28px;
+  padding: 10px 12px;
 }
 
 .card-title {
@@ -927,51 +927,4 @@ padding: 10px 12px → 6px 8px
     transform: translateX(120%);
     opacity: 0;
   }
-}
-/* KPI FIX */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 10px;
-  align-items: stretch;
-}
-
-.stats-grid .stat-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  min-height: 70px;
-  padding: 6px 8px;
-  border-radius: 18px;
-}
-
-..stats-grid .stat {
-  text-align: center;
-  font-size: 1.9rem;
-  font-weight: 900;
-  line-height: 1;
-  margin: 2px 0 0;
-  transform: translateY(-1px);
-}
-.stats-grid .muted {
-  text-align: center;
-  opacity: 0.8;
-}
-.stats-grid .stat-box {
-  min-height: 65px !important;
-  padding: 6px 8px !important;
-}
-
-.stats-grid .stat {
-  font-size: 1.8rem !important;
-  font-weight: 900 !important;
-  line-height: 1 !important;
-  margin: 2px 0 0 !important;
-  transform: translateY(-1px) !important;
-}
-
-.stats-grid {
-  gap: 6px !important;
 }
