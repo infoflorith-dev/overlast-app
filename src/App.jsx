@@ -2035,7 +2035,15 @@ ${profile.resident_name}
   <Lightbulb size={18} color="#f59e0b" />
   Licht
 </p>
-    <p className="stat">{dashboard.light}</p>
+    <p
+  className="stat"
+  style={{
+    color: "#f59e0b",
+    textShadow: "0 0 14px rgba(245,158,11,.85)"
+  }}
+>
+  {dashboard.light}
+</p>
   </div>
 
   <div
