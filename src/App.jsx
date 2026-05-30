@@ -2002,7 +2002,7 @@ ${profile.resident_name}
 <p
   className="muted"
   style={{
-    color: "#fecaca",
+  color: "#ef4444",
     display: "flex",
     alignItems: "center",
     gap: "8px",
