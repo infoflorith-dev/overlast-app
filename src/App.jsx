@@ -2344,7 +2344,27 @@ const categoryClass =
     </div>
   </div>
 
-  <Badge variant="outline">Open</Badge>
+<Badge
+  variant="outline"
+  style={{
+    color:
+      categoryClass === "geluid" ? "#ef4444" :
+      categoryClass === "licht" ? "#f59e0b" :
+      categoryClass === "geur" ? "#22c55e" :
+      categoryClass === "terras" ? "#a855f7" :
+      categoryClass === "db-analyse" ? "#3b82f6" :
+      "#f97316",
+    borderColor:
+      categoryClass === "geluid" ? "#ef4444" :
+      categoryClass === "licht" ? "#f59e0b" :
+      categoryClass === "geur" ? "#22c55e" :
+      categoryClass === "terras" ? "#a855f7" :
+      categoryClass === "db-analyse" ? "#3b82f6" :
+      "#f97316"
+  }}
+>
+  {categoryLabel}
+</Badge>
 </div>
            </button>
   );
