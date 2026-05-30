@@ -211,7 +211,10 @@ function getDbExceedance(incident) {
     exceeded: exceedance > 0,
   };
 }
-
+function extractDbAnalysisField(description, label) {
+  const match = String(description || "").match(new RegExp(`${label}: ([^\\n]+)`));
+  return match?.[1]?.trim() || "-";
+}
 function safeLower(value) {
   return String(value || "").toLowerCase();
 }
@@ -601,7 +604,14 @@ const { norm, peak } = getNormPeak(date);
   }, [incidents]);
 
   const recentTimeline = useMemo(() => filteredIncidents.slice(0, 10), [filteredIncidents]);
+const dashboardDbAnalyses = useMemo(() => {
+  return incidents
+    .filter((incident) => incident.source === "PCE dB analyse" && incident.chart_data?.length)
+    .sort((a, b) => new Date(b.datetime) - new Date(a.datetime));
+}, [incidents]);
 
+const selectedDashboardDb =
+  dashboardDbAnalyses[selectedDashboardDbIndex] || null;
   const showMessage = (message, error = false) => {
     setFormMessage(message);
     setIsError(error);
