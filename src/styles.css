@@ -928,3 +928,35 @@ padding: 10px 12px → 6px 8px
     opacity: 0;
   }
 }
+/* KPI FIX */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  align-items: stretch;
+}
+
+.stats-grid .stat-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  min-height: 80px;
+  padding: 10px 12px;
+  border-radius: 18px;
+}
+
+.stats-grid .stat {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+  margin: 6px 0 0;
+}
+
+.stats-grid .muted {
+  text-align: center;
+  opacity: 0.8;
+}
