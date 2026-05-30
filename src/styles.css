@@ -501,7 +501,7 @@ overflow: hidden;
 .hero-grid .stats-grid .stat {
   font-size: 2.6rem;
   line-height: 1;
-  margin-top: 14px;
+margin-top: 2px;
 }
 
 .hero-grid .stats-grid .muted {
