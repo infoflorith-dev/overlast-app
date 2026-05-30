@@ -959,3 +959,19 @@ padding: 10px 12px → 6px 8px
   text-align: center;
   opacity: 0.8;
 }
+.stats-grid .stat-box {
+  min-height: 65px !important;
+  padding: 6px 8px !important;
+}
+
+.stats-grid .stat {
+  font-size: 1.8rem !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  margin: 2px 0 0 !important;
+  transform: translateY(-1px) !important;
+}
+
+.stats-grid {
+  gap: 6px !important;
+}
