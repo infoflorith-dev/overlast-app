@@ -2324,7 +2324,7 @@ const categoryIcon =
     >
      <div className="between">
   <div className="badge-row">
-    <div className="incident-list-icon">
+<div className={`incident-list-icon incident-${incident.category.toLowerCase().replace(" ", "-")}`}>
       {categoryIcon}
     </div>
 
