@@ -2014,7 +2014,10 @@ ${profile.resident_name}
   }}
   style={{ cursor: "pointer" }}
 >
-    <p className="muted">Licht</p>
+   <p className="muted" style={{ color: "#f59e0b", display: "flex", alignItems: "center", gap: "8px" }}>
+  <Lightbulb size={18} color="#f59e0b" />
+  Licht
+</p>
     <p className="stat">{dashboard.light}</p>
   </div>
 
@@ -2026,7 +2029,10 @@ ${profile.resident_name}
   }}
   style={{ cursor: "pointer" }}
 >
-    <p className="muted">Geur</p>
+    <p className="muted" style={{ color: "#22c55e", display: "flex", alignItems: "center", gap: "8px" }}>
+  <Wind size={18} color="#22c55e" />
+  Geur
+</p>
     <p className="stat">{dashboard.smell}</p>
   </div>
 
@@ -2038,7 +2044,10 @@ ${profile.resident_name}
   }}
   style={{ cursor: "pointer" }}
 >
-    <p className="muted">Terras</p>
+   <p className="muted" style={{ color: "#a855f7", display: "flex", alignItems: "center", gap: "8px" }}>
+  <Store size={18} color="#a855f7" />
+  Terras
+</p>
     <p className="stat">
       {incidents.filter(i => i.category === "Terras").length}
     </p>
@@ -2052,7 +2061,10 @@ ${profile.resident_name}
   }}
   style={{ cursor: "pointer" }}
 >
-    <p className="muted">Overig</p>
+  <p className="muted" style={{ color: "#f97316", display: "flex", alignItems: "center", gap: "8px" }}>
+  <AlertTriangle size={18} color="#f97316" />
+  Overig
+</p>
     <p className="stat">
       {incidents.filter(i => i.category === "Overig").length}
     </p>
