@@ -2208,7 +2208,7 @@ ${profile.resident_name}
   <CardContent className="stack">
     {selectedDashboardDb ? (
       <>
-        <div className="stats-page-grid">
+       <div className="stats-page-grid db-home-kpi-grid">
           <Card>
             <CardContent>
               <p className="muted">Gemiddelde dB</p>
