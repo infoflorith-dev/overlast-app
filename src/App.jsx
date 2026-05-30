@@ -2015,8 +2015,8 @@ ${profile.resident_name}
     <p
   className="stat"
   style={{
-    color: "#fecaca",
-    textShadow: "0 0 10px rgba(239,68,68,.75)"
+    color: "#ef4444",
+   textShadow: "0 0 10px rgba(239,68,68,.75)"
   }}
 >
   {dashboard.sound}
