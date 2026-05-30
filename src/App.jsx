@@ -1992,24 +1992,52 @@ ${profile.resident_name}
     <p className="stat">{dashboard.sound}</p>
   </div>
 
-  <div className="stat-box">
+ <div
+  className="stat-box"
+  onClick={() => {
+    setFilterCategory("Licht");
+    setActiveTab("incidenten");
+  }}
+  style={{ cursor: "pointer" }}
+>
     <p className="muted">Licht</p>
     <p className="stat">{dashboard.light}</p>
   </div>
 
-  <div className="stat-box">
+  <div
+  className="stat-box"
+  onClick={() => {
+    setFilterCategory("Geur");
+    setActiveTab("incidenten");
+  }}
+  style={{ cursor: "pointer" }}
+>
     <p className="muted">Geur</p>
     <p className="stat">{dashboard.smell}</p>
   </div>
 
-  <div className="stat-box">
+ <div
+  className="stat-box"
+  onClick={() => {
+    setFilterCategory("Terras");
+    setActiveTab("incidenten");
+  }}
+  style={{ cursor: "pointer" }}
+>
     <p className="muted">Terras</p>
     <p className="stat">
       {incidents.filter(i => i.category === "Terras").length}
     </p>
   </div>
 
-  <div className="stat-box">
+  <div
+  className="stat-box"
+  onClick={() => {
+    setFilterCategory("Overig");
+    setActiveTab("incidenten");
+  }}
+  style={{ cursor: "pointer" }}
+>
     <p className="muted">Overig</p>
     <p className="stat">
       {incidents.filter(i => i.category === "Overig").length}
