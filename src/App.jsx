@@ -2965,34 +2965,34 @@ style={{
   <>
         <div className="stats-page-grid">
           <Card>
-            <CardContent>
+           <CardContent style={{ padding: "8px 10px" }}>
               <p className="muted">Gemiddelde dB</p>
               <p className="stat">{dbAnalysis.totalAverage}</p>
             </CardContent>
           </Card>
 
           <Card>
-            <CardContent>
+           <CardContent style={{ padding: "8px 10px" }}>
               <p className="muted">Maximum</p>
               <p className="stat">{dbAnalysis.max}</p>
             </CardContent>
           </Card>
 
           <Card>
-            <CardContent>
+            <CardContent style={{ padding: "8px 10px" }}>
               <p className="muted">Minimum</p>
               <p className="stat">{dbAnalysis.min}</p>
             </CardContent>
           </Card>
 <Card>
-  <CardContent>
+ <CardContent style={{ padding: "8px 10px" }}>
     <p className="muted">Metingen</p>
     <p className="stat">{dbAnalysis.count}</p>
   </CardContent>
 </Card>
 
 <Card>
-  <CardContent>
+ <CardContent style={{ padding: "8px 10px" }}>
     <p className="muted">Norm overschrijdingen</p>
     <p className="stat">{dbAnalysis.averageExceedances}</p>
   </CardContent>
