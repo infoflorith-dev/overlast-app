@@ -2003,7 +2003,15 @@ ${profile.resident_name}
   <AudioLines size={18} color="#ef4444" />
   Geluid
 </p>
-    <p className="stat">{dashboard.sound}</p>
+    <p
+  className="stat"
+  style={{
+    color: "#fecaca",
+    textShadow: "0 0 10px rgba(239,68,68,.75)"
+  }}
+>
+  {dashboard.sound}
+</p>
   </div>
 
  <div
