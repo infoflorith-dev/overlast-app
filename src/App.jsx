@@ -168,7 +168,7 @@ function DbChart({ data }) {
       </CardHeader>
 
       <CardContent>
-        <div style={{ width: "100%", height: 300 }}>
+      <div style={{ width: "100%", height: 420 }}>
           <ResponsiveContainer width="100%" height="100%">
   <LineChart data={data}>
     <XAxis dataKey="time" />
