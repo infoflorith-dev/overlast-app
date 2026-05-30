@@ -2182,7 +2182,7 @@ ${profile.resident_name}
       <CardTitle>Export & rapport</CardTitle>
       <CardDescription>Klaar voor dossier en print</CardDescription>
     </CardHeader>
-    <CardContent className="stack">
+   <CardContent style={{ paddingTop: "12px" }} className="stack">
       <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "10px" }}>
         <label>
           <input
