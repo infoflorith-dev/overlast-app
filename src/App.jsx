@@ -2302,17 +2302,17 @@ ${profile.resident_name}
   incident.chart_data?.[0]?.norm || dbInfo.norm;
                   if (selectedIncidentId !== incident.id) {
 const categoryIcon =
-  incident.source === "PCE dB analyse"
-    ? <Activity size={22} />
-    : incident.category === "Geluid"
-    ? <AudioLines size={22} />
-    : incident.category === "Licht"
-    ? <Lightbulb size={22} />
-    : incident.category === "Geur"
-    ? <Waves size={22} />
-    : incident.category === "Terras"
-    ? <Wind size={22} />
-    : <AlertTriangle size={22} />;
+incident.source === "PCE dB analyse"
+  ? <Activity size={22} color="#3b82f6" />
+  : incident.category === "Geluid"
+  ? <AudioLines size={22} color="#ef4444" />
+  : incident.category === "Licht"
+  ? <Lightbulb size={22} color="#f59e0b" />
+  : incident.category === "Geur"
+  ? <Waves size={22} color="#22c55e" />
+  : incident.category === "Terras"
+  ? <Wind size={22} color="#a855f7" />
+  : <AlertTriangle size={22} color="#f97316" />;
 const categoryLabel =
   incident.source === "PCE dB analyse" ? "dB Analyse" : incident.category;
 
