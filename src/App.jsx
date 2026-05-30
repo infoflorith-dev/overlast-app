@@ -2313,7 +2313,13 @@ const categoryIcon =
     : incident.category === "Terras"
     ? <Wind size={22} />
     : <AlertTriangle size={22} />;
+const categoryLabel =
+  incident.source === "PCE dB analyse" ? "dB Analyse" : incident.category;
 
+const categoryClass =
+  incident.source === "PCE dB analyse"
+    ? "db-analyse"
+    : incident.category.toLowerCase().replace(" ", "-");
   return (
     <button
       key={incident.id}
