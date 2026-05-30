@@ -2161,32 +2161,97 @@ ${profile.resident_name}
                 <div className="stack">
                  
                                 <div className="content-grid">
-  <Card>
-    <CardHeader>
-      <CardTitle>Recente tijdlijn</CardTitle>
-      <CardDescription>Laatste 10 op incidentdatum</CardDescription>
-    </CardHeader>
-    <CardContent className="stack">
-      {recentTimeline.map((incident) => (
-        <div key={incident.id} className="incident-card">
-          <div className="badge-row">
-            <Badge>{incident.category}</Badge>
-            <Badge variant="outline">{incident.severity}</Badge>
-            {isNightIncident(incident.datetime) && (
-              <Badge variant="secondary">
-                <Moon className="icon-inline" /> Nacht
-              </Badge>
-            )}
-          </div>
-          <p className="bold mt">{incident.title}</p>
-          <p className="muted mt-sm">
-            {formatDisplayDateTime(incident.datetime)} • {incident.location}
-          </p>
-          <p className="mt">{incident.description}</p>
+ <Card>
+  <CardHeader>
+    <div className="between">
+      <div>
+        <CardTitle>Laatste dB analyse</CardTitle>
+        <CardDescription>
+          {selectedDashboardDb
+            ? `${formatDisplayDateTime(selectedDashboardDb.datetime)} • ${extractDbAnalysisField(selectedDashboardDb.description, "Start meting")} t/m ${extractDbAnalysisField(selectedDashboardDb.description, "Einde meting")}`
+            : "Nog geen opgeslagen dB analyse"}
+        </CardDescription>
+      </div>
+
+      <div className="badge-row">
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          disabled={!dashboardDbAnalyses.length}
+          onClick={() =>
+            setSelectedDashboardDbIndex((prev) =>
+              prev === 0 ? dashboardDbAnalyses.length - 1 : prev - 1
+            )
+          }
+        >
+          ←
+        </Button>
+
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          disabled={!dashboardDbAnalyses.length}
+          onClick={() =>
+            setSelectedDashboardDbIndex((prev) =>
+              prev === dashboardDbAnalyses.length - 1 ? 0 : prev + 1
+            )
+          }
+        >
+          →
+        </Button>
+      </div>
+    </div>
+  </CardHeader>
+
+  <CardContent className="stack">
+    {selectedDashboardDb ? (
+      <>
+        <div className="stats-page-grid">
+          <Card>
+            <CardContent>
+              <p className="muted">Gemiddelde dB</p>
+              <p className="stat">{selectedDashboardDb.db}</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent>
+              <p className="muted">Maximum dB</p>
+              <p className="stat">
+                {extractDbAnalysisField(selectedDashboardDb.description, "Maximum dB")}
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent>
+              <p className="muted">Periode</p>
+              <p className="stat">
+                {extractDbAnalysisField(selectedDashboardDb.description, "Duur")}
+              </p>
+            </CardContent>
+          </Card>
         </div>
-      ))}
-    </CardContent>
-  </Card>
+
+        <div style={{ width: "100%", height: 300 }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={selectedDashboardDb.chart_data}>
+              <XAxis dataKey="time" />
+              <YAxis />
+              <Line type="monotone" dataKey="db" stroke="#2563eb" dot={false} strokeWidth={2} />
+              <Line type="monotone" dataKey="norm" stroke="#f59e0b" dot={false} strokeDasharray="5 5" />
+              <Line type="monotone" dataKey="peak" stroke="#ef4444" dot={false} strokeDasharray="3 3" />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </>
+    ) : (
+      <p className="muted">Nog geen dB analyse opgeslagen als incident.</p>
+    )}
+  </CardContent>
+</Card>
 
   <Card>
     <CardHeader>
