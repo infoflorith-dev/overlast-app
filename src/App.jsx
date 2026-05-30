@@ -2301,13 +2301,18 @@ ${profile.resident_name}
                   const chartNorm =
   incident.chart_data?.[0]?.norm || dbInfo.norm;
                   if (selectedIncidentId !== incident.id) {
-  const categoryIcon =
-    incident.source === "PCE dB analyse" ? "📊" :
-    incident.category === "Geluid" ? "🔊" :
-    incident.category === "Licht" ? "💡" :
-    incident.category === "Geur" ? "🌬️" :
-    incident.category === "Terras" ? "🍽️" :
-    "⚠️";
+const categoryIcon =
+  incident.source === "PCE dB analyse"
+    ? <Activity size={22} />
+    : incident.category === "Geluid"
+    ? <AudioLines size={22} />
+    : incident.category === "Licht"
+    ? <Lightbulb size={22} />
+    : incident.category === "Geur"
+    ? <Waves size={22} />
+    : incident.category === "Terras"
+    ? <Wind size={22} />
+    : <AlertTriangle size={22} />;
 
   return (
     <button
