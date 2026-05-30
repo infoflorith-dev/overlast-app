@@ -185,7 +185,9 @@ select:focus {
 .form-grid-3 { grid-template-columns: repeat(3, 1fr); }
 .form-grid-2 { grid-template-columns: repeat(2, 1fr); }
 .search-row { grid-template-columns: 1fr 220px; }
-.stats-page-grid, .stats-grid { grid-template-columns: repeat(6, 1fr); }
+.stats-page-grid { grid-template-columns: repeat(4, 1fr); }
+
+.stats-grid { grid-template-columns: repeat(6, 1fr); }
 .media-grid { grid-template-columns: repeat(3, 1fr); }
 .stack { display: flex; flex-direction: column; gap: 16px; }
 .between { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
