@@ -2315,10 +2315,10 @@ ${profile.resident_name}
     >
       <div className="between">
         <div>
-          <p className="bold">
+       <p className="bold" style={{ color: "#f8fafc" }}>
             {categoryIcon} {incident.title}
           </p>
-          <p className="muted mt-sm">
+       <p className="muted mt-sm" style={{ color: "#94a3b8" }}>
             {formatDisplayDateTime(incident.datetime)} • {incident.category} • {incident.location}
           </p>
         </div>
