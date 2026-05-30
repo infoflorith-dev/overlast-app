@@ -2331,9 +2331,7 @@ ${profile.resident_name}
 
   <Badge variant="outline">Open</Badge>
 </div>
-        <Badge variant="outline">Open</Badge>
-      </div>
-    </button>
+           </button>
   );
 }
                         return (
