@@ -59,7 +59,7 @@ select {
 }
 
 .card-content {
-  padding: 10px 12px;
+  padding: 24px 28px 28px;
 }
 
 .card-title {
@@ -455,8 +455,8 @@ overflow: hidden;
 .hero-grid .stats-grid .stat-box {
   position: relative;
   overflow: hidden;
-min-height: 70px → 42px
-padding: 10px 12px → 6px 8px
+  min-height: 130px;
+  padding: 22px;
   border-radius: 26px;
   background:
     radial-gradient(circle at top right, rgba(139,92,246,.28), transparent 34%),
@@ -748,10 +748,10 @@ padding: 10px 12px → 6px 8px
     grid-template-columns: repeat(2, 1fr) !important;
   }
 
- .hero-grid .stats-grid .stat-box {
-  min-height: 55px;
-  padding: 6px 8px;
-}
+  .hero-grid .stats-grid .stat-box {
+    min-height: 105px;
+    padding: 18px;
+  }
 
   .hero-grid .stats-grid .stat {
     font-size: 2.2rem;
