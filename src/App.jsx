@@ -1980,6 +1980,17 @@ ${profile.resident_name}
 
           <Card>
            <CardContent className="stats-grid">
+             <div
+  className="stat-box"
+  onClick={() => {
+    setFilterCategory("Alles");
+    setActiveTab("incidenten");
+  }}
+  style={{ cursor: "pointer" }}
+>
+  <p className="muted">Totaal</p>
+  <p className="stat">{dashboard.total}</p>
+</div>
 <div
   className="stat-box"
   onClick={() => {
