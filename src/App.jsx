@@ -2246,7 +2246,7 @@ ${profile.resident_name}
 </Card>
         </div>
 
-        <div style={{ width: "100%", height: 300 }}>
+       <div style={{ width: "100%", height: 420 }}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={selectedDashboardDb.chart_data}>
               <XAxis dataKey="time" />
