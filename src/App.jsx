@@ -2313,15 +2313,24 @@ ${profile.resident_name}
       onClick={() => setSelectedIncidentId(incident.id)}
       style={{ textAlign: "left", width: "100%" }}
     >
-      <div className="between">
-        <div>
-       <p className="bold" style={{ color: "#f8fafc" }}>
-            {categoryIcon} {incident.title}
-          </p>
-       <p className="muted mt-sm" style={{ color: "#94a3b8" }}>
-            {formatDisplayDateTime(incident.datetime)} • {incident.category} • {incident.location}
-          </p>
-        </div>
+     <div className="between">
+  <div className="badge-row">
+    <div className="incident-list-icon">
+      {categoryIcon}
+    </div>
+
+    <div>
+      <p className="bold" style={{ color: "#f8fafc" }}>
+        {incident.title}
+      </p>
+      <p className="muted mt-sm" style={{ color: "#94a3b8" }}>
+        {formatDisplayDateTime(incident.datetime)} • {incident.category} • {incident.location}
+      </p>
+    </div>
+  </div>
+
+  <Badge variant="outline">Open</Badge>
+</div>
         <Badge variant="outline">Open</Badge>
       </div>
     </button>
