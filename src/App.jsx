@@ -2356,6 +2356,14 @@ const categoryClass =
     fontWeight: 800,
     fontSize: "16px",
     whiteSpace: "nowrap"
+    ,
+textShadow:
+  categoryClass === "geluid" ? "0 0 12px rgba(239,68,68,.8)" :
+  categoryClass === "licht" ? "0 0 12px rgba(245,158,11,.8)" :
+  categoryClass === "geur" ? "0 0 12px rgba(34,197,94,.8)" :
+  categoryClass === "terras" ? "0 0 12px rgba(168,85,247,.8)" :
+  categoryClass === "db-analyse" ? "0 0 12px rgba(59,130,246,.8)" :
+  "0 0 12px rgba(249,115,22,.8)"
   }}
 >
   {categoryLabel} ›
