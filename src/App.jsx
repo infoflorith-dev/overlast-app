@@ -246,6 +246,7 @@ export default function App() {
   const [isError, setIsError] = useState(false);
   const [editingIncidentId, setEditingIncidentId] = useState(null);
   const [selectedIncidentId, setSelectedIncidentId] = useState(null);
+  const [selectedDashboardCategory, setSelectedDashboardCategory] = useState(null);
   const [activePreviewMedia, setActivePreviewMedia] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
