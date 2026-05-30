@@ -403,6 +403,11 @@ overflow: hidden;
   border-color: rgba(249,115,22,.35);
   box-shadow: 0 0 20px rgba(249,115,22,.35);
 }
+.incident-list-icon.incident-db-analyse {
+  background: rgba(59,130,246,.18);
+  border-color: rgba(59,130,246,.35);
+  box-shadow: 0 0 20px rgba(59,130,246,.35);
+}
 .note-row:hover,
 .task-row:hover,
 .incident-card:hover {
