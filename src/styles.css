@@ -935,13 +935,3 @@ overflow: hidden;
     opacity: 0;
   }
 }
-.hero-grid .stats-grid .stat-box {
-  min-height: 44px !important;
-  padding: 6px 8px !important;
-}
-
-.hero-grid .stats-grid .stat {
-  font-size: 1.2rem !important;
-  line-height: 1 !important;
-  margin: 2px 0 0 !important;
-}
