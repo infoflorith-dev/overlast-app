@@ -950,10 +950,10 @@ padding: 10px 12px → 6px 8px
 
 .stats-grid .stat {
   text-align: center;
-  font-size: 1.6rem;
-  font-weight: 800;
+  font-size: 2.2rem;
+  font-weight: 900;
   line-height: 1;
-  margin: 6px 0 0;
+  margin: 4px 0 0;
 }
 
 .stats-grid .muted {
