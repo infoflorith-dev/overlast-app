@@ -1980,7 +1980,14 @@ ${profile.resident_name}
 
           <Card>
            <CardContent className="stats-grid">
-  <div className="stat-box">
+<div
+  className="stat-box"
+  onClick={() => {
+    setFilterCategory("Geluid");
+    setActiveTab("incidenten");
+  }}
+  style={{ cursor: "pointer" }}
+>
     <p className="muted">Geluid</p>
     <p className="stat">{dashboard.sound}</p>
   </div>
