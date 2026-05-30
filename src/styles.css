@@ -953,9 +953,9 @@ padding: 10px 12px → 6px 8px
   font-size: 2.2rem;
   font-weight: 900;
   line-height: 1;
-  margin: 4px 0 0;
+  margin: 2px 0 0;
+  transform: translateY(-2px);
 }
-
 .stats-grid .muted {
   text-align: center;
   opacity: 0.8;
