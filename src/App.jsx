@@ -1978,12 +1978,36 @@ ${profile.resident_name}
           </Card>
 
           <Card>
-            <CardContent className="stats-grid">
-              <div className="stat-box"><p className="muted">Incidenten</p><p className="stat">{dashboard.total}</p></div>
-              <div className="stat-box"><p className="muted">Nacht</p><p className="stat">{dashboard.night}</p></div>
-              <div className="stat-box"><p className="muted">Gem. dB</p><p className="stat">{dashboard.avgDb}</p></div>
-              <div className="stat-box"><p className="muted">Bestanden</p><p className="stat">{allMedia.length}</p></div>
-            </CardContent>
+           <CardContent className="stats-grid">
+  <div className="stat-box">
+    <p className="muted">Geluid</p>
+    <p className="stat">{dashboard.sound}</p>
+  </div>
+
+  <div className="stat-box">
+    <p className="muted">Licht</p>
+    <p className="stat">{dashboard.light}</p>
+  </div>
+
+  <div className="stat-box">
+    <p className="muted">Geur</p>
+    <p className="stat">{dashboard.smell}</p>
+  </div>
+
+  <div className="stat-box">
+    <p className="muted">Terras</p>
+    <p className="stat">
+      {incidents.filter(i => i.category === "Terras").length}
+    </p>
+  </div>
+
+  <div className="stat-box">
+    <p className="muted">Overig</p>
+    <p className="stat">
+      {incidents.filter(i => i.category === "Overig").length}
+    </p>
+  </div>
+</CardContent>
           </Card>
         </motion.div>
 
