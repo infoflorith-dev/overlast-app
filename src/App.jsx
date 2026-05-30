@@ -1999,7 +1999,10 @@ ${profile.resident_name}
   }}
   style={{ cursor: "pointer" }}
 >
-    <p className="muted">Geluid</p>
+   <p className="muted" style={{ color: "#ef4444", display: "flex", alignItems: "center", gap: "8px" }}>
+  <AudioLines size={18} color="#ef4444" />
+  Geluid
+</p>
     <p className="stat">{dashboard.sound}</p>
   </div>
 
