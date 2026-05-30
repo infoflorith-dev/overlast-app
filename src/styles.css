@@ -960,6 +960,3 @@ padding: 10px 12px → 6px 8px
   text-align: center;
   opacity: 0.8;
 }
-.stats-grid .stat-box::after {
-  display: none !important;
-}
