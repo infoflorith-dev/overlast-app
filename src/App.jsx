@@ -241,6 +241,7 @@ export default function App() {
   const [formMessage, setFormMessage] = useState("");
   const [isError, setIsError] = useState(false);
   const [editingIncidentId, setEditingIncidentId] = useState(null);
+  const [selectedIncidentId, setSelectedIncidentId] = useState(null);
   const [activePreviewMedia, setActivePreviewMedia] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
