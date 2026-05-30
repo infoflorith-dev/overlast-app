@@ -2058,7 +2058,15 @@ ${profile.resident_name}
   <Wind size={18} color="#22c55e" />
   Geur
 </p>
-    <p className="stat">{dashboard.smell}</p>
+   <p
+  className="stat"
+  style={{
+    color: "#22c55e",
+    textShadow: "0 0 14px rgba(34,197,94,.85)"
+  }}
+>
+  {dashboard.smell}
+</p>
   </div>
 
  <div
@@ -2073,9 +2081,15 @@ ${profile.resident_name}
   <Wind size={18} color="#a855f7" />
   Terras
 </p>
-    <p className="stat">
-      {incidents.filter(i => i.category === "Terras").length}
-    </p>
+    <p
+  className="stat"
+  style={{
+    color: "#a855f7",
+    textShadow: "0 0 14px rgba(168,85,247,.85)"
+  }}
+>
+  {incidents.filter(i => i.category === "Terras").length}
+</p>
   </div>
 
   <div
@@ -2090,9 +2104,15 @@ ${profile.resident_name}
   <AlertTriangle size={18} color="#f97316" />
   Overig
 </p>
-    <p className="stat">
-      {incidents.filter(i => i.category === "Overig").length}
-    </p>
+    <p
+  className="stat"
+  style={{
+    color: "#f97316",
+    textShadow: "0 0 14px rgba(249,115,22,.85)"
+  }}
+>
+  {incidents.filter(i => i.category === "Overig").length}
+</p>
   </div>
 </CardContent>
           </Card>
