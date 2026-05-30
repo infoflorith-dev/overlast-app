@@ -2233,6 +2233,17 @@ ${profile.resident_name}
               </p>
             </CardContent>
           </Card>
+          <Card>
+  <CardContent>
+    <p className="muted">Gem. overschr.</p>
+    <p className="stat">
+      +{(
+        Number(selectedDashboardDb.db) -
+        Number(selectedDashboardDb.chart_data?.[0]?.norm || 45)
+      ).toFixed(1)}
+    </p>
+  </CardContent>
+</Card>
         </div>
 
         <div style={{ width: "100%", height: 300 }}>
