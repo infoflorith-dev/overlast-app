@@ -2296,8 +2296,47 @@ ${profile.resident_name}
                         const dbInfo = getDbExceedance(incident);
                   const chartNorm =
   incident.chart_data?.[0]?.norm || dbInfo.norm;
+                  if (selectedIncidentId !== incident.id) {
+  const categoryIcon =
+    incident.source === "PCE dB analyse" ? "📊" :
+    incident.category === "Geluid" ? "🔊" :
+    incident.category === "Licht" ? "💡" :
+    incident.category === "Geur" ? "🌬️" :
+    incident.category === "Terras" ? "🍽️" :
+    "⚠️";
+
+  return (
+    <button
+      key={incident.id}
+      type="button"
+      className="incident-card"
+      onClick={() => setSelectedIncidentId(incident.id)}
+      style={{ textAlign: "left", width: "100%" }}
+    >
+      <div className="between">
+        <div>
+          <p className="bold">
+            {categoryIcon} {incident.title}
+          </p>
+          <p className="muted mt-sm">
+            {formatDisplayDateTime(incident.datetime)} • {incident.category} • {incident.location}
+          </p>
+        </div>
+        <Badge variant="outline">Open</Badge>
+      </div>
+    </button>
+  );
+}
                         return (
                           <div key={incident.id} data-incident-id={incident.id} className="incident-card">
+                            <Button
+  type="button"
+  variant="outline"
+  size="sm"
+  onClick={() => setSelectedIncidentId(null)}
+>
+  ← Terug naar lijst
+</Button>
                             <div className="between">
                               <div>
                                 <div className="badge-row">
