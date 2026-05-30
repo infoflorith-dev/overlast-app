@@ -374,31 +374,31 @@ overflow: hidden;
   font-size: 20px;
   flex-shrink: 0;
 }
-.incident-geluid .incident-list-icon {
+.incident-list-icon.incident-geluid {
   background: rgba(239,68,68,.18);
   border-color: rgba(239,68,68,.35);
   box-shadow: 0 0 20px rgba(239,68,68,.35);
 }
 
-.incident-licht .incident-list-icon {
+.incident-list-icon.incident-licht {
   background: rgba(245,158,11,.18);
   border-color: rgba(245,158,11,.35);
   box-shadow: 0 0 20px rgba(245,158,11,.35);
 }
 
-.incident-geur .incident-list-icon {
+.incident-list-icon.incident-geur {
   background: rgba(34,197,94,.18);
   border-color: rgba(34,197,94,.35);
   box-shadow: 0 0 20px rgba(34,197,94,.35);
 }
 
-.incident-terras .incident-list-icon {
+.incident-list-icon.incident-terras {
   background: rgba(168,85,247,.18);
   border-color: rgba(168,85,247,.35);
   box-shadow: 0 0 20px rgba(168,85,247,.35);
 }
 
-.incident-overig .incident-list-icon {
+.incident-list-icon.incident-overig {
   background: rgba(249,115,22,.18);
   border-color: rgba(249,115,22,.35);
   box-shadow: 0 0 20px rgba(249,115,22,.35);
