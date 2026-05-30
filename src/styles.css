@@ -455,8 +455,8 @@ overflow: hidden;
 .hero-grid .stats-grid .stat-box {
   position: relative;
   overflow: hidden;
- min-height: 70px;
-padding: 10px 12px;
+min-height: 70px → 42px
+padding: 10px 12px → 6px 8px
   border-radius: 26px;
   background:
     radial-gradient(circle at top right, rgba(139,92,246,.28), transparent 34%),
