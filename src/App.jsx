@@ -2149,10 +2149,10 @@ ${profile.resident_name}
               {activeTab === "home" && (
                 <div className="stack">
                  
-       <div className="content-grid">
+                                <div className="content-grid">
   <Card>
     <CardHeader>
-  <div className="content-grid">
+      <CardTitle>Recente tijdlijn</CardTitle>
       <CardDescription>Laatste 10 op incidentdatum</CardDescription>
     </CardHeader>
     <CardContent className="stack">
