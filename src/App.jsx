@@ -2344,8 +2344,7 @@ const categoryClass =
     </div>
   </div>
 
-<Badge
-  variant="outline"
+<span
   style={{
     color:
       categoryClass === "geluid" ? "#ef4444" :
@@ -2354,34 +2353,13 @@ const categoryClass =
       categoryClass === "terras" ? "#a855f7" :
       categoryClass === "db-analyse" ? "#3b82f6" :
       "#f97316",
-    borderColor:
-      categoryClass === "geluid" ? "#ef4444" :
-      categoryClass === "licht" ? "#f59e0b" :
-      categoryClass === "geur" ? "#22c55e" :
-      categoryClass === "terras" ? "#a855f7" :
-      categoryClass === "db-analyse" ? "#3b82f6" :
-      "#f97316"
-,
-backgroundColor:
-  categoryClass === "geluid" ? "rgba(239,68,68,.15)" :
-  categoryClass === "licht" ? "rgba(245,158,11,.15)" :
-  categoryClass === "geur" ? "rgba(34,197,94,.15)" :
-  categoryClass === "terras" ? "rgba(168,85,247,.15)" :
-  categoryClass === "db-analyse" ? "rgba(59,130,246,.15)" :
-  "rgba(249,115,22,.15)",
-
-fontWeight: 700,
-boxShadow:
-  categoryClass === "geluid" ? "0 0 12px rgba(239,68,68,.35)" :
-  categoryClass === "licht" ? "0 0 12px rgba(245,158,11,.35)" :
-  categoryClass === "geur" ? "0 0 12px rgba(34,197,94,.35)" :
-  categoryClass === "terras" ? "0 0 12px rgba(168,85,247,.35)" :
-  categoryClass === "db-analyse" ? "0 0 12px rgba(59,130,246,.35)" :
-  "0 0 12px rgba(249,115,22,.35)"
+    fontWeight: 800,
+    fontSize: "16px",
+    whiteSpace: "nowrap"
   }}
 >
- {categoryLabel} ›
-</Badge>
+  {categoryLabel} ›
+</span>
 </div>
            </button>
   );
