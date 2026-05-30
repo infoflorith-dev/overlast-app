@@ -59,7 +59,7 @@ select {
 }
 
 .card-content {
-  padding: 10px 12px;
+  padding: 24px 28px 28px;
 }
 
 .card-title {
@@ -186,9 +186,7 @@ select:focus {
 .form-grid-2 { grid-template-columns: repeat(2, 1fr); }
 .search-row { grid-template-columns: 1fr 220px; }
 .stats-page-grid {
- grid-template-columns: repeat(4, minmax(0, 1fr));
-gap: 6px;
-  gap: 8px;
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .stats-grid {
@@ -456,8 +454,8 @@ overflow: hidden;
 .hero-grid .stats-grid .stat-box {
   position: relative;
   overflow: hidden;
-  min-height: 42px;
-  padding: 6px 8px;
+  min-height: 130px;
+  padding: 22px;
   border-radius: 26px;
   background:
     radial-gradient(circle at top right, rgba(139,92,246,.28), transparent 34%),
@@ -495,10 +493,11 @@ overflow: hidden;
 }
 
 .hero-grid .stats-grid .stat {
-  font-size: 1.4rem;
+  font-size: 2.6rem;
   line-height: 1;
-  margin-top: 4px;
+  margin-top: 14px;
 }
+
 .hero-grid .stats-grid .muted {
   color: #a8b3cf;
 }
@@ -748,17 +747,10 @@ overflow: hidden;
     grid-template-columns: repeat(2, 1fr) !important;
   }
 
-.hero-grid .stats-grid .stat-box {
-  position: relative;
-  overflow: hidden;
-  min-height: 42px;
-  padding: 4px 6px;
-  border-radius: 26px;
-  background:
-    radial-gradient(circle at top right, rgba(139,92,246,.28), transparent 34%),
-    linear-gradient(180deg, rgba(30,41,59,.96), rgba(10,15,30,.96));
-  border: 1px solid rgba(255,255,255,.08);
-}
+  .hero-grid .stats-grid .stat-box {
+    min-height: 105px;
+    padding: 18px;
+  }
 
   .hero-grid .stats-grid .stat {
     font-size: 2.2rem;
