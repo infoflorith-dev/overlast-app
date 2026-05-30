@@ -2045,7 +2045,7 @@ ${profile.resident_name}
   style={{ cursor: "pointer" }}
 >
    <p className="muted" style={{ color: "#a855f7", display: "flex", alignItems: "center", gap: "8px" }}>
-  <Store size={18} color="#a855f7" />
+  <Wind size={18} color="#a855f7" />
   Terras
 </p>
     <p className="stat">
