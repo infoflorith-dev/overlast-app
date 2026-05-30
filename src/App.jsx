@@ -2380,7 +2380,7 @@ boxShadow:
   "0 0 12px rgba(249,115,22,.35)"
   }}
 >
-  {categoryLabel}
+ {categoryLabel} ›
 </Badge>
 </div>
            </button>
