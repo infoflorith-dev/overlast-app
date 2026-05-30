@@ -2370,7 +2370,14 @@ backgroundColor:
   categoryClass === "db-analyse" ? "rgba(59,130,246,.15)" :
   "rgba(249,115,22,.15)",
 
-fontWeight: 700
+fontWeight: 700,
+boxShadow:
+  categoryClass === "geluid" ? "0 0 12px rgba(239,68,68,.35)" :
+  categoryClass === "licht" ? "0 0 12px rgba(245,158,11,.35)" :
+  categoryClass === "geur" ? "0 0 12px rgba(34,197,94,.35)" :
+  categoryClass === "terras" ? "0 0 12px rgba(168,85,247,.35)" :
+  categoryClass === "db-analyse" ? "0 0 12px rgba(59,130,246,.35)" :
+  "0 0 12px rgba(249,115,22,.35)"
   }}
 >
   {categoryLabel}
