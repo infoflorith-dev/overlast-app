@@ -272,10 +272,11 @@ overflow: hidden;
 }
 
 .stat {
-  font-size: 2.2rem;
+  font-size: 1.6rem;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: -0.03em;
+  text-shadow: 0 0 10px rgba(255,255,255,0.35);
 }
 .quick-btn { height: auto; justify-content: flex-start; text-align: left; padding: 18px; }
 .loading-row { display: flex; gap: 10px; align-items: center; color: #64748b; }
