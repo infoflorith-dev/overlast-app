@@ -494,9 +494,9 @@ padding: 10px 12px → 6px 8px
 }
 
 .hero-grid .stats-grid .stat {
-  font-size: 1.3rem;
+  font-size: 2.6rem;
   line-height: 1;
-  margin-top: 4px;
+  margin-top: 14px;
 }
 
 .hero-grid .stats-grid .muted {
