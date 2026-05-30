@@ -2685,7 +2685,7 @@ style={{
 
                     <div className="modal-media mt">
                       {activePreviewMedia.type === "video" ? (
-                        <video ref={previewVideoRef} key={activePreviewMedia.id} src={activePreviewMedia.url || undefined} controls playsInline preload="metadata" className="modal-media-el" />
+                       <video ref={previewVideoRef} key={activePreviewMedia.id} src={activePreviewMedia.url || undefined} controls playsInline preload="none" className="modal-media-el" />
                       ) : (
                         <img src={activePreviewMedia.url || undefined} alt={activePreviewMedia.file_name} className="modal-media-el" />
                       )}
