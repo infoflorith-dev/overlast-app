@@ -23,6 +23,10 @@ import {
   Mic,
   Sun,
   Wind,
+  AudioLines,
+Lightbulb,
+Waves,
+Activity,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import * as XLSX from "xlsx";
