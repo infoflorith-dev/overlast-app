@@ -1999,7 +1999,16 @@ ${profile.resident_name}
   }}
   style={{ cursor: "pointer" }}
 >
-   <p className="muted" style={{ color: "#ef4444", display: "flex", alignItems: "center", gap: "8px" }}>
+<p
+  className="muted"
+  style={{
+    color: "#fecaca",
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    textShadow: "0 0 8px rgba(239,68,68,.6)"
+  }}
+>
   <AudioLines size={18} color="#ef4444" />
   Geluid
 </p>
