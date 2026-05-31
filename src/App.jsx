@@ -2299,60 +2299,61 @@ ${profile.resident_name}
   }}
 >
          
- <div style={{ fontWeight: 800, marginBottom: "10px" }}>
-  Laatste meldingen
-</div>
-
-<div style={{ display: "grid", gap: "8px", fontSize: "13px" }}>
-  {["Geluid","Licht","Geur","Terras","Overig"].map((type) => {
-    const lastIncident = incidentsSorted.find((inc) => inc.category === type);
-    const iconMap = {
-      Geluid: <AudioLines size={14} color="#ef4444" />,
-      Licht: <Lightbulb size={14} color="#f59e0b" />,
-      Geur: <Wind size={14} color="#22c55e" />,
-      Terras: <Wind size={14} color="#a855f7" />,
-      Overig: <AlertTriangle size={14} color="#f97316" />,
-    };
-    return (
-      <div
-        key={type}
-        onClick={() => {
-          if (!lastIncident) return;
-          setSelectedIncidentId(lastIncident.id);
-          setActiveTab("incidenten");
-        }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          cursor: lastIncident ? "pointer" : "default",
-          opacity: lastIncident ? 1 : 0.55,
-        }}
-      >
-        {iconMap[type]}
-        <span style={{ fontWeight: 700 }}>{type}</span>
-        <span style={{ color: "#dbe4ff" }}>— {lastIncident?.title || "Nog geen melding"}</span>
-      </div>
-    );
-  })}
-</div>
-    );
-  })}
-</div>
+ <div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px", padding: "12px" }}>
+  <div style={{ fontWeight: 800, marginBottom: "10px" }}>
+    Laatste meldingen
   </div>
 
-  <div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px" }}>
-   <div style={{ fontWeight: 800, marginBottom: "10px" }}>
-  Dossierstatus
+  <div style={{ display: "grid", gap: "8px", fontSize: "13px" }}>
+    {[
+      { type: "Geluid", color: "#ef4444", icon: <AudioLines size={14} color="#ef4444" /> },
+      { type: "Licht", color: "#f59e0b", icon: <Lightbulb size={14} color="#f59e0b" /> },
+      { type: "Geur", color: "#22c55e", icon: <Wind size={14} color="#22c55e" /> },
+      { type: "Terras", color: "#a855f7", icon: <Wind size={14} color="#a855f7" /> },
+      { type: "Overig", color: "#f97316", icon: <AlertTriangle size={14} color="#f97316" /> },
+    ].map((item) => {
+      const lastIncident = incidentsSorted.find((inc) => inc.category === item.type);
+
+      return (
+        <div
+          key={item.type}
+          onClick={() => {
+            if (!lastIncident) return;
+            setSelectedIncidentId(lastIncident.id);
+            setActiveTab("incidenten");
+          }}
+          style={{
+            color: item.color,
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            cursor: lastIncident ? "pointer" : "default",
+            opacity: lastIncident ? 1 : 0.55,
+          }}
+        >
+          {item.icon}
+          <span style={{ fontWeight: 700 }}>{item.type}</span>
+          <span style={{ color: "#dbe4ff" }}>
+            — {lastIncident?.title || "Nog geen melding"}
+          </span>
+        </div>
+      );
+    })}
+  </div>
 </div>
 
-<div style={{ display: "grid", gap: "6px", fontSize: "13px" }}>
-  <div>Totaal incidenten: 78</div>
-  <div>Nachtincidenten: 18</div>
-  <div>Foto's/video's: 142</div>
-  <div>Open acties: 3</div>
-  <div>Dossier gereed: 82%</div>
-</div>
+<div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px", padding: "12px" }}>
+  <div style={{ fontWeight: 800, marginBottom: "10px" }}>
+    Dossierstatus
+  </div>
+
+  <div style={{ display: "grid", gap: "6px", fontSize: "13px" }}>
+    <div>Totaal incidenten: {dossierStats.total}</div>
+    <div>Nachtincidenten: {dossierStats.night}</div>
+    <div>Foto's/video's: {dossierStats.media}</div>
+    <div>Gem. dB avond: {dossierStats.avgEveningDb}</div>
+    <div>Gem. dB nacht: {dossierStats.avgNightDb}</div>
+    <div>Laatste incident: {dossierStats.last}</div>
   </div>
 </div>
             </>
