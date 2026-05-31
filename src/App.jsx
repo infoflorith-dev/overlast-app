@@ -2352,7 +2352,7 @@ ${profile.resident_name}
 </Card>
     <Card>
   <CardContent className="db-kpi-card-content">
-    <TrendingUp size={34} color="#22d3ee" />
+   <Activity size={34} color="#22d3ee" />
     <div>
       <p className="muted">Gem. overschr.</p>
       <p className="stat">
