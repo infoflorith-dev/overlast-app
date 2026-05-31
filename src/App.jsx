@@ -2351,14 +2351,18 @@ ${profile.resident_name}
   </CardContent>
 </Card>
           <Card>
-  <CardContent>
-    <p className="muted">Gem. overschr.</p>
-    <p className="stat">
-      +{(
-        Number(selectedDashboardDb.db) -
-        Number(selectedDashboardDb.chart_data?.[0]?.norm || 45)
-      ).toFixed(1)}
-    </p>
+ <Card>
+  <CardContent className="db-kpi-card-content">
+    <TrendingUp size={34} color="#22d3ee" />
+    <div>
+      <p className="muted">Gem. overschr.</p>
+      <p className="stat">
+        +{(
+          Number(selectedDashboardDb.db) -
+          Number(selectedDashboardDb.chart_data?.[0]?.norm || 45)
+        ).toFixed(1)}
+      </p>
+    </div>
   </CardContent>
 </Card>
         </div>
