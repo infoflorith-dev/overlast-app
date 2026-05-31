@@ -2257,10 +2257,25 @@ ${profile.resident_name}
             </LineChart>
           </ResponsiveContainer>
         </div>
-        <div style={{ marginTop: "16px", color: "white" }}>
-  TEST BLOK
+       <div 
+  style={{
+    marginTop: "16px",
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "16px"
+  }}
+>
+  <div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px" }}>
+    Kaart links
+  </div>
+
+  <div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px" }}>
+    Kaart rechts
+  </div>
 </div>
-      </>
+
+2260 </>
+            </>
     ) : (
       <p className="muted">Nog geen dB analyse opgeslagen als incident.</p>
     )}
