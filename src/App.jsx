@@ -2327,14 +2327,17 @@ ${profile.resident_name}
   </CardContent>
 </Card>
 
-          <Card>
-            <CardContent>
-              <p className="muted">Maximum dB</p>
-              <p className="stat">
-                {extractDbAnalysisField(selectedDashboardDb.description, "Maximum dB")}
-              </p>
-            </CardContent>
-          </Card>
+         <Card>
+  <CardContent className="db-kpi-card-content">
+    <Activity size={34} color="#ef4444" />
+    <div>
+      <p className="muted">Maximum dB</p>
+      <p className="stat">
+        {extractDbAnalysisField(selectedDashboardDb.description, "Maximum dB")}
+      </p>
+    </div>
+  </CardContent>
+</Card>
 
           <Card>
             <CardContent>
