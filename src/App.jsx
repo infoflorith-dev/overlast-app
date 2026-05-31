@@ -2363,8 +2363,7 @@ ${profile.resident_name}
     strokeWidth={2}
   />
 </LineChart>
-            </LineChart>
-          </ResponsiveContainer>
+                </ResponsiveContainer>
         </div>
        <div 
   style={{
