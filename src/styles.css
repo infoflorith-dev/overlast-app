@@ -1147,3 +1147,46 @@ overflow: hidden;
   overflow: hidden;
   border-radius: 18px;
 }
+.handhaving-btn {
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 0 18px rgba(168,85,247,.45),
+    0 0 36px rgba(168,85,247,.25);
+}
+
+.handhaving-btn::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow:
+    0 0 8px #fff,
+    0 0 16px #fff,
+    0 0 24px #fff;
+}
+
+.handhaving-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      120deg,
+      transparent 0%,
+      rgba(255,255,255,.18) 45%,
+      transparent 100%
+    );
+  transform: translateX(-120%);
+  animation: handhavingGlow 4s linear infinite;
+}
+
+@keyframes handhavingGlow {
+  100% {
+    transform: translateX(120%);
+  }
+}
