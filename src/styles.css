@@ -1137,24 +1137,3 @@ overflow: hidden;
   overflow: hidden;
   border-radius: 18px;
 }
-
-.db-neon-chart-wrap::before {
-  content: "";
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  top: 30%;
-  bottom: 14%;
-  background:
-    radial-gradient(ellipse at 35% 35%, rgba(34,211,238,.34), transparent 42%),
-    radial-gradient(ellipse at 50% 58%, rgba(99,102,241,.34), transparent 52%),
-    radial-gradient(ellipse at 50% 82%, rgba(124,58,237,.30), transparent 60%);
-  filter: blur(22px);
-  opacity: .9;
-  pointer-events: none;
-}
-
-.db-neon-chart-wrap > * {
-  position: relative;
-  z-index: 1;
-}
