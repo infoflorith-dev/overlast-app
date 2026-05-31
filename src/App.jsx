@@ -2304,7 +2304,7 @@ ${profile.resident_name}
     Laatste meldingen
   </div>
 
- <div style={{ display: "grid", gap:"8px", fontSize: "13px" }}>
+ <div style={{ display: "grid", gap:"8px", fontSize: "15px" }}>
   {["Geluid","Licht","Geur","Terras","Overig"].map(type => {
     const lastIncident = incidentsSorted.find(inc => inc.category === type);
     const iconMap = {
