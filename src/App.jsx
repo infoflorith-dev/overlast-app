@@ -2483,12 +2483,35 @@ opacity={0.12}
   </div>
 
   <div style={{ display: "grid", gap: "6px", fontSize: "16px", fontWeight: 700 }}>
-    <div>Totaal incidenten: {dossierStats.total}</div>
-    <div>Nachtincidenten: {dossierStats.night}</div>
-    <div>Foto's/video's: {dossierStats.media}</div>
-    <div>Gem. dB avond: {dossierStats.avgEveningDb}</div>
-    <div>Gem. dB nacht: {dossierStats.avgNightDb}</div>
-    <div>Laatste incident: {dossierStats.last}</div>
+   <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+  <Activity size={16} color="#22d3ee" />
+  <span>Totaal incidenten: {dossierStats.total}</span>
+</div>
+
+<div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+  <Moon size={16} color="#8b5cf6" />
+  <span>Nachtincidenten: {dossierStats.night}</span>
+</div>
+
+<div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+  <Camera size={16} color="#38bdf8" />
+  <span>Foto's/video's: {dossierStats.media}</span>
+</div>
+
+<div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+  <Sun size={16} color="#f59e0b" />
+  <span>Gem. dB avond: {dossierStats.avgEveningDb}</span>
+</div>
+
+<div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+  <Moon size={16} color="#60a5fa" />
+  <span>Gem. dB nacht: {dossierStats.avgNightDb}</span>
+</div>
+
+<div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+  <Activity size={16} color="#ffffff" />
+  <span>Laatste incident: {dossierStats.last}</span>
+</div>
   </div>
 </div>
 </div>
