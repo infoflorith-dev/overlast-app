@@ -2317,12 +2317,15 @@ ${profile.resident_name}
     {selectedDashboardDb ? (
       <>
        <div className="stats-page-grid db-home-kpi-grid">
-          <Card>
-            <CardContent>
-              <p className="muted">Gemiddelde dB</p>
-              <p className="stat">{selectedDashboardDb.db}</p>
-            </CardContent>
-          </Card>
+         <Card>
+  <CardContent className="db-kpi-card-content">
+    <AudioLines size={34} color="#22d3ee" />
+    <div>
+      <p className="muted">Gemiddelde dB</p>
+      <p className="stat">{selectedDashboardDb.db}</p>
+    </div>
+  </CardContent>
+</Card>
 
           <Card>
             <CardContent>
