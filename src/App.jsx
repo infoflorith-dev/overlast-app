@@ -2325,8 +2325,16 @@ ${profile.resident_name}
     </filter>
   </defs>
 
-  <XAxis dataKey="time" />
-  <YAxis />
+<XAxis dataKey="time" />
+<YAxis />
+
+<Area
+  type="monotone"
+  dataKey="db"
+  stroke="none"
+  fill="#4338ca"
+  fillOpacity={0.28}
+/>
 
   <Line
     type="monotone"
