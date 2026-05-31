@@ -170,13 +170,26 @@ function DbChart({ data }) {
       <CardContent>
       <div style={{ width: "100%", height: 420 }}>
           <ResponsiveContainer width="100%" height="100%">
-  <LineChart data={data}>
-    <XAxis dataKey="time" />
-    <YAxis />
-    <Line type="monotone" dataKey="db" stroke="#2563eb" dot={false} strokeWidth={2} />
-    <Line type="monotone" dataKey="norm" stroke="#f59e0b" dot={false} strokeDasharray="5 5" />
-    <Line type="monotone" dataKey="peak" stroke="#ef4444" dot={false} strokeDasharray="3 3" />
-  </LineChart>
+ <LineChart data={data}>
+  <defs>
+    <filter id="dbNeonGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <XAxis dataKey="time" />
+  <YAxis />
+
+  <Line type="monotone" dataKey="db" stroke="#22d3ee" dot={false} strokeWidth={8} opacity={0.18} />
+  <Line type="monotone" dataKey="db" stroke="#22d3ee" dot={false} strokeWidth={3} filter="url(#dbNeonGlow)" />
+
+  <Line type="monotone" dataKey="norm" stroke="#f59e0b" dot={false} strokeDasharray="5 5" strokeWidth={2} />
+  <Line type="monotone" dataKey="peak" stroke="#ef4444" dot={false} strokeDasharray="3 3" strokeWidth={2} />
+</LineChart>
 </ResponsiveContainer>
         </div>
       </CardContent>
@@ -2300,12 +2313,56 @@ ${profile.resident_name}
 
        <div style={{ width: "100%", height: 420 }}>
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={selectedDashboardDb.chart_data}>
-              <XAxis dataKey="time" />
-              <YAxis />
-           <Line type="monotone" dataKey="db" stroke="#22d3ee" dot={false} strokeWidth={2} />
-<Line type="monotone" dataKey="norm" stroke="#ec4899" dot={false} strokeDasharray="5 5" />
-<Line type="monotone" dataKey="peak" stroke="#a855f7" dot={false} strokeDasharray="3 3" />
+         <LineChart data={selectedDashboardDb.chart_data}>
+  <defs>
+    <filter id="dashboardNeonGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <XAxis dataKey="time" />
+  <YAxis />
+
+  <Line
+    type="monotone"
+    dataKey="db"
+    stroke="#22d3ee"
+    dot={false}
+    strokeWidth={8}
+    opacity={0.18}
+  />
+
+  <Line
+    type="monotone"
+    dataKey="db"
+    stroke="#22d3ee"
+    dot={false}
+    strokeWidth={3}
+    filter="url(#dashboardNeonGlow)"
+  />
+
+  <Line
+    type="monotone"
+    dataKey="norm"
+    stroke="#f59e0b"
+    dot={false}
+    strokeDasharray="5 5"
+    strokeWidth={2}
+  />
+
+  <Line
+    type="monotone"
+    dataKey="peak"
+    stroke="#ef4444"
+    dot={false}
+    strokeDasharray="3 3"
+    strokeWidth={2}
+  />
+</LineChart>
             </LineChart>
           </ResponsiveContainer>
         </div>
