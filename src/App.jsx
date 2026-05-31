@@ -31,11 +31,12 @@ Activity,
 import { motion } from "framer-motion";
 import * as XLSX from "xlsx";
 import {
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
+ResponsiveContainer,
+LineChart,
+Area,
+Line,
+XAxis,
+YAxis,
 } from "recharts";
 const env = typeof import.meta !== "undefined" && import.meta?.env ? import.meta.env : {};
 const supabaseUrl = env.VITE_SUPABASE_URL || "";
