@@ -2350,8 +2350,7 @@ ${profile.resident_name}
     </div>
   </CardContent>
 </Card>
-          <Card>
- <Card>
+    <Card>
   <CardContent className="db-kpi-card-content">
     <TrendingUp size={34} color="#22d3ee" />
     <div>
