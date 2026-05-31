@@ -2174,25 +2174,33 @@ ${profile.resident_name}
           <div className="main-grid">
             <Card>
               <CardContent>
-                <div className="side-nav">
-                  {tabs.map((tab) => {
-                    const Icon = tab.icon;
-                    const active = activeTab === tab.id;
-                    return (
-                      <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={cn("nav-item", active && "nav-item-active")}>
-                        <Icon className="icon-sm" />
-                        <span>{tab.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-                <div className="sidebar-neon-visual" aria-hidden="true">
+               <div className="side-nav">
+  {tabs.map((tab) => {
+    const Icon = tab.icon;
+    const active = activeTab === tab.id;
+
+    return (
+      <button
+        key={tab.id}
+        onClick={() => setActiveTab(tab.id)}
+        className={cn("nav-item", active && "nav-item-active")}
+      >
+        <Icon className="icon-sm" />
+        <span>{tab.label}</span>
+      </button>
+    );
+  })}
+</div>
+
+<div className="sidebar-neon-visual" aria-hidden="true">
   <div className="neon-wave">
     <span></span>
     <span></span>
     <span></span>
   </div>
+
   <div className="neon-beam"></div>
+
   <div className="neon-orbit orbit-1"></div>
   <div className="neon-orbit orbit-2"></div>
   <div className="neon-orbit orbit-3"></div>
