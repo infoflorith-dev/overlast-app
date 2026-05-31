@@ -2267,11 +2267,31 @@ ${profile.resident_name}
 >
          
   <div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px" }}>
-    Kaart links
+  <div style={{ fontWeight: 800, marginBottom: "10px" }}>
+  Laatste meldingen
+</div>
+
+<div style={{ display: "grid", gap: "8px", fontSize: "13px" }}>
+  <div style={{ color: "#ef4444" }}>🔊 Geluid — laatste melding</div>
+  <div style={{ color: "#f59e0b" }}>💡 Licht — laatste melding</div>
+  <div style={{ color: "#22c55e" }}>👃 Geur — laatste melding</div>
+  <div style={{ color: "#a855f7" }}>🟪 Terras — laatste melding</div>
+  <div style={{ color: "#f97316" }}>⚠️ Overig — laatste melding</div>
+</div>
   </div>
 
   <div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px" }}>
-    Kaart rechts
+   <div style={{ fontWeight: 800, marginBottom: "10px" }}>
+  Dossierstatus
+</div>
+
+<div style={{ display: "grid", gap: "6px", fontSize: "13px" }}>
+  <div>Totaal incidenten: 78</div>
+  <div>Nachtincidenten: 18</div>
+  <div>Foto's/video's: 142</div>
+  <div>Open acties: 3</div>
+  <div>Dossier gereed: 82%</div>
+</div>
   </div>
 </div>
             </>
