@@ -983,3 +983,66 @@ overflow: hidden;
 .home-grid .dossier-overview li {
   margin-bottom: 4px;
 }
+.sidebar-neon-visual {
+  position: relative;
+  height: 210px;
+  margin-top: 22px;
+  overflow: hidden;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 50% 72%, rgba(236,72,153,.50), transparent 12%),
+    radial-gradient(circle at 50% 78%, rgba(124,58,237,.35), transparent 24%),
+    radial-gradient(circle at 50% 88%, rgba(59,130,246,.28), transparent 42%);
+}
+
+.sidebar-neon-visual::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 62px;
+  height: 80px;
+  background:
+    linear-gradient(90deg, transparent, #22d3ee, #c084fc, #ec4899, transparent);
+  clip-path: polygon(
+    0 52%, 8% 50%, 14% 47%, 18% 55%, 23% 35%, 28% 66%,
+    34% 20%, 39% 82%, 45% 6%, 50% 94%, 56% 18%, 62% 74%,
+    68% 38%, 74% 62%, 82% 48%, 90% 54%, 100% 50%,
+    100% 58%, 90% 62%, 82% 56%, 74% 70%, 68% 46%, 62% 82%,
+    56% 26%, 50% 100%, 45% 14%, 39% 90%, 34% 28%, 28% 74%,
+    23% 43%, 18% 63%, 14% 55%, 8% 58%, 0 60%
+  );
+  filter:
+    drop-shadow(0 0 10px rgba(34,211,238,.9))
+    drop-shadow(0 0 22px rgba(236,72,153,.8));
+  opacity: .95;
+}
+
+.neon-beam {
+  position: absolute;
+  left: 50%;
+  bottom: 35px;
+  width: 3px;
+  height: 95px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent, #c084fc, #ec4899);
+  box-shadow:
+    0 0 14px rgba(236,72,153,.95),
+    0 0 34px rgba(168,85,247,.75);
+}
+
+.neon-orbit {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%) rotateX(68deg);
+  border: 1px solid rgba(59,130,246,.75);
+  border-radius: 50%;
+  box-shadow:
+    0 0 12px rgba(59,130,246,.7),
+    0 0 24px rgba(168,85,247,.45);
+}
+
+.orbit-1 { width: 70px; height: 28px; }
+.orbit-2 { width: 112px; height: 44px; opacity: .75; }
+.orbit-3 { width: 158px; height: 62px; opacity: .45; }
