@@ -999,10 +999,10 @@ overflow: hidden;
 .sidebar-neon-visual::before {
   content: "";
   position: absolute;
-  left: -90px;
-  right: -90px;
-  top: 128px;
-  height: 118px;
+  left: -145px;
+  right: -145px;
+  top: 92px;
+  height: 175px;
   background:
     linear-gradient(90deg, transparent 0%, #0ea5e9 12%, #22d3ee 28%, #8b5cf6 50%, #ec4899 72%, #f472b6 88%, transparent 100%);
   clip-path: polygon(
@@ -1028,9 +1028,9 @@ overflow: hidden;
     9% 53%, 7% 77%, 5% 47%, 4% 63%, 0 63%
   );
   filter:
-    drop-shadow(0 0 8px rgba(34,211,238,1))
-    drop-shadow(0 0 20px rgba(168,85,247,.95))
-    drop-shadow(0 0 34px rgba(236,72,153,.9));
+       drop-shadow(0 0 10px rgba(34,211,238,1))
+    drop-shadow(0 0 28px rgba(168,85,247,1))
+    drop-shadow(0 0 48px rgba(236,72,153,.95));
   opacity: .98;
 }
 
