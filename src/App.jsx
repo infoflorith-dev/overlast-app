@@ -2263,7 +2263,37 @@ ${profile.resident_name}
     )}
   </CardContent>
 </Card>
+<div className="home-grid">
+  <Card>
+    <CardHeader>
+      <CardTitle>Laatste incidenten</CardTitle>
+    </CardHeader>
+    <CardContent className="stack">
+      <p className="muted">3 recentste meldingen</p>
+      <ul>
+        <li>Geluid: 27-05 21:42, 6 personen terras</li>
+        <li>Geur: 27-05 18:11, Sterke frituurlucht</li>
+        <li>Licht: 26-05 23:07, Terrasverlichting aan</li>
+      </ul>
+    </CardContent>
+  </Card>
 
+  <Card>
+    <CardHeader>
+      <CardTitle>Dossierstatus</CardTitle>
+    </CardHeader>
+    <CardContent className="stack">
+      <p className="muted">Huidige stand van zaken</p>
+      <ul>
+        <li>Totaal incidenten: 76</li>
+        <li>Nachtincidenten: 18</li>
+        <li>Laatste melding: 27-05 21:42</li>
+        <li>Bewijsbestanden: 142</li>
+        <li>Open acties: 3</li>
+      </ul>
+    </CardContent>
+  </Card>
+</div>
   <Card>
     <CardHeader>
       <CardTitle>Export & rapport</CardTitle>
