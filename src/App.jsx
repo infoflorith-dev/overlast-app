@@ -173,6 +173,11 @@ function DbChart({ data }) {
           <ResponsiveContainer width="100%" height="100%">
  <LineChart data={data}>
   <defs>
+    <linearGradient id="dbFill" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.35} />
+  <stop offset="40%" stopColor="#6366f1" stopOpacity={0.25} />
+  <stop offset="100%" stopColor="#0b1020" stopOpacity={0} />
+</linearGradient>
     <filter id="dbNeonGlow" x="-40%" y="-40%" width="180%" height="180%">
       <feGaussianBlur stdDeviation="4" result="blur" />
       <feMerge>
@@ -2316,6 +2321,11 @@ ${profile.resident_name}
           <ResponsiveContainer width="100%" height="100%">
          <LineChart data={selectedDashboardDb.chart_data}>
   <defs>
+    <linearGradient id="dashboardDbFill" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.35} />
+  <stop offset="40%" stopColor="#6366f1" stopOpacity={0.25} />
+  <stop offset="100%" stopColor="#0b1020" stopOpacity={0} />
+</linearGradient>
     <filter id="dashboardNeonGlow" x="-40%" y="-40%" width="180%" height="180%">
       <feGaussianBlur stdDeviation="4" result="blur" />
       <feMerge>
