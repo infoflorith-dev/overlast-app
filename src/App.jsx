@@ -2257,6 +2257,9 @@ ${profile.resident_name}
             </LineChart>
           </ResponsiveContainer>
         </div>
+        <div style={{ marginTop: "16px", color: "white" }}>
+  TEST BLOK
+</div>
       </>
     ) : (
       <p className="muted">Nog geen dB analyse opgeslagen als incident.</p>
