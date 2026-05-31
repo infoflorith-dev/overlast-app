@@ -2428,17 +2428,7 @@ opacity={0.12}
 >
          
 <div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px", padding: "12px" }}>
- <div
-  style={{
-    fontWeight: 800,
-    marginBottom: "14px",
-    fontSize: "20px",
-    display: "flex",
-    alignItems: "center",
-    gap: "10px"
-  }}
->
-  <Bell size={22} color="#b46cff" />
+<div style={{ fontWeight: 800, marginBottom: "10px" }}>
   Laatste meldingen
 </div>
 
