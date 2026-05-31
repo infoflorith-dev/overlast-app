@@ -33,6 +33,7 @@ import * as XLSX from "xlsx";
 import {
 ResponsiveContainer,
 LineChart,
+ComposedChart,
 Area,
 Line,
 XAxis,
@@ -2319,7 +2320,7 @@ ${profile.resident_name}
 
        <div style={{ width: "100%", height: 420 }}>
           <ResponsiveContainer width="100%" height="100%">
-         <LineChart data={selectedDashboardDb.chart_data}>
+        <ComposedChart data={selectedDashboardDb.chart_data}>
   <defs>
     <linearGradient id="dashboardDbFill" x1="0" y1="0" x2="0" y2="1">
   <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.35} />
@@ -2344,7 +2345,6 @@ ${profile.resident_name}
   stroke="none"
   fill="url(#dashboardDbFill)"
 />
-
   <Line
     type="monotone"
     dataKey="db"
@@ -2380,7 +2380,7 @@ ${profile.resident_name}
     strokeDasharray="3 3"
     strokeWidth={2}
   />
-</LineChart>
+</ComposedChart>
                 </ResponsiveContainer>
         </div>
        <div 
