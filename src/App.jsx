@@ -2344,14 +2344,14 @@ ${profile.resident_name}
   stroke="none"
   fill="url(#dashboardDbFill)"
 />
-  <Line
-    type="monotone"
-    dataKey="db"
-    stroke="#22d3ee"
-    dot={false}
-    strokeWidth={8}
-    opacity={0.18}
-  />
+ <Line
+  type="monotone"
+  dataKey="db"
+  stroke="#22d3ee"
+  dot={false}
+  strokeWidth={12}
+  opacity={0.12}
+/>
 
   <Line
     type="monotone"
