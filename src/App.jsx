@@ -2026,11 +2026,11 @@ ${profile.resident_name}
               <div className="between">
                 <div>
                 <CardTitle className="big-title">
-  Welkom terug, Theo
+  Overlastregistratie
 </CardTitle>
 
 <CardDescription>
-  Overzicht van overlast, metingen, bewijsbestanden en dossierstatus.
+ Cuisine by Tromp – Oostvoorne | Geluid, geur, licht, terras en dossieropbouw..
 </CardDescription>
 
 <div className="hero-status-row">
