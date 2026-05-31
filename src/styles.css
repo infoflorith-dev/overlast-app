@@ -985,73 +985,142 @@ overflow: hidden;
 }
 .sidebar-neon-visual {
   position: relative;
-  height: 330px;
+  height: 360px;
   margin-top: 18px;
   overflow: hidden;
   border-radius: 0 0 24px 24px;
   background:
-    radial-gradient(circle at 50% 84%, rgba(255,255,255,.9), transparent 3%),
-    radial-gradient(circle at 50% 86%, rgba(236,72,153,.95), transparent 10%),
-    radial-gradient(circle at 50% 90%, rgba(124,58,237,.70), transparent 28%),
-    radial-gradient(circle at 50% 96%, rgba(59,130,246,.55), transparent 52%);
+    radial-gradient(circle at 50% 79%, rgba(255,255,255,.95), transparent 2.5%),
+    radial-gradient(circle at 50% 81%, rgba(236,72,153,.95), transparent 8%),
+    radial-gradient(circle at 50% 86%, rgba(124,58,237,.70), transparent 22%),
+    radial-gradient(circle at 50% 94%, rgba(37,99,235,.48), transparent 46%),
+    linear-gradient(180deg, transparent 0%, rgba(15,23,42,.20) 48%, rgba(15,23,42,.35) 100%);
 }
 
 .sidebar-neon-visual::before {
   content: "";
   position: absolute;
-  left: -70px;
-  right: -70px;
+  left: -82px;
+  right: -82px;
   top: 118px;
-  height: 118px;
-  background: linear-gradient(90deg, #0284c7, #22d3ee, #8b5cf6, #ec4899, #f472b6);
+  height: 138px;
+  background: linear-gradient(90deg, #0ea5e9, #22d3ee, #8b5cf6, #ec4899, #f472b6);
   clip-path: polygon(
-    0 58%, 4% 64%, 7% 45%, 10% 72%, 13% 34%, 16% 82%,
-    20% 24%, 24% 88%, 28% 18%, 32% 92%, 36% 28%,
-    40% 84%, 44% 38%, 47% 76%, 50% 18%, 53% 82%,
-    56% 36%, 60% 78%, 64% 26%, 68% 88%, 72% 34%,
-    76% 80%, 80% 45%, 84% 72%, 88% 52%, 92% 66%,
-    96% 54%, 100% 62%, 100% 70%, 96% 64%, 92% 76%,
-    88% 62%, 84% 82%, 80% 55%, 76% 90%, 72% 44%,
-    68% 96%, 64% 36%, 60% 88%, 56% 46%, 53% 92%,
-    50% 30%, 47% 86%, 44% 48%, 40% 94%, 36% 38%,
-    32% 100%, 28% 28%, 24% 98%, 20% 34%, 16% 92%,
-    13% 44%, 10% 82%, 7% 55%, 4% 74%, 0 68%
+    0 62%, 4% 58%, 7% 70%, 10% 42%, 13% 78%,
+    16% 28%, 19% 86%, 23% 20%, 27% 90%,
+    31% 14%, 35% 82%, 39% 32%, 43% 74%,
+    47% 26%, 50% 0%, 53% 88%, 57% 34%,
+    61% 78%, 65% 22%, 69% 90%, 73% 38%,
+    77% 84%, 81% 48%, 85% 76%, 89% 54%,
+    93% 68%, 97% 56%, 100% 62%,
+    100% 70%, 97% 66%, 93% 78%, 89% 64%,
+    85% 86%, 81% 58%, 77% 94%, 73% 48%,
+    69% 100%, 65% 32%, 61% 88%, 57% 44%,
+    53% 96%, 50% 8%, 47% 94%, 43% 36%,
+    39% 84%, 35% 44%, 31% 100%, 27% 24%,
+    23% 98%, 19% 36%, 16% 94%, 13% 52%,
+    10% 88%, 7% 62%, 4% 76%, 0 70%
   );
   filter:
-    drop-shadow(0 0 14px rgba(34,211,238,1))
-    drop-shadow(0 0 32px rgba(236,72,153,.95))
-    drop-shadow(0 0 65px rgba(168,85,247,.9));
+    drop-shadow(0 0 10px rgba(34,211,238,1))
+    drop-shadow(0 0 28px rgba(168,85,247,.95))
+    drop-shadow(0 0 52px rgba(236,72,153,.95));
   opacity: .98;
+}
+
+.sidebar-neon-visual::after {
+  content: "";
+  position: absolute;
+  left: -70px;
+  right: -70px;
+  bottom: 0;
+  height: 122px;
+  background:
+    repeating-linear-gradient(90deg, rgba(59,130,246,.36) 0 1px, transparent 1px 28px),
+    repeating-linear-gradient(0deg, rgba(124,58,237,.34) 0 1px, transparent 1px 22px);
+  transform: perspective(170px) rotateX(62deg);
+  transform-origin: bottom center;
+  opacity: .55;
+  filter: drop-shadow(0 0 18px rgba(59,130,246,.65));
+}
+
+.neon-wave {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.neon-wave span {
+  position: absolute;
+  left: 50%;
+  bottom: 42px;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: white;
+  box-shadow:
+    0 0 22px rgba(255,255,255,1),
+    0 0 46px rgba(236,72,153,1),
+    0 0 82px rgba(168,85,247,.95),
+    0 0 120px rgba(59,130,246,.75);
+}
+
+.neon-wave span:nth-child(1) {
+  width: 4px;
+  height: 255px;
+  bottom: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, transparent 0%, #22d3ee 18%, #8b5cf6 46%, #ec4899 74%, #ffffff 100%);
+}
+
+.neon-wave span:nth-child(2) {
+  width: 92px;
+  height: 92px;
+  bottom: 20px;
+  background: radial-gradient(circle, rgba(236,72,153,.95), rgba(124,58,237,.40) 42%, transparent 72%);
+  filter: blur(10px);
+}
+
+.neon-wave span:nth-child(3) {
+  width: 180px;
+  height: 70px;
+  bottom: 30px;
+  background: radial-gradient(ellipse, rgba(34,211,238,.75), rgba(124,58,237,.35) 48%, transparent 74%);
+  filter: blur(8px);
 }
 
 .neon-beam {
   position: absolute;
+  z-index: 4;
   left: 50%;
   bottom: 0;
-  width: 8px;
+  width: 3px;
   height: 285px;
   transform: translateX(-50%);
-  background: linear-gradient(180deg, transparent 0%, #22d3ee 16%, #a855f7 44%, #ec4899 70%, #ffffff 100%);
+  background: linear-gradient(180deg, transparent 0%, #38bdf8 18%, #a855f7 46%, #ec4899 72%, #ffffff 100%);
   box-shadow:
-    0 0 30px rgba(255,255,255,1),
-    0 0 56px rgba(236,72,153,1),
-    0 0 105px rgba(168,85,247,.95),
-    0 0 160px rgba(59,130,246,.70);
+    0 0 18px rgba(255,255,255,1),
+    0 0 34px rgba(236,72,153,1),
+    0 0 70px rgba(168,85,247,.95),
+    0 0 115px rgba(59,130,246,.75);
 }
 
 .neon-orbit {
   position: absolute;
+  z-index: 5;
   left: 50%;
-  bottom: 24px;
+  bottom: 36px;
   transform: translateX(-50%) rotateX(70deg);
   border: 1px solid rgba(34,211,238,.95);
   border-radius: 50%;
   box-shadow:
-    0 0 20px rgba(34,211,238,1),
-    0 0 48px rgba(168,85,247,.9),
-    inset 0 0 24px rgba(124,58,237,.6);
+    0 0 18px rgba(34,211,238,1),
+    0 0 38px rgba(168,85,247,.9),
+    inset 0 0 18px rgba(124,58,237,.55);
 }
 
-.orbit-1 { width: 155px; height: 52px; }
-.orbit-2 { width: 220px; height: 76px; opacity: .82; }
-.orbit-3 { width: 285px; height: 98px; opacity: .60; }
+.orbit-1 { width: 138px; height: 44px; }
+.orbit-2 { width: 196px; height: 62px; opacity: .84; }
+.orbit-3 { width: 255px; height: 82px; opacity: .62; }
