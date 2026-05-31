@@ -2273,25 +2273,40 @@ ${profile.resident_name}
 </div>
 
 <div style={{ display: "grid", gap: "8px", fontSize: "13px" }}>
-  <div style={{ color: "#ef4444", display: "flex", alignItems: "center", gap: "8px" }}>
-    <AudioLines size={14} color="#ef4444" /> Geluid — 6 personen terras
-  </div>
+  {[
+    { type: "Geluid", color: "#ef4444", icon: <AudioLines size={14} color="#ef4444" /> },
+    { type: "Licht", color: "#f59e0b", icon: <Lightbulb size={14} color="#f59e0b" /> },
+    { type: "Geur", color: "#22c55e", icon: <Wind size={14} color="#22c55e" /> },
+    { type: "Terras", color: "#a855f7", icon: <Wind size={14} color="#a855f7" /> },
+    { type: "Overig", color: "#f97316", icon: <AlertTriangle size={14} color="#f97316" /> },
+  ].map((item) => {
+    const lastIncident = incidentsSorted.find((inc) => inc.category === item.type);
 
-  <div style={{ color: "#f59e0b", display: "flex", alignItems: "center", gap: "8px" }}>
-    <Lightbulb size={14} color="#f59e0b" /> Licht — Terrasverlichting aan
-  </div>
-
-  <div style={{ color: "#22c55e", display: "flex", alignItems: "center", gap: "8px" }}>
-    <Wind size={14} color="#22c55e" /> Geur — Sterke frituurlucht
-  </div>
-
-  <div style={{ color: "#a855f7", display: "flex", alignItems: "center", gap: "8px" }}>
-    <Wind size={14} color="#a855f7" /> Terras — Personeel buiten na sluiting
-  </div>
-
-  <div style={{ color: "#f97316", display: "flex", alignItems: "center", gap: "8px" }}>
-    <AlertTriangle size={14} color="#f97316" /> Overig — Levering vrachtwagen
-  </div>
+    return (
+      <div
+        key={item.type}
+        onClick={() => {
+          if (!lastIncident) return;
+          setSelectedIncidentId(lastIncident.id);
+          setActiveTab("incidenten");
+        }}
+        style={{
+          color: item.color,
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          cursor: lastIncident ? "pointer" : "default",
+          opacity: lastIncident ? 1 : 0.55,
+        }}
+      >
+        {item.icon}
+        <span style={{ fontWeight: 700 }}>{item.type}</span>
+        <span style={{ color: "#dbe4ff" }}>
+          — {lastIncident?.title || "Nog geen melding"}
+        </span>
+      </div>
+    );
+  })}
 </div>
   </div>
 
