@@ -2186,6 +2186,17 @@ ${profile.resident_name}
                     );
                   })}
                 </div>
+                <div className="sidebar-neon-visual" aria-hidden="true">
+  <div className="neon-wave">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div className="neon-beam"></div>
+  <div className="neon-orbit orbit-1"></div>
+  <div className="neon-orbit orbit-2"></div>
+  <div className="neon-orbit orbit-3"></div>
+</div>
               </CardContent>
             </Card>
 
