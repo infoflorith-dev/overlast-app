@@ -2524,7 +2524,16 @@ opacity={0.12}
 
   <Card>
     <CardHeader>
-      <CardTitle>Export & rapport</CardTitle>
+   <CardTitle
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: "10px"
+  }}
+>
+  <FileText size={22} color="#8b5cf6" />
+  Export & rapport
+</CardTitle>
       <CardDescription>Klaar voor dossier en print</CardDescription>
     </CardHeader>
    <CardContent style={{ paddingTop: "12px" }} className="stack">
