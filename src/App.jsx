@@ -2322,9 +2322,10 @@ ${profile.resident_name}
         <ComposedChart data={selectedDashboardDb.chart_data}>
   <defs>
     <linearGradient id="dashboardDbFill" x1="0" y1="0" x2="0" y2="1">
-  <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.35} />
-  <stop offset="40%" stopColor="#6366f1" stopOpacity={0.25} />
-  <stop offset="100%" stopColor="#0b1020" stopOpacity={0} />
+  <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.55} />
+<stop offset="15%" stopColor="#3b82f6" stopOpacity={0.22} />
+<stop offset="35%" stopColor="#6366f1" stopOpacity={0.10} />
+<stop offset="100%" stopColor="#0b1020" stopOpacity={0} />
 </linearGradient>
     <filter id="dashboardNeonGlow" x="-40%" y="-40%" width="180%" height="180%">
       <feGaussianBlur stdDeviation="4" result="blur" />
