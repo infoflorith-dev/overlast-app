@@ -2317,8 +2317,7 @@ ${profile.resident_name}
   </CardContent>
 </Card>
         </div>
-
-       <div style={{ width: "100%", height: 420 }}>
+<div className="db-neon-chart-wrap" style={{ width: "100%", height: 420 }}>
           <ResponsiveContainer width="100%" height="100%">
         <ComposedChart data={selectedDashboardDb.chart_data}>
   <defs>
@@ -2339,12 +2338,6 @@ ${profile.resident_name}
 <XAxis dataKey="time" />
 <YAxis />
 
-<Area
-  type="monotone"
-  dataKey="db"
-  stroke="none"
-  fill="url(#dashboardDbFill)"
-/>
   <Line
     type="monotone"
     dataKey="db"
