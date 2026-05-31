@@ -2257,73 +2257,13 @@ ${profile.resident_name}
             </LineChart>
           </ResponsiveContainer>
         </div>
-        <div className="home-grid">
-  <Card>
-    <CardHeader>
-      <CardTitle>Laatste incidenten</CardTitle>
-      <CardDescription>Recente dB-incidenten</CardDescription>
-    </CardHeader>
-    <CardContent className="stack">
-      {recentIncidents.length === 0 ? (
-        <p className="muted">Nog geen recente incidenten.</p>
-      ) : (
-        <ul className="incident-list">
-          {recentIncidents.map((inc) => (
-            <li key={inc.id} className="incident-item">
-              <div className="incident-left">
-                <div className="incident-title">{inc.location || "Locatie onbekend"}</div>
-                <div className="incident-meta">{formatDisplayDateTime(inc.date)}</div>
-              </div>
-              <div className="incident-right">
-                <span
-                  className={`badge ${
-                    inc.status === "completed" ? "badge-success" : "badge-secondary"
-                  }`}
-                >
-                  {inc.status === "completed" ? "Afgerond" : "Open"}
-                </span>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
-    </CardContent>
-  </Card>
-
-  <Card>
-    <CardHeader>
-      <CardTitle>Dossierstatus</CardTitle>
-      <CardDescription>Huidige stand van zaken</CardDescription>
-    </CardHeader>
-    <CardContent className="stack">
-      <div className="status-row">
-        <div className="status-label">Totaal incidenten</div>
-        <div className="status-value total">{dossierStatus.total}</div>
-      </div>
-      <div className="status-row">
-        <div className="status-label">Nachtincidenten</div>
-        <div className="status-value inprogress">{dossierStatus.inProgress}</div>
-      </div>
-      <div className="status-row">
-        <div className="status-label">Laatste melding</div>
-        <div className="status-value">{dossierStatus.last}</div>
-      </div>
-      <div className="status-row">
-        <div className="status-label">Bewijsbestanden</div>
-        <div className="status-value">{dossierStatus.files}</div>
-      </div>
-      <div className="status-row">
-        <div className="status-label">Open acties</div>
-        <div className="status-value">{dossierStatus.open}</div>
-      </div>
-    </CardContent>
-  </Card>
-</div>
       </>
     ) : (
       <p className="muted">Nog geen dB analyse opgeslagen als incident.</p>
     )}
   </CardContent>
+</Card>
+
   <Card>
     <CardHeader>
       <CardTitle>Export & rapport</CardTitle>
