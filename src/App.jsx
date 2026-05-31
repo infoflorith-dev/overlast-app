@@ -2303,9 +2303,9 @@ ${profile.resident_name}
             <LineChart data={selectedDashboardDb.chart_data}>
               <XAxis dataKey="time" />
               <YAxis />
-              <Line type="monotone" dataKey="db" stroke="#2563eb" dot={false} strokeWidth={2} />
-              <Line type="monotone" dataKey="norm" stroke="#f59e0b" dot={false} strokeDasharray="5 5" />
-              <Line type="monotone" dataKey="peak" stroke="#ef4444" dot={false} strokeDasharray="3 3" />
+           <Line type="monotone" dataKey="db" stroke="#22d3ee" dot={false} strokeWidth={2} />
+<Line type="monotone" dataKey="norm" stroke="#ec4899" dot={false} strokeDasharray="5 5" />
+<Line type="monotone" dataKey="peak" stroke="#a855f7" dot={false} strokeDasharray="3 3" />
             </LineChart>
           </ResponsiveContainer>
         </div>
