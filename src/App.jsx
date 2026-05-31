@@ -2342,8 +2342,7 @@ ${profile.resident_name}
   type="monotone"
   dataKey="db"
   stroke="none"
-  fill="#4338ca"
-fillOpacity={0.65}
+  fill="url(#dashboardDbFill)"
 />
 
   <Line
