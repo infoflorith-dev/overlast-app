@@ -2304,42 +2304,39 @@ ${profile.resident_name}
     Laatste meldingen
   </div>
 
-  <div style={{ display: "grid", gap: "8px", fontSize: "13px" }}>
-    {["Geluid","Licht","Geur","Terras","Overig"].map((type) => {
-      const lastIncident = incidentsSorted.find((inc) => inc.category === type);
-
-      const iconMap = {
-        Geluid: <AudioLines size={14} color="#ef4444" />,
-        Licht: <Lightbulb size={14} color="#f59e0b" />,
-        Geur: <Wind size={14} color="#22c55e" />,
-        Terras: <Wind size={14} color="#a855f7" />,
-        Overig: <AlertTriangle size={14} color="#f97316" />,
-      };
-
-      return (
-        <div
-          key={type}
-          onClick={() => {
-            if (!lastIncident) return;
-            setSelectedIncidentId(lastIncident.id);
-            setActiveTab("incidenten");
-          }}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            cursor: lastIncident ? "pointer" : "default",
-            opacity: lastIncident ? 1 : 0.55,
-            color: iconMap[type].props.color
-          }}
-        >
-          {iconMap[type]}
-          <span style={{ fontWeight: 700 }}>{type}</span>
-          <span style={{ color: "#dbe4ff" }}>— {lastIncident?.title || "Nog geen melding"}</span>
-        </div>
-      );
-    })}
-  </div>
+ <div style={{ display: "grid", gap:"8px", fontSize: "13px" }}>
+  {["Geluid","Licht","Geur","Terras","Overig"].map(type => {
+    const lastIncident = incidentsSorted.find(inc => inc.category === type);
+    const iconMap = {
+      Geluid: <AudioLines size={14} color="#ef4444" />,
+      Licht: <Lightbulb size={14} color="#f59e0b" />,
+      Geur: <Wind size={14} color="#22c55e" />,
+      Terras: <Wind size={14} color="#a855f7" />,
+      Overig: <AlertTriangle size={14} color="#f97316" />,
+    };
+    return (
+      <div key={type}
+           onClick={() => {
+             if (!lastIncident) return;
+             setSelectedIncidentId(lastIncident.id);
+             setActiveTab("incidenten");
+           }}
+           style={{
+             display: "flex",
+             alignItems: "center",
+             gap: "8px",
+             cursor: lastIncident ? "pointer" : "default",
+             opacity: lastIncident ? 1 : 0.55,
+             color: iconMap[type].props.color
+           }}
+      >
+        {iconMap[type]}
+        <span style={{ fontWeight: 700 }}>{type}</span>
+        <span style={{ color: "#dbe4ff" }}>— {lastIncident?.title || "Nog geen melding"}</span>
+      </div>
+    );
+  })}
+</div>
 </div>
 
 <div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px", padding: "12px" }}>
