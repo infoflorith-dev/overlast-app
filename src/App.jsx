@@ -2349,8 +2349,8 @@ ${profile.resident_name}
   dataKey="db"
   stroke="#22d3ee"
   dot={false}
- strokeWidth={18}
-opacity={0.22}
+strokeWidth={12}
+opacity={0.12}
 />
 
   <Line
