@@ -492,6 +492,39 @@ const { norm, peak } = getNormPeak(date);
     const avgDb = avgDbValues.length ? (avgDbValues.reduce((a, b) => a + b, 0) / avgDbValues.length).toFixed(1) : "-";
     return { total, high, sound, light, smell, night, avgDb };
   }, [incidents]);
+  const dossierStats = useMemo(() => {
+  const avondDb = incidents
+    .filter((i) => {
+      const db = getDbValue(i.db);
+      const hour = new Date(i.datetime).getHours();
+      return db !== null && hour >= 19 && hour < 23;
+    })
+    .map((i) => getDbValue(i.db));
+
+  const nachtDb = incidents
+    .filter((i) => {
+      const db = getDbValue(i.db);
+      const hour = new Date(i.datetime).getHours();
+      return db !== null && (hour >= 23 || hour < 7);
+    })
+    .map((i) => getDbValue(i.db));
+
+  const avg = (values) =>
+    values.length
+      ? (values.reduce((a, b) => a + b, 0) / values.length).toFixed(1)
+      : "-";
+
+  return {
+    total: incidents.length,
+    night: incidents.filter((i) => isNightIncident(i.datetime)).length,
+    media: allMedia.length,
+    avgEveningDb: avg(avondDb),
+    avgNightDb: avg(nachtDb),
+    last: incidentsSorted[0]
+      ? formatDisplayDateTime(incidentsSorted[0].datetime)
+      : "-",
+  };
+}, [incidents, incidentsSorted, allMedia]);
   const dbSummary = useMemo(() => {
     const incidentsWithExceedance = incidents
       .map((incident) => {
@@ -2266,32 +2299,29 @@ ${profile.resident_name}
   }}
 >
          
-  <div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px" }}>
- 
-<div style={{ fontWeight: 800, marginBottom: "10px" }}>
+ <div style={{ fontWeight: 800, marginBottom: "10px" }}>
   Laatste meldingen
 </div>
 
 <div style={{ display: "grid", gap: "8px", fontSize: "13px" }}>
-  {[
-    { type: "Geluid", color: "#ef4444", icon: <AudioLines size={14} color="#ef4444" /> },
-    { type: "Licht", color: "#f59e0b", icon: <Lightbulb size={14} color="#f59e0b" /> },
-    { type: "Geur", color: "#22c55e", icon: <Wind size={14} color="#22c55e" /> },
-    { type: "Terras", color: "#a855f7", icon: <Wind size={14} color="#a855f7" /> },
-    { type: "Overig", color: "#f97316", icon: <AlertTriangle size={14} color="#f97316" /> },
-  ].map((item) => {
-    const lastIncident = incidentsSorted.find((inc) => inc.category === item.type);
-
+  {["Geluid","Licht","Geur","Terras","Overig"].map((type) => {
+    const lastIncident = incidentsSorted.find((inc) => inc.category === type);
+    const iconMap = {
+      Geluid: <AudioLines size={14} color="#ef4444" />,
+      Licht: <Lightbulb size={14} color="#f59e0b" />,
+      Geur: <Wind size={14} color="#22c55e" />,
+      Terras: <Wind size={14} color="#a855f7" />,
+      Overig: <AlertTriangle size={14} color="#f97316" />,
+    };
     return (
       <div
-        key={item.type}
+        key={type}
         onClick={() => {
           if (!lastIncident) return;
           setSelectedIncidentId(lastIncident.id);
           setActiveTab("incidenten");
         }}
         style={{
-          color: item.color,
           display: "flex",
           alignItems: "center",
           gap: "8px",
@@ -2299,12 +2329,13 @@ ${profile.resident_name}
           opacity: lastIncident ? 1 : 0.55,
         }}
       >
-        {item.icon}
-        <span style={{ fontWeight: 700 }}>{item.type}</span>
-        <span style={{ color: "#dbe4ff" }}>
-          — {lastIncident?.title || "Nog geen melding"}
-        </span>
+        {iconMap[type]}
+        <span style={{ fontWeight: 700 }}>{type}</span>
+        <span style={{ color: "#dbe4ff" }}>— {lastIncident?.title || "Nog geen melding"}</span>
       </div>
+    );
+  })}
+</div>
     );
   })}
 </div>
