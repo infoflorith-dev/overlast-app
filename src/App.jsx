@@ -2299,43 +2299,43 @@ ${profile.resident_name}
   }}
 >
          
- <div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px", padding: "12px" }}>
+<div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px", padding: "12px" }}>
   <div style={{ fontWeight: 800, marginBottom: "10px" }}>
     Laatste meldingen
   </div>
 
   <div style={{ display: "grid", gap: "8px", fontSize: "13px" }}>
-    {[
-      { type: "Geluid", color: "#ef4444", icon: <AudioLines size={14} color="#ef4444" /> },
-      { type: "Licht", color: "#f59e0b", icon: <Lightbulb size={14} color="#f59e0b" /> },
-      { type: "Geur", color: "#22c55e", icon: <Wind size={14} color="#22c55e" /> },
-      { type: "Terras", color: "#a855f7", icon: <Wind size={14} color="#a855f7" /> },
-      { type: "Overig", color: "#f97316", icon: <AlertTriangle size={14} color="#f97316" /> },
-    ].map((item) => {
-      const lastIncident = incidentsSorted.find((inc) => inc.category === item.type);
+    {["Geluid","Licht","Geur","Terras","Overig"].map((type) => {
+      const lastIncident = incidentsSorted.find((inc) => inc.category === type);
+
+      const iconMap = {
+        Geluid: <AudioLines size={14} color="#ef4444" />,
+        Licht: <Lightbulb size={14} color="#f59e0b" />,
+        Geur: <Wind size={14} color="#22c55e" />,
+        Terras: <Wind size={14} color="#a855f7" />,
+        Overig: <AlertTriangle size={14} color="#f97316" />,
+      };
 
       return (
         <div
-          key={item.type}
+          key={type}
           onClick={() => {
             if (!lastIncident) return;
             setSelectedIncidentId(lastIncident.id);
             setActiveTab("incidenten");
           }}
           style={{
-            color: item.color,
             display: "flex",
             alignItems: "center",
             gap: "8px",
             cursor: lastIncident ? "pointer" : "default",
             opacity: lastIncident ? 1 : 0.55,
+            color: iconMap[type].props.color
           }}
         >
-          {item.icon}
-          <span style={{ fontWeight: 700 }}>{item.type}</span>
-          <span style={{ color: "#dbe4ff" }}>
-            — {lastIncident?.title || "Nog geen melding"}
-          </span>
+          {iconMap[type]}
+          <span style={{ fontWeight: 700 }}>{type}</span>
+          <span style={{ color: "#dbe4ff" }}>— {lastIncident?.title || "Nog geen melding"}</span>
         </div>
       );
     })}
@@ -2355,6 +2355,7 @@ ${profile.resident_name}
     <div>Gem. dB nacht: {dossierStats.avgNightDb}</div>
     <div>Laatste incident: {dossierStats.last}</div>
   </div>
+</div>
 </div>
        ) : (
       <p className="muted">Nog geen dB analyse opgeslagen als incident.</p>
