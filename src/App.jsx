@@ -2271,12 +2271,30 @@ ${profile.resident_name}
   Laatste meldingen
 </div>
 
+<div style={{ fontWeight: 800, marginBottom: "10px" }}>
+  Laatste meldingen
+</div>
+
 <div style={{ display: "grid", gap: "8px", fontSize: "13px" }}>
-  <div style={{ color: "#ef4444" }}>🔊 Geluid — laatste melding</div>
-  <div style={{ color: "#f59e0b" }}>💡 Licht — laatste melding</div>
-  <div style={{ color: "#22c55e" }}>👃 Geur — laatste melding</div>
-  <div style={{ color: "#a855f7" }}>🟪 Terras — laatste melding</div>
-  <div style={{ color: "#f97316" }}>⚠️ Overig — laatste melding</div>
+  <div style={{ color: "#ef4444", display: "flex", alignItems: "center", gap: "8px" }}>
+    <AudioLines size={14} color="#ef4444" /> Geluid — 6 personen terras
+  </div>
+
+  <div style={{ color: "#f59e0b", display: "flex", alignItems: "center", gap: "8px" }}>
+    <Lightbulb size={14} color="#f59e0b" /> Licht — Terrasverlichting aan
+  </div>
+
+  <div style={{ color: "#22c55e", display: "flex", alignItems: "center", gap: "8px" }}>
+    <Wind size={14} color="#22c55e" /> Geur — Sterke frituurlucht
+  </div>
+
+  <div style={{ color: "#a855f7", display: "flex", alignItems: "center", gap: "8px" }}>
+    <Wind size={14} color="#a855f7" /> Terras — Personeel buiten na sluiting
+  </div>
+
+  <div style={{ color: "#f97316", display: "flex", alignItems: "center", gap: "8px" }}>
+    <AlertTriangle size={14} color="#f97316" /> Overig — Levering vrachtwagen
+  </div>
 </div>
   </div>
 
