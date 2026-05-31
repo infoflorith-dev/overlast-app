@@ -2598,7 +2598,11 @@ opacity={0.12}
         <Download className="icon-inline" /> Maak back-up (.json)
       </Button>
 
-      <Button onClick={generateHandhavingRequest} variant="secondary">
+   <Button
+  onClick={generateHandhavingRequest}
+  variant="secondary"
+  className="handhaving-btn"
+>
         <FileText className="icon-inline" /> Genereer handhavingsverzoek
       </Button>
     </CardContent>
