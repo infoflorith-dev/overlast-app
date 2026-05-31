@@ -2253,15 +2253,33 @@ ${profile.resident_name}
                                 <div className="content-grid">
  <Card>
   <CardHeader>
-    <div className="between">
-      <div>
-        <CardTitle>Laatste dB analyse</CardTitle>
-        <CardDescription>
-          {selectedDashboardDb
-            ? `${formatDisplayDateTime(selectedDashboardDb.datetime)} • ${extractDbAnalysisField(selectedDashboardDb.description, "Start meting")} t/m ${extractDbAnalysisField(selectedDashboardDb.description, "Einde meting")}`
-            : "Nog geen opgeslagen dB analyse"}
-        </CardDescription>
-      </div>
+  <div className="between">
+  <div style={{ display: "flex", alignItems: "flex-start", gap: "14px" }}>
+    <div
+      style={{
+        width: "42px",
+        height: "42px",
+        borderRadius: "999px",
+        display: "grid",
+        placeItems: "center",
+        background: "radial-gradient(circle, rgba(34,211,238,.35), rgba(37,99,235,.12) 60%, transparent 72%)",
+        boxShadow: "0 0 18px rgba(34,211,238,.75)"
+      }}
+    >
+      <AudioLines size={26} color="#22d3ee" />
+    </div>
+
+    <div>
+      <CardTitle style={{ fontSize: "24px", lineHeight: "1.1" }}>
+        Laatste dB analyse
+      </CardTitle>
+      <CardDescription style={{ marginTop: "8px", fontSize: "14px" }}>
+        {selectedDashboardDb
+          ? `${formatDisplayDateTime(selectedDashboardDb.datetime)} • ${extractDbAnalysisField(selectedDashboardDb.description, "Start meting")} t/m ${extractDbAnalysisField(selectedDashboardDb.description, "Einde meting")}`
+          : "Nog geen opgeslagen dB analyse"}
+      </CardDescription>
+    </div>
+  </div>
 
       <div className="badge-row">
         <Button
