@@ -172,7 +172,7 @@ function DbChart({ data }) {
       <CardContent>
       <div style={{ width: "100%", height: 420 }}>
           <ResponsiveContainer width="100%" height="100%">
- <LineChart data={data}>
+ <ComposedChart data={data}>
   <defs>
     <linearGradient id="dbFill" x1="0" y1="0" x2="0" y2="1">
   <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.35} />
@@ -190,13 +190,18 @@ function DbChart({ data }) {
 
   <XAxis dataKey="time" />
   <YAxis />
-
+<Area
+  type="monotone"
+  dataKey="db"
+  stroke="none"
+  fill="url(#dbFill)"
+/>
   <Line type="monotone" dataKey="db" stroke="#22d3ee" dot={false} strokeWidth={8} opacity={0.18} />
   <Line type="monotone" dataKey="db" stroke="#22d3ee" dot={false} strokeWidth={3} filter="url(#dbNeonGlow)" />
 
   <Line type="monotone" dataKey="norm" stroke="#f59e0b" dot={false} strokeDasharray="5 5" strokeWidth={2} />
   <Line type="monotone" dataKey="peak" stroke="#ef4444" dot={false} strokeDasharray="3 3" strokeWidth={2} />
-</LineChart>
+</ComposedChart>
 </ResponsiveContainer>
         </div>
       </CardContent>
