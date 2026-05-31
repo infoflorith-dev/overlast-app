@@ -2339,14 +2339,17 @@ ${profile.resident_name}
   </CardContent>
 </Card>
 
-          <Card>
-            <CardContent>
-              <p className="muted">Periode</p>
-              <p className="stat">
-                {extractDbAnalysisField(selectedDashboardDb.description, "Duur")}
-              </p>
-            </CardContent>
-          </Card>
+       <Card>
+  <CardContent className="db-kpi-card-content">
+    <Moon size={34} color="#8b5cf6" />
+    <div>
+      <p className="muted">Periode</p>
+      <p className="stat">
+        {extractDbAnalysisField(selectedDashboardDb.description, "Duur")}
+      </p>
+    </div>
+  </CardContent>
+</Card>
           <Card>
   <CardContent>
     <p className="muted">Gem. overschr.</p>
