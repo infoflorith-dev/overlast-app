@@ -2319,7 +2319,7 @@ ${profile.resident_name}
        <div className="stats-page-grid db-home-kpi-grid">
          <Card>
   <CardContent className="db-kpi-card-content">
-    <AudioLines size={34} color="#22d3ee" />
+    <AudioLines size={24} color="#22d3ee" />
     <div>
       <p className="muted">Gemiddelde dB</p>
       <p className="stat">{selectedDashboardDb.db}</p>
@@ -2329,7 +2329,7 @@ ${profile.resident_name}
 
          <Card>
   <CardContent className="db-kpi-card-content">
-    <Activity size={34} color="#ef4444" />
+    <Activity size={24} color="#ef4444" />
     <div>
       <p className="muted">Maximum dB</p>
       <p className="stat">
@@ -2341,7 +2341,7 @@ ${profile.resident_name}
 
        <Card>
   <CardContent className="db-kpi-card-content">
-    <Moon size={34} color="#8b5cf6" />
+    <Moon size={24} color="#8b5cf6" />
     <div>
       <p className="muted">Periode</p>
       <p className="stat">
@@ -2352,7 +2352,7 @@ ${profile.resident_name}
 </Card>
     <Card>
   <CardContent className="db-kpi-card-content">
-   <Activity size={34} color="#22d3ee" />
+   <Activity size={24} color="#22d3ee" />
     <div>
       <p className="muted">Gem. overschr.</p>
       <p className="stat">
