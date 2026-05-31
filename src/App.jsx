@@ -2442,35 +2442,43 @@ opacity={0.12}
   Laatste meldingen
 </div>
 
- <div style={{ display: "grid", gap:"8px", fontSize: "17px" }}>
+<div style={{ display: "grid", gap: "10px", fontSize: "15px" }}>
   {["Geluid","Licht","Geur","Terras","Overig"].map(type => {
     const lastIncident = incidentsSorted.find(inc => inc.category === type);
     const iconMap = {
-      Geluid: <AudioLines size={14} color="#ef4444" />,
-      Licht: <Lightbulb size={14} color="#f59e0b" />,
-      Geur: <Wind size={14} color="#22c55e" />,
-      Terras: <Wind size={14} color="#a855f7" />,
-      Overig: <AlertTriangle size={14} color="#f97316" />,
+      Geluid: <AudioLines size={17} color="#ef4444" />,
+      Licht: <Lightbulb size={17} color="#f59e0b" />,
+      Geur: <Wind size={17} color="#22c55e" />,
+      Terras: <Wind size={17} color="#a855f7" />,
+      Overig: <AlertTriangle size={17} color="#f97316" />,
     };
+
     return (
-      <div key={type}
-           onClick={() => {
-             if (!lastIncident) return;
-             setSelectedIncidentId(lastIncident.id);
-             setActiveTab("incidenten");
-           }}
-           style={{
-             display: "flex",
-             alignItems: "center",
-             gap: "8px",
-             cursor: lastIncident ? "pointer" : "default",
-             opacity: lastIncident ? 1 : 0.55,
-             color: iconMap[type].props.color
-           }}
+      <div
+        key={type}
+        onClick={() => {
+          if (!lastIncident) return;
+          setSelectedIncidentId(lastIncident.id);
+          setActiveTab("incidenten");
+        }}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "18px 1fr",
+          gap: "8px",
+          cursor: lastIncident ? "pointer" : "default",
+          opacity: lastIncident ? 1 : 0.55,
+        }}
       >
         {iconMap[type]}
-        <span style={{ fontWeight: 700 }}>{type}</span>
-        <span style={{ color: "#dbe4ff" }}>— {lastIncident?.title || "Nog geen melding"}</span>
+
+        <div>
+          <div style={{ color: iconMap[type].props.color, fontWeight: 800 }}>
+            {type}
+          </div>
+          <div style={{ color: "#dbe4ff", lineHeight: "1.25" }}>
+            {lastIncident?.title || "Nog geen melding"}
+          </div>
+        </div>
       </div>
     );
   })}
