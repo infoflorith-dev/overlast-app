@@ -2317,7 +2317,7 @@ ${profile.resident_name}
   </CardContent>
 </Card>
         </div>
-<div className="db-neon-chart-wrap" style={{ width: "100%", height: 420 }}>
+<div style={{ width: "100%", height: 420 }}>
           <ResponsiveContainer width="100%" height="100%">
         <ComposedChart data={selectedDashboardDb.chart_data}>
   <defs>
