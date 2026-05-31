@@ -2233,8 +2233,8 @@ ${profile.resident_name}
                 <div
   style={{
     textAlign: "center",
-    fontSize: "11px",
-    opacity: 0.7,
+    fontSize: "13px",
+ opacity: 0.85,
     marginTop: "14px",
     lineHeight: "1.5"
   }}
