@@ -2336,7 +2336,7 @@ ${profile.resident_name}
   </defs>
 
 <XAxis dataKey="time" />
-<YAxis domain={[0, 80]} />
+<YAxis />
 
 <Area
   type="monotone"
