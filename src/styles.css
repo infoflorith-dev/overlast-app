@@ -1190,3 +1190,16 @@ overflow: hidden;
     transform: translateX(120%);
   }
 }
+.db-kpi-card-content {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px !important;
+}
+
+.db-kpi-card-content svg {
+  filter:
+    drop-shadow(0 0 8px currentColor)
+    drop-shadow(0 0 16px currentColor);
+}
