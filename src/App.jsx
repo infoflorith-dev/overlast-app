@@ -2338,12 +2338,6 @@ ${profile.resident_name}
 
 <XAxis dataKey="time" />
 <YAxis />
-<Area
-  type="monotone"
-  dataKey="db"
-  stroke="none"
-  fill="url(#dashboardDbFill)"
-/>
  <Line
   type="monotone"
   dataKey="db"
