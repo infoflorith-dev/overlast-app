@@ -2347,7 +2347,12 @@ ${profile.resident_name}
     Dossierstatus
   </div>
 
-  <div style={{ display: "grid", gap: "6px", fontSize: "13px" }}>
+<div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px", padding: "12px" }}>
+  <div style={{ fontWeight: 800, marginBottom: "10px" }}>
+    Dossierstatus
+  </div>
+
+  <div style={{ display: "grid", gap: "6px", fontSize: "16px", fontWeight: 700 }}>
     <div>Totaal incidenten: {dossierStats.total}</div>
     <div>Nachtincidenten: {dossierStats.night}</div>
     <div>Foto's/video's: {dossierStats.media}</div>
@@ -2355,6 +2360,7 @@ ${profile.resident_name}
     <div>Gem. dB nacht: {dossierStats.avgNightDb}</div>
     <div>Laatste incident: {dossierStats.last}</div>
   </div>
+</div>
 </div>
 </div>
         </>
