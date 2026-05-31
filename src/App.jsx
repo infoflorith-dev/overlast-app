@@ -2230,6 +2230,19 @@ ${profile.resident_name}
   <div className="neon-orbit orbit-2"></div>
   <div className="neon-orbit orbit-3"></div>
 </div>
+                <div
+  style={{
+    textAlign: "center",
+    fontSize: "11px",
+    opacity: 0.7,
+    marginTop: "14px",
+    lineHeight: "1.5"
+  }}
+>
+  <div>Overlastregistratie v1.0</div>
+  <div>© Theo Verdooren 2026</div>
+  <div>Alle rechten voorbehouden</div>
+</div>
               </CardContent>
             </Card>
 
