@@ -2357,6 +2357,7 @@ ${profile.resident_name}
   </div>
 </div>
 </div>
+        </>
        ) : (
       <p className="muted">Nog geen dB analyse opgeslagen als incident.</p>
     )}
