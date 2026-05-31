@@ -2265,6 +2265,7 @@ ${profile.resident_name}
     gap: "16px"
   }}
 >
+         
   <div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px" }}>
     Kaart links
   </div>
