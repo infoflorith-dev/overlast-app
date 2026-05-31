@@ -2273,8 +2273,6 @@ ${profile.resident_name}
     Kaart rechts
   </div>
 </div>
-
-2260 </>
             </>
     ) : (
       <p className="muted">Nog geen dB analyse opgeslagen als incident.</p>
