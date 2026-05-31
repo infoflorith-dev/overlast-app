@@ -955,3 +955,31 @@ overflow: hidden;
   font-size: 1.55rem;
   margin-top: 4px;
 }
+.home-grid .last-incident,
+.home-grid .dossier-overview {
+  background: rgba(255,255,255,.05);
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+.home-grid .last-incident h4,
+.home-grid .dossier-overview h4 {
+  margin: 0 0 6px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.home-grid .last-incident ul,
+.home-grid .dossier-overview ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.85rem;
+  color: #a8b3cf;
+}
+
+.home-grid .last-incident li,
+.home-grid .dossier-overview li {
+  margin-bottom: 4px;
+}
