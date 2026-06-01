@@ -618,6 +618,16 @@ overflow: hidden;
 }
 /* Mobile responsive premium layout */
 @media (max-width: 768px) {
+    html,
+  body,
+  #root {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .app-shell {
+    overflow-x: hidden;
+  }
   .app-shell {
     padding: 12px;
     padding-bottom: calc(150px + env(safe-area-inset-bottom));
