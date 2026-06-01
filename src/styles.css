@@ -810,6 +810,9 @@ overflow: visible;
 .hero-grid > .card:nth-child(2) {
   display: none !important;
 }
+  .content-grid > .card:nth-child(2) {
+  display: none !important;
+}
 }
 .stack > div[style*="height: 420px"] {
   height: 230px !important;
