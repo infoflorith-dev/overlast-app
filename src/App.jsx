@@ -2488,7 +2488,7 @@ opacity={0.12}
             {type}
           </div>
           <div style={{ color: "#dbe4ff", lineHeight: "1.25" }}>
-           {lastIncident?.title?.split(" ").slice(0,4).join(" ") || "Nog geen melding"}
+         {lastIncident?.date || "Geen datum"}
           </div>
         </div>
       </div>
