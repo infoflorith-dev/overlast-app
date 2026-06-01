@@ -618,6 +618,9 @@ overflow: hidden;
 }
 /* Mobile responsive premium layout */
 @media (max-width: 768px) {
+    .hero-status-row {
+    display: none !important;
+  }
     html,
   body,
   #root {
