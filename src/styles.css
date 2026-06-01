@@ -811,6 +811,9 @@ overflow: visible;
   display: none !important;
 }
 }
+.stack > div[style*="height: 420px"] {
+  height: 230px !important;
+}
 /* Desktop sidebar neon zoals mobiele versie */
 @media (min-width: 769px) {
   .hero-grid {
