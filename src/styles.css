@@ -1224,3 +1224,26 @@ overflow: visible;
     drop-shadow(0 0 8px currentColor)
     drop-shadow(0 0 16px currentColor);
 }
+@media (max-width: 768px) {
+
+  .db-kpi-card-content {
+    grid-template-columns: 34px 1fr;
+    gap: 10px;
+    padding: 14px 16px !important;
+  }
+
+  .db-kpi-card-content svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .db-home-kpi-grid .stat {
+    font-size: 2.6rem;
+    line-height: 1;
+  }
+
+  .db-home-kpi-grid .muted {
+    font-size: 0.95rem;
+  }
+
+}
