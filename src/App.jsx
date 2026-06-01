@@ -18,7 +18,7 @@ import {
   Expand,
   Loader2,
   Cloud,
-  Moon,
+  Moon,F
   Printer,
   Mic,
   Sun,
@@ -2488,7 +2488,7 @@ opacity={0.12}
             {type}
           </div>
           <div style={{ color: "#dbe4ff", lineHeight: "1.25" }}>
-         {lastIncident?.date || "Geen datum"}
+      {lastIncident ? formatDisplayDateTime(lastIncident.datetime) : "Nog geen melding"}
           </div>
         </div>
       </div>
