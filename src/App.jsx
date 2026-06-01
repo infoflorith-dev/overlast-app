@@ -2469,10 +2469,11 @@ opacity={0.12}
       <div
         key={type}
         onClick={() => {
-          if (!lastIncident) return;
-          setSelectedIncidentId(lastIncident.id);
-          setActiveTab("incidenten");
-        }}
+  if (!lastIncident) return;
+  setSelectedIncidentId(null);
+  setFilterCategory(type);
+  setActiveTab("incidenten");
+}}
         style={{
           display: "grid",
           gridTemplateColumns: "18px 1fr",
