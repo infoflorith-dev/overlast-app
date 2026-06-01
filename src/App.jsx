@@ -3325,7 +3325,7 @@ style={{
                          {activeTab === "instellingen" && (
                 <Card>
                   <CardHeader>
-                    <<CardTitle>Meer</CardTitle>
+                  <CardTitle>Meer</CardTitle>
                     <CardDescription>Pas standaardvelden aan en sla ze op in Supabase</CardDescription>
                   </CardHeader>
                   <CardContent className="stack">
