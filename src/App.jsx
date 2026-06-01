@@ -2273,10 +2273,11 @@ ${profile.resident_name}
       <CardTitle style={{ fontSize: "24px", lineHeight: "1.1" }}>
         Laatste dB analyse
       </CardTitle>
-      <CardDescription style={{ marginTop: "8px", fontSize: "14px" }}>
-        {selectedDashboardDb
-         `${formatDisplayDateTime(selectedDashboardDb.datetime)} • ${extractDbAnalysisField(selectedDashboardDb.description, "Start meting")?.substring(11,16)} - ${extractDbAnalysisField(selectedDashboardDb.description, "Einde meting")?.substring(11,16)}`
-      </CardDescription>
+ <CardDescription style={{ marginTop: "8px", fontSize: "14px" }}>
+  {selectedDashboardDb
+    ? `${formatDisplayDateTime(selectedDashboardDb.datetime)}`
+    : "Nog geen opgeslagen dB analyse"}
+</CardDescription>
     </div>
   </div>
 
