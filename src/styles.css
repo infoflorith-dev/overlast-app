@@ -1238,13 +1238,14 @@ overflow: visible;
   }
 
   .db-home-kpi-grid .stat {
-    font-size: 2.6rem;
-    line-height: 1;
-  }
+  font-size: 2.35rem;
+  line-height: .95;
+  white-space: nowrap;
+}
 
 .db-home-kpi-grid .muted {
-  font-size: 0.9rem;
-  line-height: 1.15;
+  font-size: 0.82rem;
+  line-height: 1.05;
   word-break: normal;
 }
 
