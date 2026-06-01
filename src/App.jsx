@@ -18,7 +18,7 @@ import {
   Expand,
   Loader2,
   Cloud,
-  Moon,F
+  Moon,
   Printer,
   Mic,
   Sun,
