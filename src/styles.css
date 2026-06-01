@@ -1242,8 +1242,10 @@ overflow: visible;
     line-height: 1;
   }
 
-  .db-home-kpi-grid .muted {
-    font-size: 0.95rem;
-  }
+.db-home-kpi-grid .muted {
+  font-size: 0.9rem;
+  line-height: 1.15;
+  word-break: normal;
+}
 
 }
