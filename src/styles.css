@@ -817,6 +817,7 @@ overflow: visible;
 }
 .content-grid > .card:first-child .stack > div[style*="grid-template-columns: 1fr 1fr"] {
   gap: 10px !important;
+  margin-top: -42px !important;
 }
 
 .content-grid > .card:first-child .stack > div[style*="grid-template-columns: 1fr 1fr"] > div {
