@@ -791,6 +791,10 @@ overflow: hidden;
   select {
     font-size: 16px;
   }
+  .main-grid > .card:first-child .sidebar-neon-visual,
+.main-grid > .card:first-child .card-content > div[style] {
+  display: none !important;
+}
 }
 /* Desktop sidebar neon zoals mobiele versie */
 @media (min-width: 769px) {
