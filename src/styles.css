@@ -704,7 +704,7 @@ overflow: visible;
     flex-direction: column;
     justify-content: center;
     gap: 3px;
-    font-size: .68rem;
+ font-size: .72rem;
     text-align: center;
     overflow: visible;
 }
