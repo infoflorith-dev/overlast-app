@@ -950,8 +950,14 @@ overflow: visible;
     opacity: 0;
   }
 }
-.db-home-kpi-grid {
-  gap: 14px;
+@media (max-width: 768px) {
+  .db-home-kpi-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .db-home-kpi-grid .card-content {
+    min-height: 110px;
+  }
 }
 
 .db-home-kpi-grid .card {
