@@ -672,13 +672,19 @@ overflow: hidden;
     padding: 12px;
   }
 
-  .side-nav {
+ .side-nav {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr;
     gap: 8px;
     overflow: visible;
-  }
-
+}
+.side-nav .nav-item:nth-child(4),
+.side-nav .nav-item:nth-child(5),
+.side-nav .nav-item:nth-child(6),
+.side-nav .nav-item:nth-child(7) {
+    display: none;
+}
   .nav-item {
     min-height: 64px;
     padding: 9px 6px;
