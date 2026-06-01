@@ -797,6 +797,9 @@ overflow: visible;
 .main-grid > .card:first-child .card-content > div[style] {
   display: none !important;
 }
+.hero-grid > .card:nth-child(2) {
+  display: none !important;
+}
 }
 /* Desktop sidebar neon zoals mobiele versie */
 @media (min-width: 769px) {
