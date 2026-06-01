@@ -1999,7 +1999,7 @@ ${profile.resident_name}
     { id: "checklist", label: "Checklist", icon: CheckSquare },
     { id: "dashboard", label: "Dashboard", icon: BarChart3 },
     { id: "db-analyse", label: "dB Analyse", icon: BarChart3 },
-    { id: "instellingen", label: "Instellingen", icon: Filter },
+    { id: "instellingen", label: "Meer", icon: Filter },
   ];
 
   if (!supabase) {
@@ -3325,7 +3325,7 @@ style={{
                          {activeTab === "instellingen" && (
                 <Card>
                   <CardHeader>
-                    <CardTitle>Instellingen</CardTitle>
+                    <<CardTitle>Meer</CardTitle>
                     <CardDescription>Pas standaardvelden aan en sla ze op in Supabase</CardDescription>
                   </CardHeader>
                   <CardContent className="stack">
