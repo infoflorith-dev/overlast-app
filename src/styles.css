@@ -813,9 +813,24 @@ overflow: visible;
   .content-grid > .card:nth-child(2) {
   display: none !important;
 }
+.content-grid > .card:first-child .stack > div[style*="grid-template-columns: 1fr 1fr"] {
+  gap: 10px !important;
 }
+
+.content-grid > .card:first-child .stack > div[style*="grid-template-columns: 1fr 1fr"] > div {
+  padding: 10px !important;
+  min-height: 0 !important;
+}
+
+.content-grid > .card:first-child .stack > div[style*="grid-template-columns: 1fr 1fr"] > div * {
+  font-size: 13px !important;
+  line-height: 1.25 !important;
+}
+
 .stack > div[style*="height: 420px"] {
   height: 230px !important;
+}
+
 }
 /* Desktop sidebar neon zoals mobiele versie */
 @media (min-width: 769px) {
