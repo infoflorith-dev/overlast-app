@@ -2878,10 +2878,16 @@ textShadow:
                                 </div>
                                 <p className="muted mt-sm">{formatDisplayDateTime(incident.datetime)} • {incident.location}</p>
                               </div>
-                              <div className="badge-row">
-                                <Button type="button" variant="outline" size="sm" onClick={() => startEditIncident(incident)}><Pencil className="icon-inline" /> Bewerk</Button>
-                                <Button type="button" variant="ghost" size="icon" onClick={() => deleteIncident(incident.id)}><Trash2 className="icon-sm" /></Button>
-                              </div>
+                             {isAdminMode && (
+  <div className="badge-row">
+    <Button type="button" variant="outline" size="sm" onClick={() => startEditIncident(incident)}>
+      <Pencil className="icon-inline" /> Bewerk
+    </Button>
+    <Button type="button" variant="ghost" size="icon" onClick={() => deleteIncident(incident.id)}>
+      <Trash2 className="icon-sm" />
+    </Button>
+  </div>
+)}
                             </div>
                             <div className="stack mt">
                          {incident.source === "PCE dB analyse" ? (
