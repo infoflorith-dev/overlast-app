@@ -3058,13 +3058,19 @@ textShadow:
                 <Card>
                   <CardHeader><CardTitle>Notities</CardTitle></CardHeader>
                   <CardContent className="stack">
-                    <Textarea placeholder="Nieuwe notitie" value={noteInput} onChange={(e) => setNoteInput(e.target.value)} />
-                    <Button onClick={addNote}><Plus className="icon-inline" /> Notitie toevoegen</Button>
-                    <div className="stack">
-                      {notes.map((note) => (
-                        <div key={note.id} className="note-row">
-                          <p>{note.text}</p>
-                          <Button variant="ghost" size="icon" onClick={() => deleteNote(note.id)}><Trash2 className="icon-sm" /></Button>
+{isAdminMode && (
+  <>
+    <Textarea
+      placeholder="Nieuwe notitie"
+      value={noteInput}
+      onChange={(e) => setNoteInput(e.target.value)}
+    />
+
+    <Button onClick={addNote}>
+      <Plus className="icon-inline" /> Notitie toevoegen
+    </Button>
+  </>
+)}
                         </div>
                       ))}
                     </div>
@@ -3076,7 +3082,18 @@ textShadow:
                 <Card>
                   <CardHeader><CardTitle>Checklist</CardTitle></CardHeader>
                   <CardContent className="stack">
-                    <div className="badge-row"><Input placeholder="Nieuwe taak" value={taskInput} onChange={(e) => setTaskInput(e.target.value)} /><Button onClick={addTask}><Plus className="icon-inline" /> Toevoegen</Button></div>
+                {isAdminMode && (
+  <div className="badge-row">
+    <Input
+      placeholder="Nieuwe taak"
+      value={taskInput}
+      onChange={(e) => setTaskInput(e.target.value)}
+    />
+    <Button onClick={addTask}>
+      <Plus className="icon-inline" /> Toevoegen
+    </Button>
+  </div>
+)}
                     <div className="stack">
                       {tasks.map((task) => (
                         <div key={task.id} className="task-row">
@@ -3084,7 +3101,11 @@ textShadow:
                             <Checkbox checked={task.done} onCheckedChange={() => toggleTask(task)} />
                             <p className={task.done ? "line-through muted" : ""}>{task.text}</p>
                           </div>
-                          <Button variant="ghost" size="icon" onClick={() => deleteTask(task.id)}><Trash2 className="icon-sm" /></Button>
+                        {isAdminMode && (
+  <Button variant="ghost" size="icon" onClick={() => deleteTask(task.id)}>
+    <Trash2 className="icon-sm" />
+  </Button>
+)}
                         </div>
                       ))}
                     </div>
