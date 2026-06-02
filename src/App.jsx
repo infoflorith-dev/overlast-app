@@ -2673,10 +2673,12 @@ opacity={0.12}
                       </div>
 
                       <div className="media-wrap">
-                        {!allMedia.length && <p className="muted">Nog geen bestanden toegevoegd.</p>}
+                       {!allMedia.filter((item) => item.mime_type?.startsWith("image/") || item.mime_type?.startsWith("video/")).length && <p className="muted">Nog geen foto's of video's toegevoegd.</p>}
                         {!!allMedia.length && (
                           <div className="media-grid">
-                            {allMedia.map((item) => (
+                          {allMedia
+  .filter((item) => item.mime_type?.startsWith("image/") || item.mime_type?.startsWith("video/"))
+  .map((item) => (
                               <div key={item.id} className={cn("media-card", selectedMediaIds.includes(item.id) && "media-selected")}>
                                 <button type="button" className="media-preview-btn" onClick={() => openMediaPreview(item)}>
                                 {thumbnailUrls[item.id] ? (
