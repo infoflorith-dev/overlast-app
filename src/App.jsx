@@ -196,8 +196,8 @@ function DbChart({ data }) {
   stroke="none"
   fill="url(#dbFill)"
 />
-  <Line type="monotone" dataKey="db" stroke="#22d3ee" dot={false} strokeWidth={8} opacity={0.18} />
-  <Line type="monotone" dataKey="db" stroke="#22d3ee" dot={false} strokeWidth={3} filter="url(#dbNeonGlow)" />
+  <Line type="monotone" dataKey="db" stroke="#c084fc" dot={false} strokeWidth={8} opacity={0.18} />
+  <Line type="monotone" dataKey="db" stroke="##c084fc" dot={false} strokeWidth={3} filter="url(#dbNeonGlow)" />
 
   <Line type="monotone" dataKey="norm" stroke="#f59e0b" dot={false} strokeDasharray="5 5" strokeWidth={2} />
   <Line type="monotone" dataKey="peak" stroke="#ef4444" dot={false} strokeDasharray="3 3" strokeWidth={2} />
