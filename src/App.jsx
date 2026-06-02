@@ -2719,7 +2719,15 @@ opacity={0.12}
                                     <Button type="button" variant={selectedMediaIds.includes(item.id) ? "secondary" : "outline"} onClick={() => toggleSelectedMedia(item.id)}>
                                       {selectedMediaIds.includes(item.id) ? "Geselecteerd" : "Kies voor incident"}
                                     </Button>
-                                    {selectedMediaIds.includes(item.id) && <Button type="button" variant="ghost" onClick={() => removeSelectedMediaFromForm(item.id)}>Verwijder</Button>}
+                              {isAdminMode && selectedMediaIds.includes(item.id) && (
+  <Button
+    type="button"
+    variant="ghost"
+    onClick={() => removeSelectedMediaFromForm(item.id)}
+  >
+    Verwijder
+  </Button>
+)}
                                   </div>
                                 </div>
                               </div>
