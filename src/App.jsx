@@ -44,7 +44,7 @@ const supabaseUrl = env.VITE_SUPABASE_URL || "";
 const supabaseAnonKey = env.VITE_SUPABASE_ANON_KEY || "";
 const supabase = supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null;
 const isAdminMode =
-  window.location.pathname === "/metnietteradenteskt";
+  window.location.pathname === "/Rebel_1970";
 const defaultProfile = {
   resident_name: "Theo",
   location: "Oostvoorne / thuis",
