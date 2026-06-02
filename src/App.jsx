@@ -1991,7 +1991,7 @@ ${profile.resident_name}
 
   downloadTextFile("handhaving-verzoek.txt", tekst);
 };
-  const tabs = [
+ const allTabs = [
     { id: "home", label: "Start", icon: Home },
     { id: "registratie", label: editingIncidentId ? "Incident bewerken" : "Nieuw incident", icon: Plus },
     { id: "incidenten", label: "Incidenten", icon: AlertTriangle },
@@ -2002,7 +2002,9 @@ ${profile.resident_name}
     { id: "db-analyse", label: "dB Analyse", icon: BarChart3 },
     { id: "instellingen", label: "Meer", icon: Filter },
   ];
-
+const tabs = isAdminMode
+  ? allTabs
+  : allTabs.filter((tab) => tab.id !== "registratie");
   if (!supabase) {
     return (
       <div className="app-shell">
