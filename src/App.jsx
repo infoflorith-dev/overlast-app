@@ -3258,11 +3258,13 @@ style={{
     </CardHeader>
 
     <CardContent className="stack">
-      <Input
-        type="file"
-        accept=".xlsx,.xls"
-        onChange={handleDbExcelUpload}
-      />
+   {isAdminMode && (
+  <Input
+    type="file"
+    accept=".xlsx,.xls"
+    onChange={handleDbExcelUpload}
+  />
+)}
 
       {dbUploadName && (
         <p className="muted">
