@@ -3057,24 +3057,35 @@ textShadow:
               {activeTab === "notities" && (
                 <Card>
                   <CardHeader><CardTitle>Notities</CardTitle></CardHeader>
-                  <CardContent className="stack">
-{isAdminMode && (
-  <>
-    <Textarea
-      placeholder="Nieuwe notitie"
-      value={noteInput}
-      onChange={(e) => setNoteInput(e.target.value)}
-    />
+          <CardContent className="stack">
+  {isAdminMode && (
+    <>
+      <Textarea
+        placeholder="Nieuwe notitie"
+        value={noteInput}
+        onChange={(e) => setNoteInput(e.target.value)}
+      />
 
-    <Button onClick={addNote}>
-      <Plus className="icon-inline" /> Notitie toevoegen
-    </Button>
-  </>
-)}
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
+      <Button onClick={addNote}>
+        <Plus className="icon-inline" /> Notitie toevoegen
+      </Button>
+    </>
+  )}
+
+  <div className="stack">
+    {notes.map((note) => (
+      <div key={note.id} className="note-row">
+        <p>{note.text}</p>
+
+        {isAdminMode && (
+          <Button variant="ghost" size="icon" onClick={() => deleteNote(note.id)}>
+            <Trash2 className="icon-sm" />
+          </Button>
+        )}
+      </div>
+    ))}
+  </div>
+</CardContent>
                 </Card>
               )}
 
