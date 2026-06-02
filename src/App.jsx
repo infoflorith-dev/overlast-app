@@ -3033,7 +3033,11 @@ textShadow:
                           <div className="media-body">
                             <p className="truncate bold">{item.file_name}</p>
                             <p className="muted tiny">{item.type === "video" ? "Video" : "Foto"} • {formatDisplayDateTime(item.created_at)}</p>
-                            <Button type="button" variant="ghost" onClick={() => deleteMedia(item.id)}><Trash2 className="icon-inline" /> Verwijderen</Button>
+                          {isAdminMode && (
+  <Button type="button" variant="ghost" onClick={() => deleteMedia(item.id)}>
+    <Trash2 className="icon-inline" /> Verwijderen
+  </Button>
+)}
                           </div>
                         </div>
                       ))}
