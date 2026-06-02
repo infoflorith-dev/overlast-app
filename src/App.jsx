@@ -43,7 +43,8 @@ const env = typeof import.meta !== "undefined" && import.meta?.env ? import.meta
 const supabaseUrl = env.VITE_SUPABASE_URL || "";
 const supabaseAnonKey = env.VITE_SUPABASE_ANON_KEY || "";
 const supabase = supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null;
-
+const isAdminMode =
+  window.location.pathname === "/metnietteradenteskt";
 const defaultProfile = {
   resident_name: "Theo",
   location: "Oostvoorne / thuis",
