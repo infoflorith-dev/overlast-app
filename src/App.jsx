@@ -2370,9 +2370,9 @@ ${profile.resident_name}
         <ComposedChart data={selectedDashboardDb.chart_data}>
   <defs>
    <linearGradient id="dashboardDbFill" x1="0" y1="0" x2="0" y2="1">
-  <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.32} />
-  <stop offset="28%" stopColor="#2563eb" stopOpacity={0.24} />
-<stop offset="62%" stopColor="#4f46e5" stopOpacity={0.18} />
+ <stop offset="0%" stopColor="#c084fc" stopOpacity={0.38} />
+<stop offset="28%" stopColor="#a855f7" stopOpacity={0.30} />
+<stop offset="62%" stopColor="#8b5cf6" stopOpacity={0.22} />
 <stop offset="100%" stopColor="#111827" stopOpacity={0.02} />
 </linearGradient>
     <filter id="dashboardNeonGlow" x="-40%" y="-40%" width="180%" height="180%">
@@ -2395,7 +2395,7 @@ ${profile.resident_name}
  <Line
   type="monotone"
   dataKey="db"
-  stroke="#22d3ee"
+ stroke="#c084fc"
   dot={false}
 strokeWidth={12}
 opacity={0.12}
@@ -2404,7 +2404,7 @@ opacity={0.12}
   <Line
     type="monotone"
     dataKey="db"
-    stroke="#22d3ee"
+  stroke="#c084fc"
     dot={false}
     strokeWidth={3}
     filter="url(#dashboardNeonGlow)"
