@@ -3139,49 +3139,35 @@ textShadow:
   </CardContent>
 </Card>
 </div>
-<div className="mobile-dashboard-kpis">
-  <Card className="mobile-kpi-card kpi-total">
+               <div className="mobile-dashboard-kpis">
+  <Card>
     <CardContent>
-      <BarChart3 size={22} />
-      <div>
-        <p className="muted">Totaal incidenten</p>
-        <p className="stat">{dossierStats.total}</p>
-      </div>
+      <p className="muted">Totaal incidenten</p>
+      <p className="stat">{dossierStats.total}</p>
     </CardContent>
   </Card>
 
-  <Card className="mobile-kpi-card kpi-night">
+  <Card>
     <CardContent>
-      <Moon size={22} />
-      <div>
-        <p className="muted">Nachtincidenten</p>
-        <p className="stat">{dossierStats.night}</p>
-      </div>
+      <p className="muted">Nachtincidenten</p>
+      <p className="stat">{dossierStats.night}</p>
     </CardContent>
   </Card>
 
-  <Card className="mobile-kpi-card kpi-db">
+  <Card>
     <CardContent>
-      <Activity size={22} />
-      <div>
-        <p className="muted">Gemiddelde dB</p>
-        <p className="stat">{analyse?.avg}</p>
-      </div>
+      <p className="muted">Gemiddelde dB</p>
+      <p className="stat">{analyse?.avg}</p>
     </CardContent>
   </Card>
 
-  <Card className="mobile-kpi-card kpi-last">
+  <Card>
     <CardContent>
-      <Calendar size={22} />
-      <div>
-        <p className="muted">Laatste melding</p>
-        <p className="stat">{dossierStats.last}</p>
-      </div>
+      <p className="muted">Laatste incident</p>
+      <p className="stat">{dossierStats.last}</p>
     </CardContent>
   </Card>
 </div>
-</div>
-)}
  <div className="content-grid dashboard-desktop-block">
   <Card>
     <CardHeader>
