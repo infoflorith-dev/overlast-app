@@ -3126,7 +3126,7 @@ textShadow:
 
               {activeTab === "dashboard" && (
                 <div className="stack">
-  <div className="content-grid">
+  <div className="content-grid mobile-hide-dashboard-trend">
   <Card>
     <CardHeader>
       <CardTitle>Normoverschrijdingen</CardTitle>
