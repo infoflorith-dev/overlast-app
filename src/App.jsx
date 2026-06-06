@@ -3139,6 +3139,35 @@ textShadow:
   </CardContent>
 </Card>
 </div>
+               <div className="mobile-dashboard-kpis">
+  <Card>
+    <CardContent>
+      <p className="muted">Totaal incidenten</p>
+      <p className="stat">{dossierStats.total}</p>
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardContent>
+      <p className="muted">Nachtincidenten</p>
+      <p className="stat">{dossierStats.night}</p>
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardContent>
+      <p className="muted">Gemiddelde dB</p>
+      <p className="stat">{analyse?.avg}</p>
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardContent>
+      <p className="muted">Laatste incident</p>
+      <p className="stat">{dossierStats.last}</p>
+    </CardContent>
+  </Card>
+</div>
  <div className="content-grid dashboard-desktop-block">
   <Card>
     <CardHeader>
