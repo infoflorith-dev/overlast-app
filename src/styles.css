@@ -1377,11 +1377,13 @@ width: 18px;
     line-height: 1.1;
   }
 
-  .mobile-dashboard > .card:first-child .muted {
-    margin-top: 4px !important;
-    font-size: 13px !important;
-    line-height: 1.25;
-  }
+ .mobile-dashboard > .card:first-child .muted {
+  margin-top: 6px !important;
+  font-size: 16px !important;
+  line-height: 1.35;
+  color: #cbd5e1 !important;
+  opacity: 1 !important;
+}
 }
 }
 @media (max-width: 768px) {
