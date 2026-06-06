@@ -3127,7 +3127,20 @@ textShadow:
               {activeTab === "dashboard" && (
              <div className="stack dashboard-page">
                <div className="mobile-dashboard">
-  TEST MOBIEL DASHBOARD
+ <Card>
+  <CardHeader>
+    <CardTitle>Huidige situatie</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <div style={{ fontSize: "18px", fontWeight: 700, color: "#f59e0b" }}>
+      Verhoogde overlast
+    </div>
+
+    <div className="muted" style={{ marginTop: "6px" }}>
+      {dossierStats.night} nachtincidenten en verhoogde geluidsniveaus in de nacht.
+    </div>
+  </CardContent>
+</Card>
 </div>
  <div className="content-grid dashboard-desktop-block">
   <Card>
