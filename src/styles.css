@@ -1384,3 +1384,23 @@ width: 18px;
   }
 }
 }
+@media (max-width: 768px) {
+  .mobile-dashboard-kpis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .mobile-dashboard-kpis .card-content {
+    padding: 14px !important;
+  }
+
+  .mobile-dashboard-kpis .stat {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
+  .mobile-dashboard-kpis .muted {
+    font-size: .8rem;
+  }
+}
