@@ -3130,18 +3130,18 @@ textShadow:
 
               {activeTab === "dashboard" && (
              <div className="stack dashboard-page">
-               <div className="mobile-dashboard">
- <Card>
-  <CardContent>
-    <div style={{ fontSize: "18px", fontWeight: 700, color: "#f59e0b" }}>
-      Verhoogde overlast
-    </div>
+        <div className="mobile-dashboard mobile-dashboard-alert">
+  <Card>
+    <CardContent>
+      <div style={{ fontSize: "18px", fontWeight: 700, color: "#f59e0b" }}>
+        Verhoogde overlast
+      </div>
 
-    <div className="muted" style={{ marginTop: "6px" }}>
-      {dossierStats.night} nachtincidenten en verhoogde geluidsniveaus in de nacht.
-    </div>
-  </CardContent>
-</Card>
+      <div className="muted" style={{ marginTop: "4px" }}>
+        {dossierStats.night} nachtincidenten en verhoogde geluidsniveaus in de nacht.
+      </div>
+    </CardContent>
+  </Card>
 </div>
     <div className="mobile-dashboard-kpis mobile-dashboard-kpis-premium">
 
