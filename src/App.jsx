@@ -3128,9 +3128,6 @@ textShadow:
              <div className="stack dashboard-page">
                <div className="mobile-dashboard">
  <Card>
-  <CardHeader>
-    <CardTitle>Huidige situatie</CardTitle>
-  </CardHeader>
   <CardContent>
     <div style={{ fontSize: "18px", fontWeight: 700, color: "#f59e0b" }}>
       Verhoogde overlast
