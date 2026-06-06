@@ -1416,14 +1416,14 @@ width: 18px;
     gap: 10px !important;
   }
 
-  ..mobile-dashboard-kpis-premium .card {
-    min-height: 70px !important;
+  .mobile-dashboard-kpis-premium .card {
+    min-height: 92px !important;
     border-radius: 20px !important;
   }
 
- .mobile-dashboard-kpis-premium .card-content {
-    padding: 8px !important;
- }
+  .mobile-dashboard-kpis-premium .card-content {
+    padding: 14px !important;
+  }
 
   .mobile-dashboard-kpis-premium .muted {
     font-size: 0.78rem !important;
