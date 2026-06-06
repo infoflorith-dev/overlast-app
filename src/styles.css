@@ -1436,3 +1436,24 @@ width: 18px;
   margin-top: 2px !important;
 }
 }
+@media (max-width: 768px) {
+  .mobile-dashboard-kpis-premium .card:nth-child(1) .stat {
+    color: #22d3ee !important;
+    text-shadow: 0 0 12px rgba(34,211,238,.65);
+  }
+
+  .mobile-dashboard-kpis-premium .card:nth-child(2) .stat {
+    color: #a855f7 !important;
+    text-shadow: 0 0 12px rgba(168,85,247,.65);
+  }
+
+  .mobile-dashboard-kpis-premium .card:nth-child(3) .stat {
+    color: #22c55e !important;
+    text-shadow: 0 0 12px rgba(34,197,94,.65);
+  }
+
+  .mobile-dashboard-kpis-premium .card:nth-child(4) .stat {
+    color: #a855f7 !important;
+    text-shadow: 0 0 12px rgba(168,85,247,.65);
+  }
+}
