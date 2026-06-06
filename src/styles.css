@@ -1336,13 +1336,21 @@ width: 18px;
 
 }
 @media (max-width: 768px) {
-  .mobile-hide-dashboard-trend {
+  .mobile-hide-dashboard-analysis,
+  .mobile-hide-dashboard-extra {
     display: none !important;
   }
 }
+.mobile-dashboard {
+  display: none;
+}
+
 @media (max-width: 768px) {
-  .mobile-hide-dashboard-analysis,
-  .mobile-hide-dashboard-extra {
+  .mobile-dashboard {
+    display: block;
+  }
+
+  .dashboard-desktop-block {
     display: none !important;
   }
 }
