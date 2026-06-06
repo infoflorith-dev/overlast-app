@@ -546,9 +546,13 @@ const { norm, peak } = getNormPeak(date);
     media: allMedia.length,
     avgEveningDb: avg(avondDb),
     avgNightDb: avg(nachtDb),
-    last: incidentsSorted[0]
-      ? formatDisplayDateTime(incidentsSorted[0].datetime)
-      : "-",
+   last: incidentsSorted[0]
+  ? new Intl.DateTimeFormat("nl-NL", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }).format(new Date(incidentsSorted[0].datetime))
+  : "-",
   };
 }, [incidents, incidentsSorted, allMedia]);
   const dbSummary = useMemo(() => {
