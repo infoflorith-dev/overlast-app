@@ -3187,7 +3187,7 @@ style={{
     </CardContent>
   </Card>
 </div>                
-                  <Card>
+                 <Card className="mobile-hide-dashboard-analysis">
                     <CardHeader>
                       <CardTitle>Automatische analyse</CardTitle>
                       <CardDescription>Snelle samenvatting van patroon en zwaarte</CardDescription>
@@ -3223,7 +3223,7 @@ style={{
                     </CardContent>
                   </Card>
 
-                  <div className="content-grid">
+                 <div className="content-grid mobile-hide-dashboard-extra">
                     <Card>
                       <CardHeader><CardTitle>Bronnenoverzicht</CardTitle><CardDescription>Welke bron komt het meest voor</CardDescription></CardHeader>
                       <CardContent className="stack">
