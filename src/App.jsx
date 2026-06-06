@@ -2501,7 +2501,7 @@ opacity={0.12}
 </div>
 </div>
 
-<div style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px", padding: "12px" }}>
+<div className="mobile-hide-dashboard-status" style={{ border: "1px solid rgba(255,255,255,.1)", minHeight: "150px", borderRadius: "16px", padding: "12px" }}>
   <div style={{ fontWeight: 800, marginBottom: "10px" }}>
     Dossierstatus
   </div>
