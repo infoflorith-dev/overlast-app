@@ -3126,6 +3126,9 @@ textShadow:
 
               {activeTab === "dashboard" && (
              <div className="stack dashboard-page">
+               <div className="mobile-dashboard">
+  TEST MOBIEL DASHBOARD
+</div>
  <div className="content-grid dashboard-desktop-block">
   <Card>
     <CardHeader>
