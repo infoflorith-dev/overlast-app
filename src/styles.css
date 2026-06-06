@@ -1335,8 +1335,4 @@ width: 18px;
 }
 
 }
-@media (max-width: 768px) {
-  .mobile-hide-dashboard-status {
-    display: none !important;
-  }
-}
+
