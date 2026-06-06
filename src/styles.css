@@ -1428,9 +1428,11 @@ width: 18px;
  }
 
   .mobile-dashboard-kpis-premium .muted {
-    font-size: 0.78rem !important;
-    margin-bottom: 6px !important;
-  }
+  font-size: 0.82rem !important;
+  margin-bottom: 6px !important;
+  color: #dbe4ff !important;
+  font-weight: 600 !important;
+}
 
   .mobile-dashboard-kpis-premium .stat {
   font-size: 1.25rem !important;
