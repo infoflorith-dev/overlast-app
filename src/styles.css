@@ -1388,19 +1388,26 @@ width: 18px;
   .mobile-dashboard-kpis {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 8px;
+  }
+
+  .mobile-dashboard-kpis .card {
+    border-radius: 18px;
   }
 
   .mobile-dashboard-kpis .card-content {
-    padding: 14px !important;
+    min-height: 82px;
+    padding: 10px 12px !important;
   }
 
   .mobile-dashboard-kpis .stat {
-    font-size: 1.8rem;
-    line-height: 1;
+    font-size: 1.55rem;
+    line-height: .95;
+    margin-top: 4px;
   }
 
   .mobile-dashboard-kpis .muted {
-    font-size: .8rem;
+    font-size: .72rem;
+    line-height: 1.05;
   }
 }
