@@ -2008,7 +2008,16 @@ ${profile.resident_name}
   ];
 const tabs = isAdminMode
   ? allTabs
-  : allTabs.filter((tab) => tab.id !== "registratie");
+  : [
+      allTabs.find((tab) => tab.id === "home"),
+      allTabs.find((tab) => tab.id === "incidenten"),
+      allTabs.find((tab) => tab.id === "media"),
+      allTabs.find((tab) => tab.id === "notities"),
+      allTabs.find((tab) => tab.id === "checklist"),
+      allTabs.find((tab) => tab.id === "db-analyse"),
+      allTabs.find((tab) => tab.id === "dashboard"),
+      allTabs.find((tab) => tab.id === "instellingen"),
+    ].filter(Boolean);
   if (!supabase) {
     return (
       <div className="app-shell">
