@@ -3139,7 +3139,7 @@ textShadow:
   </CardContent>
 </Card>
 </div>
-               <div className="mobile-dashboard-kpis">
+          <div className="mobile-dashboard-kpis mobile-dashboard-kpis-premium">
   <Card>
     <CardContent>
       <p className="muted">Totaal incidenten</p>
