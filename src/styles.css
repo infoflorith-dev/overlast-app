@@ -1340,3 +1340,9 @@ width: 18px;
     display: none !important;
   }
 }
+@media (max-width: 768px) {
+  .mobile-hide-dashboard-analysis,
+  .mobile-hide-dashboard-extra {
+    display: none !important;
+  }
+}
