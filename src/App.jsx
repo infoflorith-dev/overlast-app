@@ -3125,8 +3125,8 @@ textShadow:
               )}
 
               {activeTab === "dashboard" && (
-                <div className="stack">
-  <div className="content-grid">
+             <div className="stack dashboard-page">
+ <div className="content-grid dashboard-desktop-block">
   <Card>
     <CardHeader>
       <CardTitle>Normoverschrijdingen</CardTitle>
