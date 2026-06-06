@@ -807,16 +807,30 @@ overflow: visible;
   }
 
   .big-title {
-    font-size: 1.75rem;
-  }
+  font-size: 1.45rem;
+  line-height: 1.05;
+}
 
-  .card {
-    border-radius: 22px;
-  }
+.hero-grid > .card:first-child .card-header {
+  padding: 14px 16px 12px;
+}
 
-  .card-header {
-    padding: 20px 20px 0;
-  }
+.hero-grid > .card:first-child .card-description {
+  font-size: .9rem;
+  line-height: 1.25;
+}
+
+.hero-status-row {
+  display: none !important;
+}
+
+.card {
+  border-radius: 22px;
+}
+
+.card-header {
+  padding: 20px 20px 0;
+}
 
   .card-content {
     padding: 20px;
