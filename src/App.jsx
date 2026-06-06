@@ -3139,34 +3139,45 @@ textShadow:
   </CardContent>
 </Card>
 </div>
-          <div className="mobile-dashboard-kpis mobile-dashboard-kpis-premium">
+    <div className="mobile-dashboard-kpis mobile-dashboard-kpis-premium">
+
   <Card>
     <CardContent>
-      <p className="muted">Totaal incidenten</p>
+      <p className="muted">
+        <Activity className="icon-inline" color="#22d3ee" /> Totaal incidenten
+      </p>
       <p className="stat">{dossierStats.total}</p>
     </CardContent>
   </Card>
 
   <Card>
     <CardContent>
-      <p className="muted">Nachtincidenten</p>
+      <p className="muted">
+        <Moon className="icon-inline" color="#a855f7" /> Nachtincidenten
+      </p>
       <p className="stat">{dossierStats.night}</p>
     </CardContent>
   </Card>
 
   <Card>
     <CardContent>
-      <p className="muted">Gemiddelde dB</p>
+      <p className="muted">
+        <AudioLines className="icon-inline" color="#22c55e" /> Gemiddelde dB
+      </p>
       <p className="stat">{analyse?.avg}</p>
     </CardContent>
   </Card>
 
   <Card>
     <CardContent>
-      <p className="muted">Laatste incident</p>
+      <p className="muted">
+        <Calendar className="icon-inline" color="#a855f7" /> Laatste incident
+      </p>
       <p className="stat">{dossierStats.last}</p>
     </CardContent>
   </Card>
+
+</div>
 </div>
  <div className="content-grid dashboard-desktop-block">
   <Card>
