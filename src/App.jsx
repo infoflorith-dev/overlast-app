@@ -3181,6 +3181,7 @@ textShadow:
   </Card>
 </div>
 </div>
+)}
  <div className="content-grid dashboard-desktop-block">
   <Card>
     <CardHeader>
