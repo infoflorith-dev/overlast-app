@@ -1411,3 +1411,27 @@ width: 18px;
     line-height: 1.05;
   }
 }
+@media (max-width: 768px) {
+  .mobile-dashboard-kpis-premium {
+    gap: 10px !important;
+  }
+
+  .mobile-dashboard-kpis-premium .card {
+    min-height: 92px !important;
+    border-radius: 20px !important;
+  }
+
+  .mobile-dashboard-kpis-premium .card-content {
+    padding: 14px !important;
+  }
+
+  .mobile-dashboard-kpis-premium .muted {
+    font-size: 0.78rem !important;
+    margin-bottom: 6px !important;
+  }
+
+  .mobile-dashboard-kpis-premium .stat {
+    font-size: 2rem !important;
+    line-height: 1 !important;
+  }
+}
