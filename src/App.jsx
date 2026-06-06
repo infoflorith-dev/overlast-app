@@ -3171,7 +3171,7 @@ textShadow:
   <Card>
     <CardContent>
       <p className="muted">
-        <Calendar className="icon-inline" color="#a855f7" /> Laatste incident
+        <FileText className="icon-inline" color="#a855f7" /> Laatste incident
       </p>
       <p className="stat">{dossierStats.last}</p>
     </CardContent>
