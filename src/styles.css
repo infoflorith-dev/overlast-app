@@ -1457,3 +1457,12 @@ width: 18px;
     text-shadow: 0 0 12px rgba(168,85,247,.65);
   }
 }
+@media (max-width: 768px) {
+  .dashboard-page {
+    margin-top: -112px !important;
+  }
+
+  .mobile-dashboard-alert .card-content {
+    padding: 14px 18px !important;
+  }
+}
