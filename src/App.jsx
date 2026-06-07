@@ -3209,9 +3209,12 @@ textShadow:
     }}
   />
 
-  <div style={{ fontSize: "14px" }}>
-    TEST
-  </div>
+ <div style={{ fontSize: "14px", lineHeight: "1.8" }}>
+  <div>🟣 Ochtend (07:00 - 12:00)</div>
+  <div>🔵 Middag (12:00 - 17:00)</div>
+  <div>🟠 Avond (17:00 - 23:00)</div>
+  <div>🔴 Nacht (23:00 - 07:00)</div>
+</div>
 </div>
     </CardContent>
   </Card>
