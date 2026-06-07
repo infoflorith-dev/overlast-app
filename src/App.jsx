@@ -3214,7 +3214,7 @@ textShadow:
       position: "absolute",
       inset: "42px",
       borderRadius: "50%",
-      background: "#0b1222"
+      background: "#111827"
     }}
   />
 </div>
