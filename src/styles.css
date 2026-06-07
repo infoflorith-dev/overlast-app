@@ -1627,3 +1627,66 @@ width: 18px;
     color: #f59e0b;
   }
 }
+@media (max-width: 768px) {
+  .mobile-donut-card h2,
+  .mobile-period-card h2,
+  .mobile-latest-card h2 {
+    margin: 0 0 16px;
+    font-size: 1.25rem;
+    color: #ffffff;
+  }
+
+  .mobile-donut-card h2 span {
+    font-size: .9rem;
+    font-weight: 400;
+    color: #cbd5e1;
+  }
+
+  .donut-layout {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .donut-chart {
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 0 28px rgba(255,48,79,.20);
+  }
+
+  .donut-chart::after {
+    content: "";
+    position: absolute;
+    inset: 36px;
+    border-radius: 50%;
+    background: #071120;
+  }
+
+  .donut-legend {
+    display: grid;
+    gap: 10px;
+  }
+
+  .donut-row {
+    display: grid;
+    grid-template-columns: 12px 1fr auto;
+    align-items: center;
+    gap: 8px;
+    color: #dbe4ff;
+    font-size: .88rem;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .donut-row strong {
+    font-weight: 700;
+    color: #e2e8f0;
+  }
+}
