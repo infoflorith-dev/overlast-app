@@ -3232,10 +3232,10 @@ textShadow:
     height: "160px",
     borderRadius: "50%",
     position: "relative",
-    background: `conic-gradient(
-  #3b82f6 0 ${dbSummary.total ? (dbSummary.day / dbSummary.total) * 100 : 0}%,
-  #f59e0b ${dbSummary.total ? (dbSummary.day / dbSummary.total) * 100 : 0}% ${dbSummary.total ? ((dbSummary.day + dbSummary.evening) / dbSummary.total) * 100 : 0}%,
-  #ef4444 ${dbSummary.total ? ((dbSummary.day + dbSummary.evening) / dbSummary.total) * 100 : 0}% 100%
+background: `conic-gradient(
+  #3b82f6 0 ${overlastMomenten.dagPct}%,
+  #f59e0b ${overlastMomenten.dagPct}% ${overlastMomenten.dagPct + overlastMomenten.avondPct}%,
+  #ef4444 ${overlastMomenten.dagPct + overlastMomenten.avondPct}% 100%
 )`
   }}
 >
