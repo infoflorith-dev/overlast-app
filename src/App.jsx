@@ -3235,13 +3235,17 @@ position: "relative",
 transform: "perspective(700px) rotateX(50deg)",
 transformStyle: "preserve-3d",
 boxShadow:
-  "0 24px 0 rgba(80,28,10,.75), 0 34px 38px rgba(0,0,0,.45), 0 0 18px rgba(59,130,246,.35), 0 0 24px rgba(245,158,11,.25), 0 0 30px rgba(239,68,68,.35)",
-    filter: "saturate(1.18) contrast(1.08) drop-shadow(0 -4px 8px rgba(255,255,255,.18))",
-background: `conic-gradient(
-  #3b82f6 0 ${overlastMomenten.dagPct}%,
-  #f59e0b ${overlastMomenten.dagPct}% ${overlastMomenten.dagPct + overlastMomenten.avondPct}%,
-  #ef4444 ${overlastMomenten.dagPct + overlastMomenten.avondPct}% 100%
-)`
+  "inset 0 6px 10px rgba(255,255,255,.32), inset 0 -14px 18px rgba(0,0,0,.42), 0 24px 0 rgba(70,24,8,.88), 0 34px 42px rgba(0,0,0,.55), 0 0 22px rgba(59,130,246,.55), 0 0 28px rgba(245,158,11,.45), 0 0 36px rgba(239,68,68,.55)",
+filter: "saturate(1.35) contrast(1.14) drop-shadow(0 -5px 10px rgba(255,255,255,.24))",
+background: `
+  radial-gradient(ellipse at 32% 16%, rgba(255,255,255,.42), transparent 26%),
+  radial-gradient(ellipse at 68% 80%, rgba(0,0,0,.32), transparent 36%),
+  conic-gradient(
+    #3b82f6 0 ${overlastMomenten.dagPct}%,
+    #f59e0b ${overlastMomenten.dagPct}% ${overlastMomenten.dagPct + overlastMomenten.avondPct}%,
+    #ef4444 ${overlastMomenten.dagPct + overlastMomenten.avondPct}% 100%
+  )
+`
   }}
 >
    <div
