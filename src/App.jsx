@@ -3198,9 +3198,16 @@ textShadow:
         Overlastmomenten
       </div>
 
-      <div className="muted" style={{ marginTop: "4px" }}>
-        Verdeling per dagdeel komt hier.
-      </div>
+    <div
+  style={{
+    width: "120px",
+    height: "120px",
+    borderRadius: "50%",
+    margin: "16px auto",
+    background:
+      "conic-gradient(#ef4444 0 49%, #f59e0b 49% 88%, #3b82f6 88% 98%, #a855f7 98% 100%)"
+  }}
+/>
     </CardContent>
   </Card>
 </div>              
