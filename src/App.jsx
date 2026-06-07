@@ -3200,8 +3200,8 @@ textShadow:
 
     <div
   style={{
-    width: "120px",
-    height: "120px",
+  width: "160px",
+height: "160px",
     borderRadius: "50%",
     margin: "16px auto",
     background:
