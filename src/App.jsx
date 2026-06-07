@@ -3228,21 +3228,24 @@ textShadow:
   <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
  <div
   style={{
-    width: "160px",
-    height: "160px",
-    borderRadius: "50%",
-    position: "relative",
+  width: "180px",
+height: "180px",
+borderRadius: "50%",
+position: "relative",
+boxShadow:
+  "0 0 18px rgba(59,130,246,.35), 0 0 24px rgba(245,158,11,.25), 0 0 30px rgba(239,68,68,.35)",
 background: `conic-gradient(
-  #3b82f6 0 ${overlastMomenten.dagPct}%,
-  #f59e0b ${overlastMomenten.dagPct}% ${overlastMomenten.dagPct + overlastMomenten.avondPct}%,
-  #ef4444 ${overlastMomenten.dagPct + overlastMomenten.avondPct}% 100%
+#3b82f6 0 ${overlastMomenten.dagPct}%,
+#f59e0b ${overlastMomenten.dagPct}% ${overlastMomenten.dagPct + overlastMomenten.avondPct}%,
+#ef4444 ${overlastMomenten.dagPct + overlastMomenten.avondPct}% 100%
+`
 )`
   }}
 >
   <div
     style={{
       position: "absolute",
-      inset: "42px",
+      inset: "34px",
       borderRadius: "50%",
       background: "#111827"
     }}
