@@ -3209,21 +3209,27 @@ textShadow:
     }}
   />
 
-<div style={{ display: "grid", gap: "8px", fontSize: "13px", flex: 1 }}>
-  <div style={{ display: "flex", justifyContent: "space-between", gap: "8px" }}>
-    <span>🟣 Dag (07:00-17:00)</span>
+<div style={{ display: "grid", gap: "12px", fontSize: "16px", flex: 1 }}>
+
+  <div style={{ display: "grid", gridTemplateColumns: "18px 1fr auto", gap: "8px", alignItems: "center" }}>
+    <span>🟣</span>
+    <span>Dag</span>
     <strong>10 (12%)</strong>
   </div>
 
-  <div style={{ display: "flex", justifyContent: "space-between", gap: "8px" }}>
-    <span>🟠 Avond (17:00-23:00)</span>
+  <div style={{ display: "grid", gridTemplateColumns: "18px 1fr auto", gap: "8px", alignItems: "center" }}>
+    <span>🟠</span>
+    <span>Avond</span>
     <strong>32 (39%)</strong>
   </div>
 
-  <div style={{ display: "flex", justifyContent: "space-between", gap: "8px" }}>
-    <span>🔴 Nacht (23:00-07:00)</span>
+  <div style={{ display: "grid", gridTemplateColumns: "18px 1fr auto", gap: "8px", alignItems: "center" }}>
+    <span>🔴</span>
+    <span>Nacht</span>
     <strong>41 (49%)</strong>
   </div>
+
+</div>
 </div>
 </div>
     </CardContent>
