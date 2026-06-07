@@ -3203,7 +3203,7 @@ textShadow:
   width: "160px",
 height: "160px",
     borderRadius: "50%",
-    margin: "16px auto",
+   margin: "16px 0",
     background:
       "conic-gradient(#ef4444 0 49%, #f59e0b 49% 88%, #3b82f6 88% 98%, #a855f7 98% 100%)"
   }}
