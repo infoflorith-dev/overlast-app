@@ -3244,6 +3244,17 @@ background: `conic-gradient(
 )`
   }}
 >
+   <div
+  style={{
+    position: "absolute",
+    inset: "0",
+    borderRadius: "50%",
+    pointerEvents: "none",
+    background:
+      "linear-gradient(145deg, rgba(255,255,255,.38) 0%, rgba(255,255,255,.16) 18%, rgba(255,255,255,0) 42%, rgba(0,0,0,.22) 78%, rgba(0,0,0,.35) 100%)",
+    mixBlendMode: "screen"
+  }}
+/>
   <div
     style={{
       position: "absolute",
