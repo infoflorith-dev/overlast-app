@@ -3209,10 +3209,21 @@ textShadow:
     }}
   />
 
- <div style={{ fontSize: "14px", lineHeight: "1.8", flex: 1 }}>
-  <div>🟣 Dag (07:00-17:00) 10 (12%)</div>
-  <div>🟠 Avond (17:00-23:00) 32 (39%)</div>
-  <div>🔴 Nacht (23:00-07:00) 41 (49%)</div>
+<div style={{ display: "grid", gap: "8px", fontSize: "13px", flex: 1 }}>
+  <div style={{ display: "flex", justifyContent: "space-between", gap: "8px" }}>
+    <span>🟣 Dag (07:00-17:00)</span>
+    <strong>10 (12%)</strong>
+  </div>
+
+  <div style={{ display: "flex", justifyContent: "space-between", gap: "8px" }}>
+    <span>🟠 Avond (17:00-23:00)</span>
+    <strong>32 (39%)</strong>
+  </div>
+
+  <div style={{ display: "flex", justifyContent: "space-between", gap: "8px" }}>
+    <span>🔴 Nacht (23:00-07:00)</span>
+    <strong>41 (49%)</strong>
+  </div>
 </div>
 </div>
     </CardContent>
