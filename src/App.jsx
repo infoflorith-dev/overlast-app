@@ -3232,7 +3232,7 @@ width: "180px",
 height: "180px",
 borderRadius: "50%",
 position: "relative",
-transform: "perspective(700px) rotateX(58deg)",
+transform: "perspective(700px) rotateX(50deg)",
 transformStyle: "preserve-3d",
 boxShadow:
   "0 24px 0 rgba(80,28,10,.75), 0 34px 38px rgba(0,0,0,.45), 0 0 18px rgba(59,130,246,.35), 0 0 24px rgba(245,158,11,.25), 0 0 30px rgba(239,68,68,.35)",
