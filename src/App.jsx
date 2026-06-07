@@ -3252,7 +3252,7 @@ textShadow:
 <div style={{ display: "grid", gap: "12px", fontSize: "16px", flex: 1 }}>
 
   <div style={{ display: "grid", gridTemplateColumns: "18px 1fr auto", gap: "8px", alignItems: "center" }}>
-    <span>🟣</span>
+  <span>🔵</span>
     <span>Dag</span>
   <strong>{overlastMomenten.dag} ({overlastMomenten.dagPct}%)</strong>
   </div>
