@@ -1995,42 +1995,6 @@ ${profile.resident_name}
 
   downloadTextFile("handhaving-verzoek.txt", tekst);
 };
-  const mobileDashboardData = useMemo(() => {
-  const periodDefs = [
-    { key: "ochtend", label: "Ochtend", time: "07:00 - 12:00", color: "#a855f7", match: (h) => h >= 7 && h < 12 },
-    { key: "middag", label: "Middag", time: "12:00 - 17:00", color: "#3b82f6", match: (h) => h >= 12 && h < 17 },
-    { key: "avond", label: "Avond", time: "17:00 - 23:00", color: "#f59e0b", match: (h) => h >= 17 && h < 23 },
-    { key: "nacht", label: "Nacht", time: "23:00 - 07:00", color: "#ff304f", match: (h) => h >= 23 || h < 7 },
-  ];
-
-  const total = incidents.length || 1;
-
-  const periods = periodDefs.map((period) => {
-    const items = incidents.filter((incident) => {
-      const h = new Date(incident.datetime).getHours();
-      return period.match(h);
-    });
-
-    const dbValues = items
-      .map((incident) => Number(incident.db))
-      .filter((n) => !Number.isNaN(n) && n > 0);
-
-    const avgDb = dbValues.length
-      ? (dbValues.reduce((a, b) => a + b, 0) / dbValues.length).toFixed(1)
-      : "-";
-
-    return {
-      ...period,
-      count: items.length,
-      percent: Math.round((items.length / total) * 100),
-      avgDb,
-    };
-  });
-
-  const latest = incidentsSorted.slice(0, 3);
-
-  return { periods, latest };
-}, [incidents, incidentsSorted]);
  const allTabs = [
     { id: "home", label: "Start", icon: Home },
     { id: "registratie", label: editingIncidentId ? "Incident bewerken" : "Nieuw incident", icon: Plus },
@@ -3173,181 +3137,189 @@ textShadow:
                 </Card>
               )}
 
-           {activeTab === "dashboard" && (
-  <div className="stack dashboard-page mobile-dashboard-exact">
-    <div className="mobile-dashboard-header">
-      <div className="mobile-dashboard-title-row">
-        <div className="mobile-dashboard-icon">
-          <BarChart3 size={30} />
-        </div>
-
-        <div>
-          <h1>Dashboard</h1>
-          <p>Overzicht van geluidsoverlast</p>
-        </div>
+              {activeTab === "dashboard" && (
+             <div className="stack dashboard-page">
+        <div className="mobile-dashboard mobile-dashboard-alert">
+  <Card>
+    <CardContent>
+      <div style={{ fontSize: "18px", fontWeight: 700, color: "#f59e0b" }}>
+        Verhoogde overlast
       </div>
 
-      <Button variant="outline" className="mobile-export-btn" onClick={exportReport}>
-        <Download className="icon-inline" /> Exporteren
-      </Button>
-    </div>
+      <div className="muted" style={{ marginTop: "4px" }}>
+        {dossierStats.night} nachtincidenten en verhoogde geluidsniveaus in de nacht.
+      </div>
+    </CardContent>
+  </Card>
+</div>
+    <div className="mobile-dashboard-kpis mobile-dashboard-kpis-premium">
 
-    <Card className="mobile-warning-card">
-      <CardContent>
-        <div className="warning-icon-wrap">
-          <AlertTriangle size={46} />
+  <Card>
+    <CardContent>
+      <p className="muted">
+        <Activity className="icon-inline" color="#22d3ee" /> Totaal incidenten
+      </p>
+      <p className="stat">{dossierStats.total}</p>
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardContent>
+      <p className="muted">
+        <Moon className="icon-inline" color="#a855f7" /> Nachtincidenten
+      </p>
+      <p className="stat">{dossierStats.night}</p>
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardContent>
+      <p className="muted">
+        <AudioLines className="icon-inline" color="#22c55e" /> Gemiddelde dB
+      </p>
+      <p className="stat">{analyse?.avg}</p>
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardContent>
+      <p className="muted">
+        <FileText className="icon-inline" color="#a855f7" /> Laatste incident
+      </p>
+      <p className="stat">{dossierStats.last}</p>
+    </CardContent>
+  </Card>
+
+</div>
+ <div className="content-grid dashboard-desktop-block">
+  <Card>
+    <CardHeader>
+      <CardTitle>Normoverschrijdingen</CardTitle>
+      <CardDescription>Verdeling van dB-overschrijdingen per normperiode</CardDescription>
+    </CardHeader>
+    <CardContent className="stack">
+      {!dbSummary.total && <p className="muted">Nog geen dB-overschrijdingen gevonden.</p>}
+      {!!dbSummary.total && dbSummary.periodChart.map((item) => (
+        <div key={item.label} className="summary-row">
+          <div className="summary-label">{item.label}</div>
+          <div className="summary-bar-wrap">
+            <div
+   className="summary-bar"
+style={{
+  width: `${Math.max(
+    (item.value / Math.max(...dbSummary.periodChart.map((x) => x.value), 1)) * 100,
+    item.value > 0 ? 8 : 0
+  )}%`,
+  height: "8px",
+  background: "#2563eb",
+  borderRadius: "4px"
+}}
+/>
+          </div>
+          <div className="summary-count">{item.value}</div>
         </div>
+      ))}
+    </CardContent>
+  </Card>
 
-        <div>
-          <p className="warning-label">Huidige situatie</p>
-          <h2>Verhoogde overlast</h2>
-          <p>{dossierStats.night} nachtincidenten en verhoogde geluidsniveaus in de nacht.</p>
+  <Card>
+    <CardHeader>
+      <CardTitle>Zwaarste overschrijdingen</CardTitle>
+      <CardDescription>Top 5 hoogste dB-overschrijdingen</CardDescription>
+    </CardHeader>
+    <CardContent className="stack">
+      {!dbSummary.topExceedances.length && <p className="muted">Nog geen overschrijdingen met dB-waarde.</p>}
+      {!!dbSummary.topExceedances.length && dbSummary.topExceedances.map((item, index) => (
+        <div key={`${item.label}-${index}`} className="summary-row">
+          <div className="summary-label" title={item.label}>{item.shortLabel}</div>
+          <div className="summary-bar-wrap">
+            <div
+         className="summary-bar"
+style={{
+  width: `${Math.max(
+    (item.value / Math.max(...dbSummary.topExceedances.map((x) => x.value), 1)) * 100,
+    8
+  )}%`,
+  height: "8px",
+  background: "#2563eb",
+  borderRadius: "4px"
+}}
+            />
+          </div>
+          <div className="summary-count">+{item.value}</div>
         </div>
+      ))}
+    </CardContent>
+  </Card>
+</div>                
+                 <Card className="mobile-hide-dashboard-analysis">
+                    <CardHeader>
+                      <CardTitle>Automatische analyse</CardTitle>
+                      <CardDescription>Snelle samenvatting van patroon en zwaarte</CardDescription>
+                    </CardHeader>
+                    <CardContent className="stack">
+                      <div className="stats-grid">
+                        <div className="stat-box">
+                          <p className="muted">Totaal</p>
+                          <p className="stat">{analyse?.total}</p>
+                        </div>
+                        <div className="stat-box">
+                          <p className="muted">Nacht</p>
+                          <p className="stat">{analyse?.night}</p>
+                        </div>
+                        <div className="stat-box">
+                          <p className="muted">Gem. dB</p>
+                          <p className="stat">{analyse?.avg}</p>
+                        </div>
+                        <div className="stat-box">
+                          <p className="muted">Meest</p>
+                          <p className="stat">{analyse?.topCategory}</p>
+                        </div>
+                      </div>
 
-        <div className="warning-arrow">›</div>
-      </CardContent>
-    </Card>
+                      <div className="incident-card">
+                        <p className="bold">Korte conclusie</p>
+                        <p className="mt">
+                          {(analyse?.night ?? 0) > 0
+                            ? `Er is sprake van terugkerende overlast, met ${analyse?.night ?? 0} nachtincidenten en ${(analyse?.topCategory || "-").toLowerCase()} als meest voorkomende categorie.`
+                            : `Er is sprake van terugkerende overlast, waarbij ${(analyse?.topCategory || "-").toLowerCase()} momenteel de meest voorkomende categorie is.`}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
 
-    <div className="mobile-dashboard-kpi-grid">
-      <Card>
-        <CardContent>
-          <div className="kpi-icon purple"><Activity size={24} /></div>
-          <div>
-            <p className="kpi-label">Totaal incidenten</p>
-            <p className="kpi-value">{dossierStats.total}</p>
-            <p className="kpi-sub red">+12 t.o.v. vorige 30 dagen</p>
-          </div>
-        </CardContent>
-      </Card>
+                 <div className="content-grid mobile-hide-dashboard-extra">
+                    <Card>
+                      <CardHeader><CardTitle>Bronnenoverzicht</CardTitle><CardDescription>Welke bron komt het meest voor</CardDescription></CardHeader>
+                      <CardContent className="stack">
+                        {!sourceSummary.length && <p className="muted">Nog geen brongegevens.</p>}
+                        {sourceSummary.map(([source, count]) => (
+                          <div key={source} className="summary-row">
+                            <div className="summary-label">{source}</div>
+                            <div className="summary-bar-wrap"><div className="summary-bar" style={{ width: `${Math.max((count / Math.max(...sourceSummary.map(([, c]) => c))) * 100, 8)}%` }} /></div>
+                            <div className="summary-count">{count}</div>
+                          </div>
+                        ))}
+                      </CardContent>
+                    </Card>
 
-      <Card>
-        <CardContent>
-          <div className="kpi-icon purple"><Moon size={24} /></div>
-          <div>
-            <p className="kpi-label">Nachtincidenten</p>
-            <p className="kpi-value">{dossierStats.night}</p>
-            <p className="kpi-sub orange">
-              {dossierStats.total ? Math.round((dossierStats.night / dossierStats.total) * 100) : 0}% van totaal
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardContent>
-          <div className="kpi-icon cyan"><AudioLines size={24} /></div>
-          <div>
-            <p className="kpi-label">Gemiddelde dB</p>
-            <p className="kpi-value">{analyse?.avg}</p>
-            <p className="kpi-sub red">+9.5 dB overschr.</p>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardContent>
-          <div className="kpi-icon purple"><FileText size={24} /></div>
-          <div>
-            <p className="kpi-label">Laatste incident</p>
-            <p className="kpi-value purple-text">{dossierStats.last}</p>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-
-    <Card className="mobile-donut-card">
-      <CardContent>
-        <h2>Overlastmomenten <span>(verdeling per dagdeel)</span></h2>
-
-        <div className="donut-layout">
-          <div
-            className="donut-chart"
-            style={{
-              background: `conic-gradient(
-                #a855f7 0 ${mobileDashboardData.periods[0].percent}%,
-                #3b82f6 ${mobileDashboardData.periods[0].percent}% ${mobileDashboardData.periods[0].percent + mobileDashboardData.periods[1].percent}%,
-                #f59e0b ${mobileDashboardData.periods[0].percent + mobileDashboardData.periods[1].percent}% ${mobileDashboardData.periods[0].percent + mobileDashboardData.periods[1].percent + mobileDashboardData.periods[2].percent}%,
-                #ff304f ${mobileDashboardData.periods[0].percent + mobileDashboardData.periods[1].percent + mobileDashboardData.periods[2].percent}% 100%
-              )`
-            }}
-          />
-
-          <div className="donut-legend">
-            {mobileDashboardData.periods.map((period) => (
-              <div className="donut-row" key={period.key}>
-                <span className="dot" style={{ background: period.color }} />
-                <span>{period.label} ({period.time})</span>
-                <strong>{period.count} ({period.percent}%)</strong>
-              </div>
-            ))}
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-
-    <Card className="mobile-period-card">
-      <CardContent>
-        <h2>Gem. dB per periode</h2>
-
-        <div className="period-grid">
-          {mobileDashboardData.periods.map((period) => (
-            <div className="period-box" key={period.key}>
-              <p>{period.label}</p>
-              <span>{period.time}</span>
-              <strong style={{ color: period.color }}>{period.avgDb} dB</strong>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-
-    <Card className="mobile-latest-card">
-      <CardContent>
-        <h2>Laatste meldingen</h2>
-
-        <div className="latest-list">
-          {mobileDashboardData.latest.map((incident) => {
-            const h = new Date(incident.datetime).getHours();
-            const isNight = h >= 23 || h < 7;
-
-            const color =
-              incident.category === "Licht" ? "#f59e0b" :
-              incident.category === "Geur" ? "#22c55e" :
-              incident.category === "Terras" ? "#a855f7" :
-              incident.category === "Overig" ? "#f97316" :
-              "#a855f7";
-
-            return (
-              <button
-                key={incident.id}
-                type="button"
-                className="latest-row"
-                onClick={() => {
-                  setSelectedIncidentId(incident.id);
-                  setFilterCategory("Alles");
-                  setActiveTab("incidenten");
-                }}
-              >
-                <div className="latest-icon" style={{ color }}>
-                  <AudioLines size={22} />
+                    <Card>
+                      <CardHeader><CardTitle>Categorieoverzicht</CardTitle><CardDescription>Verdeling van type overlast</CardDescription></CardHeader>
+                      <CardContent className="stack">
+                        {!categorySummary.length && <p className="muted">Nog geen categorieën.</p>}
+                        {categorySummary.map(([category, count]) => (
+                          <div key={category} className="summary-row">
+                            <div className="summary-label">{category}</div>
+                            <div className="summary-bar-wrap"><div className="summary-bar" style={{ width: `${Math.max((count / Math.max(...categorySummary.map(([, c]) => c))) * 100, 8)}%` }} /></div>
+                            <div className="summary-count">{count}</div>
+                          </div>
+                        ))}
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
+              )}
 
-                <div>
-                  <strong style={{ color }}>{incident.title}</strong>
-                  <span>{formatDisplayDateTime(incident.datetime)}</span>
-                </div>
-
-                <em className={isNight ? "night" : "evening"}>
-                  {isNight ? "Nacht" : "Avond"}
-                </em>
-              </button>
-            );
-          })}
-        </div>
-      </CardContent>
-    </Card>
-  </div>
-)}
               {activePreviewMedia && (
                 <div className="modal-backdrop" onClick={closeMediaPreview}>
                   <div className="modal-card" onClick={(e) => e.stopPropagation()}>
