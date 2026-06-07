@@ -3228,8 +3228,6 @@ textShadow:
     <span>Nacht</span>
     <strong>41 (49%)</strong>
   </div>
-
-</div>
 </div>
 </div>
     </CardContent>
