@@ -1995,6 +1995,33 @@ ${profile.resident_name}
 
   downloadTextFile("handhaving-verzoek.txt", tekst);
 };
+  const overlastMomenten = useMemo(() => {
+  const dag = incidents.filter((i) => {
+    const h = new Date(i.datetime).getHours();
+    return h >= 7 && h < 17;
+  }).length;
+
+  const avond = incidents.filter((i) => {
+    const h = new Date(i.datetime).getHours();
+    return h >= 17 && h < 23;
+  }).length;
+
+  const nacht = incidents.filter((i) => {
+    const h = new Date(i.datetime).getHours();
+    return h >= 23 || h < 7;
+  }).length;
+
+  const totaal = dag + avond + nacht || 1;
+
+  return {
+    dag,
+    avond,
+    nacht,
+    dagPct: Math.round((dag / totaal) * 100),
+    avondPct: Math.round((avond / totaal) * 100),
+    nachtPct: Math.round((nacht / totaal) * 100),
+  };
+}, [incidents]);
  const allTabs = [
     { id: "home", label: "Start", icon: Home },
     { id: "registratie", label: editingIncidentId ? "Incident bewerken" : "Nieuw incident", icon: Plus },
