@@ -3191,6 +3191,19 @@ textShadow:
   </Card>
 
 </div>
+ <div className="mobile-dashboard mobile-dashboard-donut">
+  <Card>
+    <CardContent>
+      <div style={{ fontSize: "18px", fontWeight: 800 }}>
+        Overlastmomenten
+      </div>
+
+      <div className="muted" style={{ marginTop: "4px" }}>
+        Verdeling per dagdeel komt hier.
+      </div>
+    </CardContent>
+  </Card>
+</div>              
  <div className="content-grid dashboard-desktop-block">
   <Card>
     <CardHeader>
