@@ -3209,11 +3209,10 @@ textShadow:
     }}
   />
 
- <div style={{ fontSize: "14px", lineHeight: "1.8" }}>
-  <div>🟣 Ochtend (07:00 - 12:00)  2 (2%)</div>
-  <div>🔵 Middag (12:00 - 17:00)</div>
-  <div>🟠 Avond (17:00 - 23:00)</div>
-  <div>🔴 Nacht (23:00 - 07:00)</div>
+ <div style={{ fontSize: "14px", lineHeight: "1.8", flex: 1 }}>
+  <div>🟣 Dag (07:00-17:00) 10 (12%)</div>
+  <div>🟠 Avond (17:00-23:00) 32 (39%)</div>
+  <div>🔴 Nacht (23:00-07:00) 41 (49%)</div>
 </div>
 </div>
     </CardContent>
