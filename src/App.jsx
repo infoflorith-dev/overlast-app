@@ -3198,16 +3198,21 @@ textShadow:
         Overlastmomenten
       </div>
 
-    <div
-  style={{
-  width: "160px",
-height: "160px",
-    borderRadius: "50%",
-   margin: "16px 0",
-    background:
-      "conic-gradient(#ef4444 0 49%, #f59e0b 49% 88%, #3b82f6 88% 98%, #a855f7 98% 100%)"
-  }}
-/>
+  <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+  <div
+    style={{
+      width: "160px",
+      height: "160px",
+      borderRadius: "50%",
+      background:
+        "conic-gradient(#ef4444 0 49%, #f59e0b 49% 88%, #3b82f6 88% 98%, #a855f7 98% 100%)"
+    }}
+  />
+
+  <div style={{ fontSize: "14px" }}>
+    TEST
+  </div>
+</div>
     </CardContent>
   </Card>
 </div>              
