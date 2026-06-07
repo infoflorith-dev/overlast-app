@@ -3199,15 +3199,25 @@ textShadow:
       </div>
 
   <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+ <div
+  style={{
+    width: "160px",
+    height: "160px",
+    borderRadius: "50%",
+    position: "relative",
+    background:
+      "conic-gradient(#ef4444 0 49%, #f59e0b 49% 88%, #3b82f6 88% 98%, #a855f7 98% 100%)"
+  }}
+>
   <div
     style={{
-      width: "160px",
-      height: "160px",
+      position: "absolute",
+      inset: "42px",
       borderRadius: "50%",
-      background:
-        "conic-gradient(#ef4444 0 49%, #f59e0b 49% 88%, #3b82f6 88% 98%, #a855f7 98% 100%)"
+      background: "#0b1222"
     }}
   />
+</div>
 
 <div style={{ display: "grid", gap: "12px", fontSize: "16px", flex: 1 }}>
 
