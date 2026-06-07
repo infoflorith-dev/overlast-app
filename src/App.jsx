@@ -3254,19 +3254,19 @@ textShadow:
   <div style={{ display: "grid", gridTemplateColumns: "18px 1fr auto", gap: "8px", alignItems: "center" }}>
     <span>🟣</span>
     <span>Dag</span>
-    <strong>10 (12%)</strong>
+  <strong>{overlastMomenten.dag} ({overlastMomenten.dagPct}%)</strong>
   </div>
 
   <div style={{ display: "grid", gridTemplateColumns: "18px 1fr auto", gap: "8px", alignItems: "center" }}>
     <span>🟠</span>
     <span>Avond</span>
-    <strong>32 (39%)</strong>
+    <strong>{overlastMomenten.avond} ({overlastMomenten.avondPct}%)</strong>
   </div>
 
   <div style={{ display: "grid", gridTemplateColumns: "18px 1fr auto", gap: "8px", alignItems: "center" }}>
     <span>🔴</span>
     <span>Nacht</span>
-    <strong>41 (49%)</strong>
+    <strong>{overlastMomenten.nacht} ({overlastMomenten.nachtPct}%)</strong>
   </div>
 </div>
 </div>
