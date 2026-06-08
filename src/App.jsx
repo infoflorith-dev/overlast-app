@@ -3331,11 +3331,18 @@ background: `
     </div>
 
     <div style={{ display: "grid", gap: "8px", fontSize: "14px" }}>
-      <div>🔊 Geluid: {stats.geluid || 0}</div>
-      <div>💡 Licht: {stats.licht || 0}</div>
-      <div>👃 Geur: {stats.geur || 0}</div>
-      <div>🍺 Terras: {stats.terras || 0}</div>
-      <div>📋 Overig: {stats.overig || 0}</div>
+     {categorySummary.map(([category, count]) => (
+  <div
+    key={category}
+    style={{
+      display: "flex",
+      justifyContent: "space-between"
+    }}
+  >
+    <span>{category}</span>
+    <strong>{count}</strong>
+  </div>
+))}
     </div>
   </CardContent>
 </Card>
