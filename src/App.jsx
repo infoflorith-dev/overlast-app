@@ -3295,7 +3295,7 @@ background: `
 </div>  
                <div className="mobile-dashboard-bottom-grid">
 
-  <Card>
+<Card>
   <CardContent>
     <div style={{ fontSize: "18px", fontWeight: 800, marginBottom: "12px" }}>
       Laatste meldingen
@@ -3304,24 +3304,27 @@ background: `
     {incidents
       .slice()
       .sort((a, b) => new Date(b.datetime) - new Date(a.datetime))
-      .slice(0, 5)
+      .slice(0, 3)
       .map((incident) => (
         <div
           key={incident.id}
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: "8px",
-            fontSize: "13px"
+            marginBottom: "12px",
+            paddingBottom: "10px",
+            borderBottom: "1px solid rgba(255,255,255,0.08)"
           }}
         >
-          <span>{incident.title}</span>
-          <span className="muted">
+          <div style={{ fontSize: "14px", fontWeight: 600, lineHeight: "1.3" }}>
+            {incident.title}
+          </div>
+
+          <div style={{ fontSize: "12px", color: "#94a3b8", marginTop: "4px" }}>
             {new Date(incident.datetime).toLocaleDateString("nl-NL")}
-          </span>
+          </div>
         </div>
       ))}
   </CardContent>
+</Card>
 </Card>
 
 <Card>
