@@ -3306,14 +3306,20 @@ background: `
       .sort((a, b) => new Date(b.datetime) - new Date(a.datetime))
       .slice(0, 3)
       .map((incident) => (
-        <div
-          key={incident.id}
-          style={{
-            marginBottom: "12px",
-            paddingBottom: "10px",
-            borderBottom: "1px solid rgba(255,255,255,0.08)"
-          }}
-        >
+       <div
+  key={incident.id}
+  onClick={() => {
+    setFilterCategory("Alles");
+    setSelectedIncidentId(incident.id);
+    setActiveTab("incidenten");
+  }}
+  style={{
+    cursor: "pointer",
+    marginBottom: "12px",
+    paddingBottom: "10px",
+    borderBottom: "1px solid rgba(255,255,255,0.08)"
+  }}
+>
        <div
   style={{
     fontSize: "14px",
