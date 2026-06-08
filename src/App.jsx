@@ -3314,9 +3314,21 @@ background: `
             borderBottom: "1px solid rgba(255,255,255,0.08)"
           }}
         >
-          <div style={{ fontSize: "14px", fontWeight: 600, lineHeight: "1.3" }}>
-            {incident.title}
-          </div>
+       <div
+  style={{
+    fontSize: "14px",
+    fontWeight: 600,
+    lineHeight: "1.3",
+    color:
+      incident.category === "geluid" ? "#ef4444" :
+      incident.category === "licht" ? "#facc15" :
+      incident.category === "geur" ? "#22c55e" :
+      incident.category === "terras" ? "#f59e0b" :
+      "#3b82f6"
+  }}
+>
+  {incident.title}
+</div>
 
           <div style={{ fontSize: "12px", color: "#94a3b8", marginTop: "4px" }}>
             {new Date(incident.datetime).toLocaleDateString("nl-NL")}
