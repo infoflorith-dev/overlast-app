@@ -1470,3 +1470,17 @@ width: 18px;
     padding: 14px 18px !important;
   }
 }
+.mobile-dashboard-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.mobile-dashboard-bottom-grid .card {
+  min-height: 260px;
+}
+
+.mobile-dashboard-bottom-grid .card-content {
+  padding: 18px !important;
+}
