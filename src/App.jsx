@@ -3292,7 +3292,34 @@ background: `
 </div>
     </CardContent>
   </Card>
-</div>              
+</div>  
+               <div className="mobile-dashboard-bottom-grid">
+
+  <Card>
+    <CardContent>
+      <div style={{ fontSize: "18px", fontWeight: 800, marginBottom: "12px" }}>
+        Laatste meldingen
+      </div>
+
+      <div className="muted">
+        Meldingen komen hier
+      </div>
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardContent>
+      <div style={{ fontSize: "18px", fontWeight: 800, marginBottom: "12px" }}>
+        Categorieverdeling
+      </div>
+
+      <div className="muted">
+        Verdeling komt hier
+      </div>
+    </CardContent>
+  </Card>
+
+</div>
  <div className="content-grid dashboard-desktop-block">
   <Card>
     <CardHeader>
