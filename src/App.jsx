@@ -3296,28 +3296,49 @@ background: `
                <div className="mobile-dashboard-bottom-grid">
 
   <Card>
-    <CardContent>
-      <div style={{ fontSize: "18px", fontWeight: 800, marginBottom: "12px" }}>
-        Laatste meldingen
-      </div>
+  <CardContent>
+    <div style={{ fontSize: "18px", fontWeight: 800, marginBottom: "12px" }}>
+      Laatste meldingen
+    </div>
 
-      <div className="muted">
-        Meldingen komen hier
-      </div>
-    </CardContent>
-  </Card>
+    {incidents
+      .slice()
+      .sort((a, b) => new Date(b.datetime) - new Date(a.datetime))
+      .slice(0, 5)
+      .map((incident) => (
+        <div
+          key={incident.id}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "8px",
+            fontSize: "13px"
+          }}
+        >
+          <span>{incident.title}</span>
+          <span className="muted">
+            {new Date(incident.datetime).toLocaleDateString("nl-NL")}
+          </span>
+        </div>
+      ))}
+  </CardContent>
+</Card>
 
-  <Card>
-    <CardContent>
-      <div style={{ fontSize: "18px", fontWeight: 800, marginBottom: "12px" }}>
-        Categorieverdeling
-      </div>
+<Card>
+  <CardContent>
+    <div style={{ fontSize: "18px", fontWeight: 800, marginBottom: "12px" }}>
+      Categorieverdeling
+    </div>
 
-      <div className="muted">
-        Verdeling komt hier
-      </div>
-    </CardContent>
-  </Card>
+    <div style={{ display: "grid", gap: "8px", fontSize: "14px" }}>
+      <div>🔊 Geluid: {stats.geluid || 0}</div>
+      <div>💡 Licht: {stats.licht || 0}</div>
+      <div>👃 Geur: {stats.geur || 0}</div>
+      <div>🍺 Terras: {stats.terras || 0}</div>
+      <div>📋 Overig: {stats.overig || 0}</div>
+    </div>
+  </CardContent>
+</Card>
 
 </div>
  <div className="content-grid dashboard-desktop-block">
