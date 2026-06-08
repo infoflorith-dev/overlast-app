@@ -3361,7 +3361,7 @@ background: `
   <span>{category}</span>
   <strong>{count}</strong>
 </div>>
-))}
+)}
     </div>
   </CardContent>
 </Card>
