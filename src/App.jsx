@@ -3319,12 +3319,12 @@ background: `
     fontSize: "14px",
     fontWeight: 600,
     lineHeight: "1.3",
-    color:
-      incident.category === "geluid" ? "#ef4444" :
-      incident.category === "licht" ? "#facc15" :
-      incident.category === "geur" ? "#22c55e" :
-      incident.category === "terras" ? "#f59e0b" :
-      "#3b82f6"
+   color:
+  incident.category === "Geluid" ? "#ef4444" :
+  incident.category === "Licht" ? "#facc15" :
+  incident.category === "Geur" ? "#22c55e" :
+  incident.category === "Terras" ? "#f59e0b" :
+  "#3b82f6"
   }}
 >
   {incident.title}
