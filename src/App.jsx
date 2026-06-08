@@ -3325,8 +3325,6 @@ background: `
       ))}
   </CardContent>
 </Card>
-</Card>
-
 <Card>
   <CardContent>
     <div style={{ fontSize: "18px", fontWeight: 800, marginBottom: "12px" }}>
