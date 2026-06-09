@@ -3370,26 +3370,26 @@ background: `
     <div style={{ fontSize: "18px", fontWeight: 800, marginBottom: "12px" }}>
       Categorieverdeling
     </div>
-<div style={{ display: "grid", gap: "8px", fontSize: "14px" }}>
-  {categorySummary.map(([category, count]) => (
-    <div
-      key={category}
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        color:
-          category === "Geluid" ? "#ef4444" :
-          category === "Geur" ? "#22c55e" :
-          category === "Licht" ? "#facc15" :
-          category === "Terras" ? "#f59e0b" :
-          "#3b82f6"
-      }}
-    >
-      <span>{category}</span>
-      <strong>{count}</strong>
-    </div>
-  ))}
+
+    <div style={{ display: "grid", gap: "8px", fontSize: "14px" }}>
+     {categorySummary.map(([category, count]) => (
+ <div
+  key={category}
+  style={{
+    display: "flex",
+    justifyContent: "space-between",
+    color:
+      category === "Geluid" ? "#ef4444" :
+      category === "Geur" ? "#22c55e" :
+      category === "Licht" ? "#facc15" :
+      category === "Terras" ? "#f59e0b" :
+      "#3b82f6"
+  }}
+>
+  <span>{category}</span>
+  <strong>{count}</strong>
 </div>
+))}
     </div>
   </CardContent>
 </Card>
