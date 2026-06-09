@@ -3213,7 +3213,7 @@ textShadow:
                <div className="desktop-dashboard-analysis-kpis">
   <Card>
     <CardContent>
-  <p className="muted">🎵 Gemiddelde dB</p>
+ <p className="muted">Gemiddelde dB</p>
       <p className="stat">{selectedDashboardDb?.db || "-"}</p>
     </CardContent>
   </Card>
@@ -3231,7 +3231,7 @@ textShadow:
 
   <Card>
     <CardContent>
-     <p className="muted">📉 Minimum dB</p>
+    <p className="muted">Minimum dB</p>
       <p className="stat">
         {selectedDashboardDb
           ? extractDbAnalysisField(selectedDashboardDb.description, "Minimum dB")
@@ -3242,7 +3242,7 @@ textShadow:
 
   <Card>
     <CardContent>
-    <p className="muted">⚠️ Gem. overschrijding</p>
+  <p className="muted">Gem. overschrijding</p>
       <p className="stat">
         {selectedDashboardDb
           ? `+${Math.max(
