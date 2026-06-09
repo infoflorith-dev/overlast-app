@@ -3210,6 +3210,51 @@ textShadow:
     </CardContent>
   </Card>
 </div>
+               <div className="desktop-dashboard-analysis-kpis">
+  <Card>
+    <CardContent>
+      <p className="muted">Gemiddelde dB</p>
+      <p className="stat">{selectedDashboardDb?.db || "-"}</p>
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardContent>
+      <p className="muted">Maximum dB</p>
+      <p className="stat">
+        {selectedDashboardDb
+          ? extractDbAnalysisField(selectedDashboardDb.description, "Maximum dB")
+          : "-"}
+      </p>
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardContent>
+      <p className="muted">Minimum dB</p>
+      <p className="stat">
+        {selectedDashboardDb
+          ? extractDbAnalysisField(selectedDashboardDb.description, "Minimum dB")
+          : "-"}
+      </p>
+    </CardContent>
+  </Card>
+
+  <Card>
+    <CardContent>
+      <p className="muted">Gem. overschrijding</p>
+      <p className="stat">
+        {selectedDashboardDb
+          ? `+${Math.max(
+              0,
+              Number(selectedDashboardDb.db) -
+                Number(selectedDashboardDb.chart_data?.[0]?.norm || 45)
+            ).toFixed(1)}`
+          : "-"}
+      </p>
+    </CardContent>
+  </Card>
+</div>
     <div className="mobile-dashboard-kpis mobile-dashboard-kpis-premium">
 
   <Card>
