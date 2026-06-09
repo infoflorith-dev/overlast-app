@@ -3179,6 +3179,37 @@ textShadow:
     </CardContent>
   </Card>
 </div>
+               <div className="desktop-dashboard-db-chart">
+  <Card>
+    <CardHeader>
+      <CardTitle>Laatste dB analyse</CardTitle>
+      <CardDescription>
+        {selectedDashboardDb
+          ? `${formatDisplayDateTime(selectedDashboardDb.datetime)}`
+          : "Nog geen opgeslagen dB analyse"}
+      </CardDescription>
+    </CardHeader>
+
+    <CardContent>
+      {selectedDashboardDb?.chart_data?.length ? (
+        <div style={{ width: "100%", height: 420 }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <ComposedChart data={selectedDashboardDb.chart_data}>
+              <XAxis dataKey="time" />
+              <YAxis />
+              <Area type="monotone" dataKey="db" stroke="none" fill="#312e81" />
+              <Line type="monotone" dataKey="db" stroke="#c084fc" dot={false} strokeWidth={3} />
+              <Line type="monotone" dataKey="norm" stroke="#f59e0b" dot={false} strokeDasharray="5 5" strokeWidth={2} />
+              <Line type="monotone" dataKey="peak" stroke="#ef4444" dot={false} strokeDasharray="3 3" strokeWidth={2} />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </div>
+      ) : (
+        <p className="muted">Nog geen dB analyse beschikbaar.</p>
+      )}
+    </CardContent>
+  </Card>
+</div>
     <div className="mobile-dashboard-kpis mobile-dashboard-kpis-premium">
 
   <Card>
