@@ -1549,3 +1549,24 @@ width: 18px;
     display: block;
   }
 }
+/* DESKTOP DASHBOARD - analyse KPI's onder grafiek */
+.desktop-dashboard-analysis-kpis {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .dashboard-page > .mobile-dashboard-kpis.mobile-dashboard-kpis-premium {
+    display: none !important;
+  }
+
+  .desktop-dashboard-analysis-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .desktop-dashboard-analysis-kpis .card-content {
+    min-height: 104px;
+    padding: 20px 22px !important;
+  }
+}
