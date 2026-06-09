@@ -1484,3 +1484,24 @@ width: 18px;
 .mobile-dashboard-bottom-grid .card-content {
   padding: 18px !important;
 }
+/* DESKTOP DASHBOARD - STAP 1 */
+/* Alleen desktop. Mobiel blijft ongemoeid. */
+@media (min-width: 769px) {
+  .dashboard-page .dashboard-desktop-block,
+  .dashboard-page .mobile-hide-dashboard-analysis,
+  .dashboard-page .mobile-hide-dashboard-extra {
+    display: none !important;
+  }
+
+  .dashboard-page .mobile-dashboard-donut {
+    display: block !important;
+  }
+
+  .dashboard-page .mobile-dashboard-donut > .card {
+    min-height: 340px;
+  }
+
+  .dashboard-page .mobile-dashboard-donut .card-content {
+    padding: 28px !important;
+  }
+}
