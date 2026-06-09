@@ -1539,3 +1539,13 @@ width: 18px;
     gap: 16px !important;
   }
 }
+/* Desktop-only dB grafiek op dashboard */
+.desktop-dashboard-db-chart {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .desktop-dashboard-db-chart {
+    display: block;
+  }
+}
