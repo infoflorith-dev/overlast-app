@@ -3394,7 +3394,7 @@ background: `
           gridTemplateColumns: "18px 1fr auto",
           gap: "8px",
           alignItems: "center",
-          color
+          color,
         }}
       >
         <Icon size={15} />
