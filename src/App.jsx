@@ -3370,31 +3370,34 @@ background: `
     <div style={{ fontSize: "18px", fontWeight: 800, marginBottom: "12px" }}>
       Categorieverdeling
     </div>
-<div
-  key={category}
-  style={{
-    display: "grid",
-    gridTemplateColumns: "18px 1fr auto",
-    gap: "8px",
-    alignItems: "center",
-    color:
-      category === "Geluid" ? "#ef4444" :
-      category === "Geur" ? "#22c55e" :
-      category === "Licht" ? "#facc15" :
-      category === "Terras" ? "#f59e0b" :
-      "#3b82f6"
-  }}
->
-  {category === "Geluid" && <AudioLines size={15} />}
-  {category === "Licht" && <Lightbulb size={15} />}
-  {category === "Geur" && <Wind size={15} />}
-  {category === "Terras" && <Wind size={15} />}
-  {category === "Overig" && <AlertTriangle size={15} />}
+<div style={{ display: "grid", gap: "8px", fontSize: "14px" }}>
+  {categorySummary.map(([category, count]) => (
+    <div
+      key={category}
+      style={{
+        display: "grid",
+        gridTemplateColumns: "18px 1fr auto",
+        gap: "8px",
+        alignItems: "center",
+        color:
+          category === "Geluid" ? "#ef4444" :
+          category === "Geur" ? "#22c55e" :
+          category === "Licht" ? "#facc15" :
+          category === "Terras" ? "#f59e0b" :
+          "#3b82f6"
+      }}
+    >
+      {category === "Geluid" && <AudioLines size={15} />}
+      {category === "Licht" && <Lightbulb size={15} />}
+      {category === "Geur" && <Wind size={15} />}
+      {category === "Terras" && <Wind size={15} />}
+      {category === "Overig" && <AlertTriangle size={15} />}
 
-  <span>{category}</span>
-  <strong>{count}</strong>
+      <span>{category}</span>
+      <strong>{count}</strong>
+    </div>
+  ))}
 </div>
-))}
     </div>
   </CardContent>
 </Card>
