@@ -3371,32 +3371,38 @@ background: `
       Categorieverdeling
     </div>
 <div style={{ display: "grid", gap: "8px", fontSize: "14px" }}>
-  {categorySummary.map(([category, count]) => (
-    <div
-      key={category}
-      style={{
-        display: "grid",
-        gridTemplateColumns: "18px 1fr auto",
-        gap: "8px",
-        alignItems: "center",
-        color:
-          category === "Geluid" ? "#ef4444" :
-          category === "Geur" ? "#22c55e" :
-          category === "Licht" ? "#facc15" :
-          category === "Terras" ? "#f59e0b" :
-          "#3b82f6"
-      }}
-    >
-      {category === "Geluid" && <AudioLines size={15} />}
-      {category === "Licht" && <Lightbulb size={15} />}
-      {category === "Geur" && <Wind size={15} />}
-      {category === "Terras" && <Wind size={15} />}
-      {category === "Overig" && <AlertTriangle size={15} />}
+  {categorySummary.map(([category, count]) => {
+    const color =
+      category === "Geluid" ? "#ef4444" :
+      category === "Geur" ? "#22c55e" :
+      category === "Licht" ? "#facc15" :
+      category === "Terras" ? "#f59e0b" :
+      "#3b82f6";
 
-      <span>{category}</span>
-      <strong>{count}</strong>
-    </div>
-  ))}
+    const Icon =
+      category === "Geluid" ? AudioLines :
+      category === "Licht" ? Lightbulb :
+      category === "Geur" ? Wind :
+      category === "Terras" ? Wind :
+      AlertTriangle;
+
+    return (
+      <div
+        key={category}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "18px 1fr auto",
+          gap: "8px",
+          alignItems: "center",
+          color
+        }}
+      >
+        <Icon size={15} />
+        <span>{category}</span>
+        <strong>{count}</strong>
+      </div>
+    );
+  })}
 </div>
     </div>
   </CardContent>
