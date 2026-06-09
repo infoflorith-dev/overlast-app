@@ -3320,22 +3320,44 @@ background: `
     borderBottom: "1px solid rgba(255,255,255,0.08)"
   }}
 >
-       <div
+<div
   style={{
+    display: "flex",
+    alignItems: "flex-start",
+    gap: "6px",
     fontSize: "14px",
     fontWeight: 600,
     lineHeight: "1.3",
-   color:
-  incident.category === "Geluid" ? "#ef4444" :
-  incident.category === "Licht" ? "#facc15" :
-  incident.category === "Geur" ? "#22c55e" :
-  incident.category === "Terras" ? "#f59e0b" :
-  "#3b82f6"
+    color:
+      incident.category === "Geluid" ? "#ef4444" :
+      incident.category === "Licht" ? "#facc15" :
+      incident.category === "Geur" ? "#22c55e" :
+      incident.category === "Terras" ? "#f59e0b" :
+      "#3b82f6"
   }}
 >
-  {incident.title}
-</div>
+  {incident.category === "Geluid" && (
+    <AudioLines size={14} style={{ marginTop: "2px", flexShrink: 0 }} />
+  )}
 
+  {incident.category === "Licht" && (
+    <Lightbulb size={14} style={{ marginTop: "2px", flexShrink: 0 }} />
+  )}
+
+  {incident.category === "Geur" && (
+    <Wind size={14} style={{ marginTop: "2px", flexShrink: 0 }} />
+  )}
+
+  {incident.category === "Terras" && (
+    <Wind size={14} style={{ marginTop: "2px", flexShrink: 0 }} />
+  )}
+
+  {incident.category === "Overig" && (
+    <AlertTriangle size={14} style={{ marginTop: "2px", flexShrink: 0 }} />
+  )}
+
+  <span>{incident.title}</span>
+</div>
           <div style={{ fontSize: "12px", color: "#94a3b8", marginTop: "4px" }}>
             {new Date(incident.datetime).toLocaleDateString("nl-NL")}
           </div>
