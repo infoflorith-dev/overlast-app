@@ -1505,3 +1505,37 @@ width: 18px;
     padding: 28px !important;
   }
 }
+/* DESKTOP DASHBOARD - STAP 2 */
+/* Alleen desktop dashboard, mobiel blijft ongemoeid */
+
+@media (min-width: 769px) {
+  .dashboard-page .mobile-dashboard-kpis {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  .dashboard-page .mobile-dashboard-kpis .card-content {
+    min-height: 120px;
+    padding: 22px 24px !important;
+  }
+
+  .dashboard-page .mobile-dashboard-kpis .stat {
+    font-size: 2.1rem;
+  }
+
+  .dashboard-page .mobile-dashboard-donut > .card .card-content > div:nth-child(2) {
+    justify-content: center !important;
+    gap: 48px !important;
+  }
+
+  .dashboard-page .mobile-dashboard-donut > .card .card-content > div:nth-child(2) > div:first-child {
+    width: 260px !important;
+    height: 260px !important;
+  }
+
+  .dashboard-page .mobile-dashboard-bottom-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+}
