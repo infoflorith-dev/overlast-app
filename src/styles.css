@@ -1565,8 +1565,24 @@ width: 18px;
     gap: 16px;
   }
 
-  .desktop-dashboard-analysis-kpis .card-content {
-    min-height: 104px;
-    padding: 20px 22px !important;
-  }
+ .desktop-dashboard-analysis-kpis .card-content {
+  min-height: 120px;
+  padding: 18px 22px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.desktop-dashboard-analysis-kpis .muted {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+
+.desktop-dashboard-analysis-kpis .stat {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
 }
